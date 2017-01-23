@@ -25474,17 +25474,17 @@
 	      ),
 	      React.createElement(
 	        Link,
-	        { to: '/' },
+	        { to: '/', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
 	        'Home'
 	      ),
 	      React.createElement(
 	        Link,
-	        { to: '/login' },
+	        { to: '/login', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
 	        'Login'
 	      ),
 	      React.createElement(
 	        Link,
-	        { to: '/account' },
+	        { to: '/account', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
 	        'Account'
 	      )
 	    );

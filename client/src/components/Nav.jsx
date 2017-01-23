@@ -9,9 +9,9 @@
      return (
        <div>
          <h2>Nav Component</h2>
-         <Link to="/">Home</Link>
-         <Link to="/login">Login</Link>
-         <Link to="/account">Account</Link>
+         <Link to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Home</Link>
+         <Link to="/login" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Login</Link>
+         <Link to="/account" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Account</Link>
        </div>
      );
    }
