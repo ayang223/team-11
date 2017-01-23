@@ -25523,26 +25523,54 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'top-bar' },
 	      React.createElement(
-	        'h2',
-	        null,
-	        'Nav Component'
+	        'div',
+	        { className: 'top-bar-left' },
+	        React.createElement(
+	          'ul',
+	          { className: 'menu' },
+	          React.createElement(
+	            'li',
+	            { className: 'menu-text' },
+	            'United Way'
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Home'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/login', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Login'
+	            )
+	          )
+	        )
 	      ),
 	      React.createElement(
-	        Link,
-	        { to: '/', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	        'Home'
-	      ),
-	      React.createElement(
-	        Link,
-	        { to: '/login', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	        'Login'
-	      ),
-	      React.createElement(
-	        Link,
-	        { to: '/account', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
-	        'Account'
+	        'div',
+	        { className: 'top-bar-right' },
+	        React.createElement(
+	          'ul',
+	          { className: 'menu' },
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/account', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Account'
+	            )
+	          )
+	        )
 	      )
 	    );
 	  }
