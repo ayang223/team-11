@@ -26,7 +26,8 @@ externals: {
       Nav: 'src/components/Nav.jsx',
       Main: 'src/scenes/Main.jsx',
       Login: 'src/scenes/Login.jsx',
-      Account: 'src/scenes/Account.jsx'
+      Account: 'src/scenes/Account.jsx',
+      Import: 'src/scenes/Import.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

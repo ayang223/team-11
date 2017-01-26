@@ -106,6 +106,7 @@
 	var Main = __webpack_require__(229);
 	var Login = __webpack_require__(231);
 	var Account = __webpack_require__(232);
+	var Import = __webpack_require__(233);
 	__webpack_require__(234);
 	$(document).foundation();
 
@@ -117,6 +118,7 @@
 	    { path: '/', component: Main },
 	    React.createElement(Route, { path: '/login', component: Login }),
 	    React.createElement(Route, { path: '/account', component: Account }),
+	    React.createElement(Route, { path: '/import', component: Import }),
 	    React.createElement(IndexRoute, { component: Login })
 	  )
 	), document.getElementById('app'));
@@ -25552,6 +25554,15 @@
 	              { to: '/login', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
 	              'Login'
 	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/import', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Import'
+	            )
 	          )
 	        )
 	      ),
@@ -25685,7 +25696,51 @@
 	module.exports = Account;
 
 /***/ },
-/* 233 */,
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var Import = React.createClass({
+	    displayName: 'Import',
+
+	    uploadFile: function uploadFile(e) {
+	        var fd = new FormData();
+	        fd.append('file', this.refs.file.getDOMNode().files[0]);
+
+	        // TODO: need to do a call to the backend to give the data
+	        // $.ajax({
+	        //     url: '',
+	        //     data: fd,
+	        //     processData: false,
+	        //     contentType: false,
+	        //     type: 'POST',
+	        //     success: function(data){
+	        //         alert(data);
+	        //     }
+	        // });
+
+	        e.preventDefault();
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'form',
+	                { ref: 'uploadForm', className: 'uploader', encType: 'multipart/form-data' },
+	                React.createElement('input', { ref: 'file', id: 'CSVUpload', type: 'file', name: 'file', className: 'upload-file' }),
+	                React.createElement('input', { type: 'button', ref: 'button', value: 'Upload', onClick: this.uploadFile })
+	            )
+	        );
+	    }
+	});
+
+	module.exports = Import;
+
+/***/ },
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
