@@ -27,7 +27,6 @@ externals: {
       Main: 'src/scenes/Main.jsx',
       Login: 'src/scenes/Login.jsx',
       Account: 'src/scenes/Account.jsx'
-
     },
     extensions: ['', '.js', '.jsx']
   },

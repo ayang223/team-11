@@ -25589,10 +25589,60 @@
 	 */
 	var React = __webpack_require__(8);
 
+	var LoginForm = React.createClass({
+	  displayName: 'LoginForm',
+
+	  onFormSubmit: function onFormSubmit(e) {
+	    e.preventDefault();
+
+	    var username = this.refs.username.value;
+	    var password = this.refs.password.value;
+	    if (username.length > 0 && password.length > 0) {
+	      this.refs.username.value = '';
+	      this.refs.password.value = '';
+	      this.props.onNewLogin(username, password);
+	    }
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'form',
+	      { onFormSubmit: this.onFormSubmit },
+	      React.createElement('input', { type: 'text', ref: 'username' }),
+	      React.createElement('input', { type: 'text', ref: 'password' }),
+	      React.createElement(
+	        'button',
+	        { className: 'button' },
+	        'Login'
+	      )
+	    );
+	  }
+	});
+
 	var Login = React.createClass({
 	  displayName: 'Login',
 
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      username: '',
+	      password: ''
+	    };
+	  },
+	  getInitialState: function getInitialState() {
+	    return {
+	      username: this.props.username,
+	      password: this.props.password
+	    };
+	  },
+	  handleNewLogin: function handleNewLogin(username, password) {
+	    this.setState({
+	      username: username,
+	      password: password
+	    });
+	  },
+
 	  render: function render() {
+	    var username = this.state.username;
+	    var password = this.state.password;
 	    return React.createElement(
 	      'div',
 	      null,
@@ -25600,7 +25650,8 @@
 	        'h2',
 	        null,
 	        'Login Page'
-	      )
+	      ),
+	      React.createElement(LoginForm, { onNewLogin: this.handleNewLogin })
 	    );
 	  }
 	});
