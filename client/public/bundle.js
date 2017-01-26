@@ -25616,14 +25616,31 @@
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      'form',
-	      { onFormSubmit: this.onFormSubmit },
-	      React.createElement('input', { type: 'text', ref: 'username' }),
-	      React.createElement('input', { type: 'text', ref: 'password' }),
+	      'div',
+	      { className: 'row' },
 	      React.createElement(
-	        'button',
-	        { className: 'button' },
-	        'Login'
+	        'form',
+	        { onFormSubmit: this.onFormSubmit },
+	        React.createElement(
+	          'div',
+	          { className: 'medium-6 columns center' },
+	          React.createElement('input', { type: 'text', ref: 'username', placeholder: 'Enter username here' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'medium-6 columns center' },
+	          React.createElement('input', { type: 'text', ref: 'password', placeholder: 'Enter password here' }),
+	          React.createElement(
+	            'p',
+	            { className: 'help-text', id: 'passwordHelpText' },
+	            'Your password nust be at least x characters'
+	          )
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'button small-centered text-center columns' },
+	          'Login'
+	        )
 	      )
 	    );
 	  }

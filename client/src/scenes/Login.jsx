@@ -17,11 +17,18 @@
    },
    render: function(){
      return (
+       <div className="row">
        <form onFormSubmit={this.onFormSubmit}>
-         <input type="text" ref="username"/>
-         <input type="text" ref="password"/>
-         <button className="button">Login</button>
+         <div className="medium-6 columns center">
+         <input type="text" ref="username" placeholder="Enter username here"/>
+         </div>
+         <div className="medium-6 columns center">
+         <input type="text" ref="password" placeholder="Enter password here"/>
+         <p className="help-text" id="passwordHelpText">Your password nust be at least x characters</p>
+         </div>
+         <button className="button small-centered text-center columns">Login</button>
        </form>
+     </div>
      )
    }
  })
