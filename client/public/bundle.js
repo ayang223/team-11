@@ -107,7 +107,8 @@
 	var Login = __webpack_require__(231);
 	var Account = __webpack_require__(232);
 	var Import = __webpack_require__(233);
-	__webpack_require__(234);
+	var Dashboard = __webpack_require__(234);
+	__webpack_require__(235);
 	$(document).foundation();
 
 	ReactDOM.render(React.createElement(
@@ -119,6 +120,7 @@
 	    React.createElement(Route, { path: '/login', component: Login }),
 	    React.createElement(Route, { path: '/account', component: Account }),
 	    React.createElement(Route, { path: '/import', component: Import }),
+	    React.createElement(Route, { path: '/dashboard', component: Dashboard }),
 	    React.createElement(IndexRoute, { component: Login })
 	  )
 	), document.getElementById('app'));
@@ -25563,6 +25565,15 @@
 	              { to: '/import', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
 	              'Import'
 	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/dashboard', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Dashboard'
+	            )
 	          )
 	        )
 	      ),
@@ -25761,13 +25772,35 @@
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var Dashboard = React.createClass({
+	  displayName: 'Dashboard',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'Dashboard Page'
+	    );
+	  }
+	});
+
+	module.exports = Dashboard;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(235);
+	var content = __webpack_require__(236);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(237)(content, {});
+	var update = __webpack_require__(238)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25784,10 +25817,10 @@
 	}
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(236)();
+	exports = module.exports = __webpack_require__(237)();
 	// imports
 
 
@@ -25798,7 +25831,7 @@
 
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports) {
 
 	/*
@@ -25854,7 +25887,7 @@
 
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

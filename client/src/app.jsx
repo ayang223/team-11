@@ -5,6 +5,7 @@ var Main = require('Main');
 var Login = require('Login');
 var Account = require('Account');
 var Import = require('Import');
+var Dashboard = require('Dashboard');
 require('style!css!foundation-sites/dist/foundation.min.css')
 $(document).foundation();
 
@@ -14,6 +15,7 @@ ReactDOM.render(
       <Route path="/login" component={Login}/>
       <Route path="/account" component={Account}/>
       <Route path="/import" component={Import}/>
+      <Route path="/dashboard" component={Dashboard}/>
       <IndexRoute component={Login}/>
     </Route>
   </Router>,
