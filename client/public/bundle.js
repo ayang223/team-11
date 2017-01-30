@@ -25604,7 +25604,7 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	/**
 	 * Created by nathan on 21/01/17.
@@ -25612,7 +25612,7 @@
 	var React = __webpack_require__(8);
 
 	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
+	  displayName: "LoginForm",
 
 	  onFormSubmit: function onFormSubmit(e) {
 	    e.preventDefault();
@@ -25620,37 +25620,35 @@
 	    var username = this.refs.username.value;
 	    var password = this.refs.password.value;
 	    if (username.length > 0 && password.length > 0) {
-	      this.refs.username.value = '';
-	      this.refs.password.value = '';
 	      this.props.onNewLogin(username, password);
 	    }
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      'div',
-	      { className: 'row' },
+	      "div",
+	      { className: "row" },
 	      React.createElement(
-	        'form',
+	        "form",
 	        { onFormSubmit: this.onFormSubmit },
 	        React.createElement(
-	          'div',
-	          { className: 'medium-6 columns center' },
-	          React.createElement('input', { type: 'text', ref: 'username', placeholder: 'Enter username here' })
+	          "div",
+	          { className: "medium-6 columns center" },
+	          React.createElement("input", { type: "text", ref: "username", placeholder: "Enter username here" })
 	        ),
 	        React.createElement(
-	          'div',
-	          { className: 'medium-6 columns center' },
-	          React.createElement('input', { type: 'text', ref: 'password', placeholder: 'Enter password here' }),
+	          "div",
+	          { className: "medium-6 columns center" },
+	          React.createElement("input", { type: "text", ref: "password", placeholder: "Enter password here" }),
 	          React.createElement(
-	            'p',
-	            { className: 'help-text', id: 'passwordHelpText' },
-	            'Your password nust be at least x characters'
+	            "p",
+	            { className: "help-text", id: "passwordHelpText" },
+	            "Your password must be at least x characters"
 	          )
 	        ),
 	        React.createElement(
-	          'button',
-	          { className: 'button small-centered text-center columns' },
-	          'Login'
+	          "button",
+	          { className: "button small-centered text-center columns" },
+	          "Login"
 	        )
 	      )
 	    );
@@ -25658,7 +25656,7 @@
 	});
 
 	var Login = React.createClass({
-	  displayName: 'Login',
+	  displayName: "Login",
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -25683,12 +25681,12 @@
 	    var username = this.state.username;
 	    var password = this.state.password;
 	    return React.createElement(
-	      'div',
+	      "div",
 	      null,
 	      React.createElement(
-	        'h2',
+	        "h2",
 	        null,
-	        'Login Page'
+	        "Login Page"
 	      ),
 	      React.createElement(LoginForm, { onNewLogin: this.handleNewLogin })
 	    );
