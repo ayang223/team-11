@@ -108,7 +108,7 @@
 	var Account = __webpack_require__(232);
 	var Import = __webpack_require__(233);
 	var Dashboard = __webpack_require__(234);
-	__webpack_require__(235);
+	__webpack_require__(236);
 	$(document).foundation();
 
 	ReactDOM.render(React.createElement(
@@ -25773,6 +25773,7 @@
 	'use strict';
 
 	var React = __webpack_require__(8);
+	var FilterByYear = __webpack_require__(235);
 
 	var Dashboard = React.createClass({
 	  displayName: 'Dashboard',
@@ -25781,7 +25782,12 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      'Dashboard Page'
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Dashboard Page'
+	      ),
+	      React.createElement(FilterByYear, null)
 	    );
 	  }
 	});
@@ -25792,13 +25798,65 @@
 /* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var FilterByYear = React.createClass({
+	  displayName: 'FilterByYear',
+
+	  getInitialState: function getInitialState() {
+	    return { selectedValue: '2017' };
+	  },
+	  handleChange: function handleChange(e) {
+	    this.setState({ selectValue: e.target.value });
+	  },
+	  render: function render() {
+	    var message = 'FilterByYear: ' + this.state.selectValue;
+	    return React.createElement(
+	      'div',
+	      { className: 'dropdown menu' },
+	      React.createElement(
+	        'select',
+	        { value: this.state.selectValue, onChange: this.handleChange },
+	        React.createElement(
+	          'option',
+	          { value: '2017' },
+	          '2017'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: '2016' },
+	          '2016'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: '2015' },
+	          '2015'
+	        )
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        message
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FilterByYear;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(236);
+	var content = __webpack_require__(237);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(238)(content, {});
+	var update = __webpack_require__(239)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25815,10 +25873,10 @@
 	}
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(237)();
+	exports = module.exports = __webpack_require__(238)();
 	// imports
 
 
@@ -25829,7 +25887,7 @@
 
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports) {
 
 	/*
@@ -25885,7 +25943,7 @@
 
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

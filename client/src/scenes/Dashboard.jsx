@@ -1,9 +1,13 @@
 var React = require('react');
+var FilterByYear = require('FilterByYear');
 
 var Dashboard = React.createClass({
   render: function(){
     return(
-      <div>Dashboard Page</div>
+      <div>
+        <h2>Dashboard Page</h2>
+        <FilterByYear />
+      </div>
     )
   }
 })
