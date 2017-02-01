@@ -10,6 +10,8 @@
      var username = this.refs.username.value;
      var password = this.refs.password.value;
      if(username.length >0 && password.length > 0){
+       this.refs.username.value = '';
+       this.refs.password.value = '';
        this.props.onNewLogin(username,password);
      }
    },
@@ -17,11 +19,13 @@
      return (
        <div className="row">
        <form onFormSubmit={this.onFormSubmit}>
+       <p> Username: </p>
          <div className="medium-6 columns center">
          <input type="text" ref="username" placeholder="Enter username here"/>
-         </div>
+         </div><br/><br/><br/>
          <div className="medium-6 columns center">
-         <input type="text" ref="password" placeholder="Enter password here"/>
+          <p> Password: </p>
+         <input type="password" ref="password" placeholder="Enter password here"/>
          <p className="help-text" id="passwordHelpText">Your password must be at least x characters</p>
          </div>
          <button className="button small-centered text-center columns">Login</button>

@@ -25604,7 +25604,7 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	/**
 	 * Created by nathan on 21/01/17.
@@ -25612,7 +25612,7 @@
 	var React = __webpack_require__(8);
 
 	var LoginForm = React.createClass({
-	  displayName: "LoginForm",
+	  displayName: 'LoginForm',
 
 	  onFormSubmit: function onFormSubmit(e) {
 	    e.preventDefault();
@@ -25620,35 +25620,50 @@
 	    var username = this.refs.username.value;
 	    var password = this.refs.password.value;
 	    if (username.length > 0 && password.length > 0) {
+	      this.refs.username.value = '';
+	      this.refs.password.value = '';
 	      this.props.onNewLogin(username, password);
 	    }
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "row" },
+	      'div',
+	      { className: 'row' },
 	      React.createElement(
-	        "form",
+	        'form',
 	        { onFormSubmit: this.onFormSubmit },
 	        React.createElement(
-	          "div",
-	          { className: "medium-6 columns center" },
-	          React.createElement("input", { type: "text", ref: "username", placeholder: "Enter username here" })
+	          'p',
+	          null,
+	          ' Username: '
 	        ),
 	        React.createElement(
-	          "div",
-	          { className: "medium-6 columns center" },
-	          React.createElement("input", { type: "text", ref: "password", placeholder: "Enter password here" }),
+	          'div',
+	          { className: 'medium-6 columns center' },
+	          React.createElement('input', { type: 'text', ref: 'username', placeholder: 'Enter username here' })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement('br', null),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'div',
+	          { className: 'medium-6 columns center' },
 	          React.createElement(
-	            "p",
-	            { className: "help-text", id: "passwordHelpText" },
-	            "Your password must be at least x characters"
+	            'p',
+	            null,
+	            ' Password: '
+	          ),
+	          React.createElement('input', { type: 'password', ref: 'password', placeholder: 'Enter password here' }),
+	          React.createElement(
+	            'p',
+	            { className: 'help-text', id: 'passwordHelpText' },
+	            'Your password must be at least x characters'
 	          )
 	        ),
 	        React.createElement(
-	          "button",
-	          { className: "button small-centered text-center columns" },
-	          "Login"
+	          'button',
+	          { className: 'button small-centered text-center columns' },
+	          'Login'
 	        )
 	      )
 	    );
@@ -25656,7 +25671,7 @@
 	});
 
 	var Login = React.createClass({
-	  displayName: "Login",
+	  displayName: 'Login',
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -25681,12 +25696,12 @@
 	    var username = this.state.username;
 	    var password = this.state.password;
 	    return React.createElement(
-	      "div",
+	      'div',
 	      null,
 	      React.createElement(
-	        "h2",
+	        'h2',
 	        null,
-	        "Login Page"
+	        'Login Page'
 	      ),
 	      React.createElement(LoginForm, { onNewLogin: this.handleNewLogin })
 	    );
@@ -25703,10 +25718,102 @@
 
 	var React = __webpack_require__(8);
 
+	var AccountForm = React.createClass({
+	  displayName: 'AccountForm',
+
+	  onFormSubmit: function onFormSubmit(e) {
+	    e.preventDefault();
+
+	    var oldpassword = this.refs.oldpassword.value;
+	    var newpassword = this.refs.newpassword.value;
+	    var verifynewpassword = this.refs.verifynewpassword.value;
+
+	    if (oldpassword.length > 0 && newpassword.length > 0 && verifynewpassword.length > 0) {
+	      this.refs.oldpassword.value = '';
+	      this.refs.newpassword.value = '';
+	      this.refs.verifynewpassword.value = '';
+	      this.props.onNewAccount(oldpassword, newpassword, verifynewpassword);
+	    }
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'x' },
+	      React.createElement(
+	        'form',
+	        { onFormAccount: this.onFormAccount },
+	        React.createElement(
+	          'div',
+	          { className: 'pass' },
+	          React.createElement(
+	            'p',
+	            null,
+	            ' Old password: '
+	          ),
+	          React.createElement('input', { type: 'password', ref: 'oldpassword', placeholder: 'Please enter your old password. ' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'pass' },
+	          React.createElement(
+	            'p',
+	            null,
+	            ' New password: '
+	          ),
+	          React.createElement('input', { type: 'password', ref: 'newpassword', placeholder: 'Please enter your new password' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'pass' },
+	          React.createElement(
+	            'p',
+	            null,
+	            ' Verify new password: '
+	          ),
+	          React.createElement('input', { type: 'password', ref: 'verifynewpassword', placeholder: 'Please re-enter your new password' })
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'button small-centered text-center columns', type: 'submit' },
+	          'Create account'
+	        )
+	      )
+	    );
+	  }
+	});
+
 	var Account = React.createClass({
 	  displayName: 'Account',
 
+
+	  getDefaultProps: function getDefaultProps() {
+	    return {
+	      oldpassword: '',
+	      newpassword: '',
+	      verifynewpassword: ''
+	    };
+	  },
+
+	  getInitialState: function getInitialState() {
+	    return {
+	      oldpassword: this.oldpassword,
+	      newpassword: this.newpassword,
+	      verifynewpassword: this.verifynewpassword
+	    };
+	  },
+
+	  handleNewAccount: function handleNewAccount(oldpassword, newpassword, verifynewpassword) {
+	    this.setState({ oldpassword: oldpassword,
+	      newpassword: newpassword,
+	      verifynewpassword: verifynewpassword
+	    });
+	  },
+
 	  render: function render() {
+	    var oldpassword = this.state.oldpassword;
+	    var newpassword = this.state.newpassword;
+	    var verifynewpassword = this.state.verifynewpassword;
 	    return React.createElement(
 	      'div',
 	      null,
@@ -25714,7 +25821,8 @@
 	        'h2',
 	        null,
 	        'Account Page'
-	      )
+	      ),
+	      React.createElement(AccountForm, { onNewAccount: this.handleNewAccount })
 	    );
 	  }
 	});
