@@ -107,7 +107,8 @@
 	var Login = __webpack_require__(231);
 	var Account = __webpack_require__(232);
 	var Import = __webpack_require__(233);
-	__webpack_require__(234);
+	var Dashboard = __webpack_require__(234);
+	__webpack_require__(236);
 	$(document).foundation();
 
 	ReactDOM.render(React.createElement(
@@ -119,6 +120,7 @@
 	    React.createElement(Route, { path: '/login', component: Login }),
 	    React.createElement(Route, { path: '/account', component: Account }),
 	    React.createElement(Route, { path: '/import', component: Import }),
+	    React.createElement(Route, { path: '/dashboard', component: Dashboard }),
 	    React.createElement(IndexRoute, { component: Login })
 	  )
 	), document.getElementById('app'));
@@ -25563,6 +25565,15 @@
 	              { to: '/import', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
 	              'Import'
 	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/dashboard', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Dashboard'
+	            )
 	          )
 	        )
 	      ),
@@ -25593,7 +25604,7 @@
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	/**
 	 * Created by nathan on 21/01/17.
@@ -25601,7 +25612,7 @@
 	var React = __webpack_require__(8);
 
 	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
+	  displayName: "LoginForm",
 
 	  onFormSubmit: function onFormSubmit(e) {
 	    e.preventDefault();
@@ -25609,37 +25620,35 @@
 	    var username = this.refs.username.value;
 	    var password = this.refs.password.value;
 	    if (username.length > 0 && password.length > 0) {
-	      this.refs.username.value = '';
-	      this.refs.password.value = '';
 	      this.props.onNewLogin(username, password);
 	    }
 	  },
 	  render: function render() {
 	    return React.createElement(
-	      'div',
-	      { className: 'row' },
+	      "div",
+	      { className: "row" },
 	      React.createElement(
-	        'form',
+	        "form",
 	        { onFormSubmit: this.onFormSubmit },
 	        React.createElement(
-	          'div',
-	          { className: 'medium-6 columns center' },
-	          React.createElement('input', { type: 'text', ref: 'username', placeholder: 'Enter username here' })
+	          "div",
+	          { className: "medium-6 columns center" },
+	          React.createElement("input", { type: "text", ref: "username", placeholder: "Enter username here" })
 	        ),
 	        React.createElement(
-	          'div',
-	          { className: 'medium-6 columns center' },
-	          React.createElement('input', { type: 'text', ref: 'password', placeholder: 'Enter password here' }),
+	          "div",
+	          { className: "medium-6 columns center" },
+	          React.createElement("input", { type: "text", ref: "password", placeholder: "Enter password here" }),
 	          React.createElement(
-	            'p',
-	            { className: 'help-text', id: 'passwordHelpText' },
-	            'Your password nust be at least x characters'
+	            "p",
+	            { className: "help-text", id: "passwordHelpText" },
+	            "Your password must be at least x characters"
 	          )
 	        ),
 	        React.createElement(
-	          'button',
-	          { className: 'button small-centered text-center columns' },
-	          'Login'
+	          "button",
+	          { className: "button small-centered text-center columns" },
+	          "Login"
 	        )
 	      )
 	    );
@@ -25647,7 +25656,7 @@
 	});
 
 	var Login = React.createClass({
-	  displayName: 'Login',
+	  displayName: "Login",
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
@@ -25672,12 +25681,12 @@
 	    var username = this.state.username;
 	    var password = this.state.password;
 	    return React.createElement(
-	      'div',
+	      "div",
 	      null,
 	      React.createElement(
-	        'h2',
+	        "h2",
 	        null,
-	        'Login Page'
+	        "Login Page"
 	      ),
 	      React.createElement(LoginForm, { onNewLogin: this.handleNewLogin })
 	    );
@@ -25761,13 +25770,93 @@
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var React = __webpack_require__(8);
+	var FilterByYear = __webpack_require__(235);
+
+	var Dashboard = React.createClass({
+	  displayName: 'Dashboard',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Dashboard Page'
+	      ),
+	      React.createElement(FilterByYear, null)
+	    );
+	  }
+	});
+
+	module.exports = Dashboard;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var FilterByYear = React.createClass({
+	  displayName: 'FilterByYear',
+
+	  getInitialState: function getInitialState() {
+	    return { selectedValue: '2017' };
+	  },
+	  handleChange: function handleChange(e) {
+	    this.setState({ selectValue: e.target.value });
+	  },
+	  render: function render() {
+	    var message = 'FilterByYear: ' + this.state.selectValue;
+	    return React.createElement(
+	      'div',
+	      { className: 'dropdown menu' },
+	      React.createElement(
+	        'select',
+	        { value: this.state.selectValue, onChange: this.handleChange },
+	        React.createElement(
+	          'option',
+	          { value: '2017' },
+	          '2017'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: '2016' },
+	          '2016'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: '2015' },
+	          '2015'
+	        )
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        message
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FilterByYear;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(235);
+	var content = __webpack_require__(237);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(237)(content, {});
+	var update = __webpack_require__(239)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25784,10 +25873,10 @@
 	}
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(236)();
+	exports = module.exports = __webpack_require__(238)();
 	// imports
 
 
@@ -25798,7 +25887,7 @@
 
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports) {
 
 	/*
@@ -25854,7 +25943,7 @@
 
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
