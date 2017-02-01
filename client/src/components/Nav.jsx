@@ -20,6 +20,9 @@
               <li>
                 <Link to="/import" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Import</Link>
               </li>
+              <li>
+                <Link to="/dashboard" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Dashboard</Link>
+              </li>
              </ul>
            </div>
            <div className="top-bar-right">
