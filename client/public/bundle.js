@@ -108,6 +108,7 @@
 	var Account = __webpack_require__(232);
 	var Import = __webpack_require__(233);
 	var Dashboard = __webpack_require__(234);
+	var Test = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"Test\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	__webpack_require__(236);
 	$(document).foundation();
 
@@ -121,6 +122,7 @@
 	    React.createElement(Route, { path: '/account', component: Account }),
 	    React.createElement(Route, { path: '/import', component: Import }),
 	    React.createElement(Route, { path: '/dashboard', component: Dashboard }),
+	    React.createElement(Route, { path: '/test', component: Test }),
 	    React.createElement(IndexRoute, { component: Login })
 	  )
 	), document.getElementById('app'));
@@ -25573,6 +25575,15 @@
 	              Link,
 	              { to: '/dashboard', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
 	              'Dashboard'
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              Link,
+	              { to: '/test', activeClassName: 'active', activeStyle: { fontWeight: 'bold' } },
+	              'Test'
 	            )
 	          )
 	        )

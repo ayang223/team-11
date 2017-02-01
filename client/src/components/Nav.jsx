@@ -23,6 +23,9 @@
               <li>
                 <Link to="/dashboard" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Dashboard</Link>
               </li>
+              <li>
+                <Link to="/test" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Test</Link>
+              </li>
              </ul>
            </div>
            <div className="top-bar-right">
