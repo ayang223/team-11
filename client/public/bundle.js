@@ -108,7 +108,7 @@
 	var Account = __webpack_require__(232);
 	var Import = __webpack_require__(233);
 	var Dashboard = __webpack_require__(234);
-	__webpack_require__(236);
+	__webpack_require__(240);
 	$(document).foundation();
 
 	ReactDOM.render(React.createElement(
@@ -25882,6 +25882,10 @@
 
 	var React = __webpack_require__(8);
 	var FilterByYear = __webpack_require__(235);
+	var FilterByFocusArea = __webpack_require__(236);
+	var FilterByCity = __webpack_require__(237);
+	var FilterByAgency = __webpack_require__(238);
+	var FilterByInvested = __webpack_require__(239);
 
 	var Dashboard = React.createClass({
 	  displayName: 'Dashboard',
@@ -25895,7 +25899,15 @@
 	        null,
 	        'Dashboard Page'
 	      ),
-	      React.createElement(FilterByYear, null)
+	      React.createElement(
+	        'div',
+	        { className: 'top-bar', style: { flexDirection: 'row' } },
+	        React.createElement(FilterByYear, null),
+	        React.createElement(FilterByFocusArea, null),
+	        React.createElement(FilterByCity, null),
+	        React.createElement(FilterByAgency, null),
+	        React.createElement(FilterByInvested, null)
+	      )
 	    );
 	  }
 	});
@@ -25958,13 +25970,236 @@
 /* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var FilterByFocusArea = React.createClass({
+	  displayName: 'FilterByFocusArea',
+
+	  getInitialState: function getInitialState() {
+	    return { selectedValue: 'Other' };
+	  },
+	  handleChange: function handleChange(e) {
+	    this.setState({ selectValue: e.target.value });
+	  },
+	  render: function render() {
+	    var message = 'FilterByFocusArea: ' + this.state.selectValue;
+	    return React.createElement(
+	      'div',
+	      { className: 'dropdown menu' },
+	      React.createElement(
+	        'select',
+	        { value: this.state.selectValue, onChange: this.handleChange },
+	        React.createElement(
+	          'option',
+	          { value: 'All that Kids can Be' },
+	          'All that Kids can Be'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Building Stronger Communities' },
+	          'Building Stronger Communities'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Other' },
+	          'Other'
+	        )
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        message
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FilterByFocusArea;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var FilterByCity = React.createClass({
+	  displayName: 'FilterByCity',
+
+	  getInitialState: function getInitialState() {
+	    return { selectedValue: 'Vancouver' };
+	  },
+	  handleChange: function handleChange(e) {
+	    this.setState({ selectValue: e.target.value });
+	  },
+	  render: function render() {
+	    var message = 'FilterByCity: ' + this.state.selectValue;
+	    return React.createElement(
+	      'div',
+	      { className: 'dropdown menu' },
+	      React.createElement(
+	        'select',
+	        { value: this.state.selectValue, onChange: this.handleChange },
+	        React.createElement(
+	          'option',
+	          { value: 'Vancouver' },
+	          'Vancouver'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Richmond' },
+	          'Richmond'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Burnaby' },
+	          'Burnaby'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Surrey' },
+	          'Surrey'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Delta' },
+	          'Delta'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Langely' },
+	          'Langely'
+	        )
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        message
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FilterByCity;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var FilterByAgency = React.createClass({
+	  displayName: 'FilterByAgency',
+
+	  getInitialState: function getInitialState() {
+	    return { selectedValue: 'SUCCESS' };
+	  },
+	  handleChange: function handleChange(e) {
+	    this.setState({ selectValue: e.target.value });
+	  },
+	  render: function render() {
+	    var message = 'FilterByAgency: ' + this.state.selectValue;
+	    return React.createElement(
+	      'div',
+	      { className: 'dropdown menu' },
+	      React.createElement(
+	        'select',
+	        { value: this.state.selectValue, onChange: this.handleChange },
+	        React.createElement(
+	          'option',
+	          { value: 'YMCA of Greater Vancouver' },
+	          'YMCA of Greater Vancouver'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'SUCCESS' },
+	          'SUCCESS'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: 'Big Brothers of Greater Vancouver' },
+	          'Big Brothers of Greater Vancouver'
+	        )
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        message
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FilterByAgency;
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(8);
+
+	var FilterByInvested = React.createClass({
+	  displayName: 'FilterByInvested',
+
+	  getInitialState: function getInitialState() {
+	    return { selectedValue: '0' };
+	  },
+	  handleChange: function handleChange(e) {
+	    this.setState({ selectValue: e.target.value });
+	  },
+	  render: function render() {
+	    var message = 'FilterByInvested: ' + this.state.selectValue;
+	    return React.createElement(
+	      'ul',
+	      { className: 'dropdown menu' },
+	      React.createElement(
+	        'select',
+	        { value: this.state.selectValue, onChange: this.handleChange },
+	        React.createElement(
+	          'option',
+	          { value: '0' },
+	          '$0'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: '100' },
+	          '$100'
+	        ),
+	        React.createElement(
+	          'option',
+	          { value: '1000' },
+	          '$1000'
+	        )
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        message
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FilterByInvested;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(237);
+	var content = __webpack_require__(241);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(239)(content, {});
+	var update = __webpack_require__(243)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25981,10 +26216,10 @@
 	}
 
 /***/ },
-/* 237 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(238)();
+	exports = module.exports = __webpack_require__(242)();
 	// imports
 
 
@@ -25995,7 +26230,7 @@
 
 
 /***/ },
-/* 238 */
+/* 242 */
 /***/ function(module, exports) {
 
 	/*
@@ -26051,7 +26286,7 @@
 
 
 /***/ },
-/* 239 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
