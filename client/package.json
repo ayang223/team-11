@@ -5,6 +5,7 @@
   "dependencies": {
     "express": "^4.13.4",
     "react": "^0.14.7",
+    "react-ajax": "^0.1.1",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.0"
   },

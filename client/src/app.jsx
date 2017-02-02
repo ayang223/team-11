@@ -6,7 +6,7 @@ var Login = require('Login');
 var Account = require('Account');
 var Import = require('Import');
 var Dashboard = require('Dashboard');
-var Test = require('Test');
+var Test = require('src/scenes/Test.jsx');
 require('style!css!foundation-sites/dist/foundation.min.css')
 $(document).foundation();
 
