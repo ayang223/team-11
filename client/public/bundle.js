@@ -25972,15 +25972,11 @@
 	'use strict';
 
 	var React = __webpack_require__(8);
-	//var Ajax = require('react-ajax');
 	var Servlet = __webpack_require__(237);
 
 	var Test = React.createClass({
 	  displayName: 'Test',
 
-	  // getServlet:function(){
-	  // 	<Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"/>
-	  // },
 
 	  render: function render() {
 	    return React.createElement(
@@ -26002,7 +25998,7 @@
 /* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+	'use strict';
 
 	var React = __webpack_require__(8);
 	var Ajax = __webpack_require__(238);
@@ -26011,16 +26007,16 @@
 		displayName: 'Servlet',
 
 		getServlet: function getServlet() {
-			// <Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"
-			// method="GET"
-			// onResponse={this.responseHandler}/>
-			$.ajax({
-				url: 'http://localhost:8080/BackendServer/DatabaseServlet',
-				type: 'GET',
-				success: function success(data) {
-					this.setState({ data: data });
-				}
-			});
+			React.createElement(Ajax, { url: 'http://localhost:8080/BackendServer/DatabaseServlet',
+				method: 'GET',
+				onResponse: this.responseHandler });
+			// $.ajax({
+			// 	url: 'http://localhost:8080/BackendServer/DatabaseServlet',
+			// 	type:'GET',
+			// 	success: function(data){
+			// 		this.setState({data:data});
+			// 	}
+			// });
 		},
 
 		render: function render() {
@@ -26038,7 +26034,6 @@
 	});
 
 	module.exports = Servlet;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 /* 238 */
