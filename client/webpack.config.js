@@ -44,5 +44,8 @@ externals: {
         exclude: /(node_modules|bower_components)/
       }
     ]
+  },
+  node: {
+    fs:'empty'
   }
 };
