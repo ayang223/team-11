@@ -25998,7 +25998,7 @@
 /* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	var React = __webpack_require__(8);
 	var Ajax = __webpack_require__(238);
@@ -26007,16 +26007,16 @@
 		displayName: 'Servlet',
 
 		getServlet: function getServlet() {
-			React.createElement(Ajax, { url: 'http://localhost:8080/BackendServer/DatabaseServlet',
-				method: 'GET',
-				onResponse: this.responseHandler });
-			// $.ajax({
-			// 	url: 'http://localhost:8080/BackendServer/DatabaseServlet',
-			// 	type:'GET',
-			// 	success: function(data){
-			// 		this.setState({data:data});
-			// 	}
-			// });
+			// <Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"
+			// method="GET"
+			// onResponse={this.responseHandler}/>
+			$.ajax({
+				url: 'http://localhost:8080/BackendServer/DatabaseServlet',
+				type: 'GET',
+				success: function success(data) {
+					this.setState({ data: data });
+				}
+			});
 		},
 
 		render: function render() {
@@ -26034,6 +26034,7 @@
 	});
 
 	module.exports = Servlet;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 /* 238 */
