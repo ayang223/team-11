@@ -3,8 +3,13 @@ Andar information database. Preexisting tables will not be overwritten and
 will result in an error. Please use the corresponding United_Way_Deletion.sql
 file to clear any database*/
 
-CREATE DATABASE United_Way_Andar_DB;
+CREATE DATABASE IF NOT EXISTS United_Way_Andar_DB;
 
+<<<<<<< HEAD
+USE United_Way_Andar_DB;
+
+=======
+>>>>>>> e559ceb6056c85d80edea56c28de5d31532cdd9a
 CREATE TABLE Agencies (
 	id integer NOT NULL,
 	name varchar(128) NOT NULL,
@@ -27,7 +32,11 @@ CREATE TABLE AndarDataOutput (
 	focus varchar (32) NOT NULL,
 	outcome varchar (64) NOT NULL,
 	funding varchar (64) NOT NULL,
+<<<<<<< HEAD
+	agency_andar Integer NOT NULL,
+=======
 	agency_andar Integer,
+>>>>>>> e559ceb6056c85d80edea56c28de5d31532cdd9a
 	program_andar Integer NOT NULL,
 	program_name varchar(512) NOT NULL,
 	yearly_allocation Integer NOT NULL,
@@ -113,7 +122,13 @@ CREATE TABLE AndarDataOutput (
 	out_volunteers integer,
 	out_locations integer,
 
+<<<<<<< HEAD
+	PRIMARY KEY(program_andar),
+
+	FOREIGN KEY (agency_andar) REFERENCES Agencies(id)
+=======
 	PRIMARY KEY(program_andar)
+>>>>>>> e559ceb6056c85d80edea56c28de5d31532cdd9a
 );
 
 /* Attribute AdminPrivileges identifies user
@@ -126,9 +141,17 @@ CREATE TABLE Users (
 	first_name varchar(32),
 	last_name varchar(32),
 	admin_privileges boolean NOT NULL,
+<<<<<<< HEAD
+	PRIMARY KEY (id)
+=======
 	PRIMARY KEY (id)Users
+>>>>>>> e559ceb6056c85d80edea56c28de5d31532cdd9a
 );
 
 /* Initialization of main administer account*/
 INSERT INTO Users
+<<<<<<< HEAD
+VALUES (0, 'Main_Admin', 'main', NULL, NULL, TRUE);
+=======
 VALUES (0,  "Main_Admin", "main", NULL, NULL, TRUE);
+>>>>>>> e559ceb6056c85d80edea56c28de5d31532cdd9a
