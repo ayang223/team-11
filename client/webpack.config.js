@@ -31,7 +31,7 @@ externals: {
       Dashboard: 'src/scenes/Dashboard.jsx',
       FilterByYear: 'src/components/FilterByYear.jsx'
     },
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx',]
   },
   module: {
     loaders: [

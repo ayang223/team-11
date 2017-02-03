@@ -25858,6 +25858,17 @@
 
 	        e.preventDefault();
 	    },
+
+	    convertJSON: function convertJSON(e) {
+	        var file = document.getElementById('CSVUpload').files[0];
+	        console.log(file);
+	        var reader = new FileReader();
+	        reader.onload = function () {
+	            document.getElementById('out').innerHTML = reader.result;
+	        };
+	        // start reading the file. When it is done, calls the onload event defined above.
+	        reader.readAsBinaryString(file);
+	    },
 	    render: function render() {
 	        return React.createElement(
 	            'div',
@@ -25866,8 +25877,9 @@
 	                'form',
 	                { ref: 'uploadForm', className: 'uploader', encType: 'multipart/form-data' },
 	                React.createElement('input', { ref: 'file', id: 'CSVUpload', type: 'file', name: 'file', className: 'upload-file' }),
-	                React.createElement('input', { type: 'button', ref: 'button', value: 'Upload', onClick: this.uploadFile })
-	            )
+	                React.createElement('input', { type: 'button', ref: 'button', value: 'Upload', onClick: this.convertJSON })
+	            ),
+	            React.createElement('div', { id: 'out' })
 	        );
 	    }
 	});
