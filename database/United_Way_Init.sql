@@ -3,31 +3,34 @@ Andar information database. Preexisting tables will not be overwritten and
 will result in an error. Please use the corresponding United_Way_Deletion.sql
 file to clear any database*/
 
-CREATE DATABASE United_Way_Andar_DB;
+CREATE DATABASE IF NOT EXISTS United_Way_Andar_DB;
 
-CREATE TABLE Agencies {
+USE United_Way_Andar_DB;
+
+CREATE TABLE Agencies (
 	id integer NOT NULL,
 	name varchar(128) NOT NULL,
 	description varchar(512) NOT NULL,
 	city varchar(128) NOT NULL,
 	longitude decimal(10,6) NOT NULL,
 	latitude decimal(10,6) NOT NULL,
+	
 	PRIMARY KEY (id)
-};
+);
 
 /*file_name is the unique name given by the person adding the data*/
 /* tp: Target population
    pe: Program event
    mu: Municipality
    de: Donor Engagement */
-CREATE TABLE AndarDataOutput {
+CREATE TABLE AndarDataOutput (
 	file_name varchar(32) NOT NULL UNIQUE,
 	area varchar(32) NOT NULL,
 	funds varchar(16) NOT NULL,
 	focus varchar (32) NOT NULL,
 	outcome varchar (64) NOT NULL,
 	funding varchar (64) NOT NULL,
-	agency_andar Integer FOREIGN KEY References id from Agencies NOT NULL,
+	agency_andar Integer NOT NULL,
 	program_andar Integer NOT NULL,
 	program_name varchar(512) NOT NULL,
 	yearly_allocation Integer NOT NULL,
@@ -54,7 +57,7 @@ CREATE TABLE AndarDataOutput {
 	pe_information boolean,
 	pe_intergenerational boolean,
 	pe_life_skills boolean,
-	pe_mental_wellness: boolean,
+	pe_mental_wellness boolean,
 	pe_physical_activity boolean,
 	pe_physical_wellness boolean,
 	pe_policy boolean,
@@ -113,22 +116,26 @@ CREATE TABLE AndarDataOutput {
 	out_volunteers integer,
 	out_locations integer,
 
-	PRIMARY KEY(program_andar)
-};
+	PRIMARY KEY(program_andar),
+
+	FOREIGN KEY (agency_andar) REFERENCES Agencies(id)
+);
 
 /* Attribute AdminPrivileges identifies user
 	False: Basic user
 	True: Admin user*/
-CREATE TABLE Users {
+CREATE TABLE Users (
 	id integer NOT NULL,
 	username varchar(32) NOT NULL,
 	password varchar(32) NOT NULL,
 	first_name varchar(32),
 	last_name varchar(32),
 	admin_privileges boolean NOT NULL,
+	
 	PRIMARY KEY (id)
-};
+);
 
 /* Initialization of main administer account*/
 INSERT INTO Users
-VALUES (0,  Main_Admin, main, NULL, NULL, TRUE);
+VALUES (0, 'Main_Admin', 'main', NULL, NULL, TRUE);
+

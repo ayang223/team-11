@@ -35,7 +35,7 @@ externals: {
       FilterByAgency: 'src/components/FilterByAgency.jsx',
       FilterByInvested: 'src/components/FilterByInvested.jsx'
     },
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx',]
   },
   module: {
     loaders: [
@@ -48,5 +48,8 @@ externals: {
         exclude: /(node_modules|bower_components)/
       }
     ]
+  },
+  node: {
+    fs:'empty'
   }
 };
