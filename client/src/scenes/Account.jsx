@@ -18,22 +18,30 @@ var AccountForm = React.createClass({
 
      render: function(){
      return (
-       <div className="x">
+       <div className="row">
        <form onFormAccount={this.onFormAccount}>
-         <div className="pass">
+         <div className="row">
+         <div className="medium-6 columns">
          <p> Old password: </p>
          <input type="password" ref="oldpassword" placeholder="Please enter your old password. "/>
          </div>
-         <div className="pass">
+         </div>
+         <div className="row">
+         <div className="medium-6 columns">
          <p> New password: </p>
          <input type="password" ref="newpassword" placeholder="Please enter your new password"/>
          </div>
-         <div className="pass">
+         </div>
+         <div className="row">
+         <div className="medium-6 columns">
          <p> Verify new password: </p>
          <input type="password" ref="verifynewpassword" placeholder="Please re-enter your new password"/>
          </div>
-         <button className="button small-centered text-center columns" type="submit">Create account</button>
-       </form>
+         </div>
+         <div className="row">
+         <button className="button small-centered text-center columns" type="submit" style={{width:150, height:40}}>Create account</button>
+         </div>
+     </form>
      </div>
      )
    }

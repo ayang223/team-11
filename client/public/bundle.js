@@ -25644,37 +25644,46 @@
 	        'form',
 	        { onFormSubmit: this.onFormSubmit },
 	        React.createElement(
-	          'p',
-	          null,
-	          ' Username: '
-	        ),
-	        React.createElement(
 	          'div',
-	          { className: 'medium-6 columns center' },
-	          React.createElement('input', { type: 'text', ref: 'username', placeholder: 'Enter username here' })
-	        ),
-	        React.createElement('br', null),
-	        React.createElement('br', null),
-	        React.createElement('br', null),
-	        React.createElement(
-	          'div',
-	          { className: 'medium-6 columns center' },
+	          { className: 'row' },
 	          React.createElement(
-	            'p',
-	            null,
-	            ' Password: '
-	          ),
-	          React.createElement('input', { type: 'password', ref: 'password', placeholder: 'Enter password here' }),
-	          React.createElement(
-	            'p',
-	            { className: 'help-text', id: 'passwordHelpText' },
-	            'Your password must be at least x characters'
+	            'div',
+	            { className: 'medium-6 columns center' },
+	            React.createElement(
+	              'p',
+	              null,
+	              ' Username: '
+	            ),
+	            React.createElement('input', { type: 'text', ref: 'username', placeholder: 'Enter username here' })
 	          )
 	        ),
 	        React.createElement(
-	          'button',
-	          { className: 'button small-centered text-center columns' },
-	          'Login'
+	          'div',
+	          { className: 'row' },
+	          React.createElement(
+	            'div',
+	            { className: 'medium-6 columns center' },
+	            React.createElement(
+	              'p',
+	              null,
+	              ' Password: '
+	            ),
+	            React.createElement('input', { type: 'password', ref: 'password', placeholder: 'Enter password here' }),
+	            React.createElement(
+	              'p',
+	              { className: 'help-text', id: 'passwordHelpText' },
+	              'Your password must be at least x characters'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'row' },
+	          React.createElement(
+	            'button',
+	            { className: 'button small-centered text-center columns', type: 'submit', style: { width: 150, height: 40 } },
+	            'Login'
+	          )
 	        )
 	      )
 	    );
@@ -25750,44 +25759,60 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'x' },
+	      { className: 'row' },
 	      React.createElement(
 	        'form',
 	        { onFormAccount: this.onFormAccount },
 	        React.createElement(
 	          'div',
-	          { className: 'pass' },
+	          { className: 'row' },
 	          React.createElement(
-	            'p',
-	            null,
-	            ' Old password: '
-	          ),
-	          React.createElement('input', { type: 'password', ref: 'oldpassword', placeholder: 'Please enter your old password. ' })
+	            'div',
+	            { className: 'medium-6 columns' },
+	            React.createElement(
+	              'p',
+	              null,
+	              ' Old password: '
+	            ),
+	            React.createElement('input', { type: 'password', ref: 'oldpassword', placeholder: 'Please enter your old password. ' })
+	          )
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'pass' },
+	          { className: 'row' },
 	          React.createElement(
-	            'p',
-	            null,
-	            ' New password: '
-	          ),
-	          React.createElement('input', { type: 'password', ref: 'newpassword', placeholder: 'Please enter your new password' })
+	            'div',
+	            { className: 'medium-6 columns' },
+	            React.createElement(
+	              'p',
+	              null,
+	              ' New password: '
+	            ),
+	            React.createElement('input', { type: 'password', ref: 'newpassword', placeholder: 'Please enter your new password' })
+	          )
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'pass' },
+	          { className: 'row' },
 	          React.createElement(
-	            'p',
-	            null,
-	            ' Verify new password: '
-	          ),
-	          React.createElement('input', { type: 'password', ref: 'verifynewpassword', placeholder: 'Please re-enter your new password' })
+	            'div',
+	            { className: 'medium-6 columns' },
+	            React.createElement(
+	              'p',
+	              null,
+	              ' Verify new password: '
+	            ),
+	            React.createElement('input', { type: 'password', ref: 'verifynewpassword', placeholder: 'Please re-enter your new password' })
+	          )
 	        ),
 	        React.createElement(
-	          'button',
-	          { className: 'button small-centered text-center columns', type: 'submit' },
-	          'Create account'
+	          'div',
+	          { className: 'row' },
+	          React.createElement(
+	            'button',
+	            { className: 'button small-centered text-center columns', type: 'submit', style: { width: 150, height: 40 } },
+	            'Create account'
+	          )
 	        )
 	      )
 	    );
@@ -26834,12 +26859,14 @@
 	      null,
 	      React.createElement(
 	        'h2',
-	        null,
+	        { style: { textAlign: "left" } },
 	        'Dashboard Page'
 	      ),
+	      React.createElement('br', null),
+	      React.createElement('br', null),
 	      React.createElement(
 	        'div',
-	        { className: 'top-bar', style: { flexDirection: 'row' } },
+	        { className: 'row' },
 	        React.createElement(FilterByYear, null),
 	        React.createElement(FilterByFocusArea, null),
 	        React.createElement(FilterByCity, null),
@@ -26874,7 +26901,7 @@
 	    var message = 'FilterByYear: ' + this.state.selectValue;
 	    return React.createElement(
 	      'div',
-	      { className: 'dropdown menu' },
+	      { className: 'medium-2 columns' },
 	      React.createElement(
 	        'select',
 	        { value: this.state.selectValue, onChange: this.handleChange },
@@ -26926,7 +26953,7 @@
 	    var message = 'FilterByFocusArea: ' + this.state.selectValue;
 	    return React.createElement(
 	      'div',
-	      { className: 'dropdown menu' },
+	      { className: 'medium-2 columns' },
 	      React.createElement(
 	        'select',
 	        { value: this.state.selectValue, onChange: this.handleChange },
@@ -26978,7 +27005,7 @@
 	    var message = 'FilterByCity: ' + this.state.selectValue;
 	    return React.createElement(
 	      'div',
-	      { className: 'dropdown menu' },
+	      { className: 'medium-2 columns' },
 	      React.createElement(
 	        'select',
 	        { value: this.state.selectValue, onChange: this.handleChange },
@@ -27045,7 +27072,7 @@
 	    var message = 'FilterByAgency: ' + this.state.selectValue;
 	    return React.createElement(
 	      'div',
-	      { className: 'dropdown menu' },
+	      { className: 'medium-3 columns' },
 	      React.createElement(
 	        'select',
 	        { value: this.state.selectValue, onChange: this.handleChange },
@@ -27097,7 +27124,7 @@
 	    var message = 'FilterByInvested: ' + this.state.selectValue;
 	    return React.createElement(
 	      'ul',
-	      { className: 'dropdown menu' },
+	      { className: 'medium-2 columns' },
 	      React.createElement(
 	        'select',
 	        { value: this.state.selectValue, onChange: this.handleChange },
@@ -27157,10 +27184,10 @@
 			render: function render() {
 					return _react2.default.createElement(
 							'div',
-							null,
+							{ className: 'row' },
 							_react2.default.createElement(
 									'h2',
-									null,
+									{ style: { textAlign: "left" } },
 									'Doughnut Example'
 							),
 							_react2.default.createElement(_reactChartjs.Doughnut, { data: data })

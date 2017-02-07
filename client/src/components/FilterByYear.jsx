@@ -10,7 +10,7 @@ var FilterByYear = React.createClass({
   render:function(){
     var message = 'FilterByYear: ' + this.state.selectValue;
     return(
-      <div className="dropdown menu">
+      <div className="medium-2 columns">
         <select value={this.state.selectValue} onChange={this.handleChange}>
           <option value="2017">2017</option>
           <option value="2016">2016</option>

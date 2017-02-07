@@ -27,8 +27,8 @@ var ChartDollarsCity=React.createClass({
   displayName: 'DoughnutExample',
   render() {
     return (
-      <div>
-        <h2>Doughnut Example</h2>
+      <div className="row">
+        <h2 style={{textAlign:"left"}}>Doughnut Example</h2>
         <Doughnut data={data} />
       </div>
     );
