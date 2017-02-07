@@ -25,7 +25,6 @@ const data = {
 
 var ChartDollarsCity=React.createClass({
   displayName: 'DoughnutExample',
-
   render() {
     return (
       <div>

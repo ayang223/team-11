@@ -8,7 +8,7 @@ CREATE DATABASE IF NOT EXISTS United_Way_Andar_DB;
 USE United_Way_Andar_DB;
 
 CREATE TABLE Agency (
-	id integer NOT NULL,
+	id integer NOT NULL,UsersTargetPopulationProgramSubElement
 	name varchar(128) NOT NULL,
 	postal varchar(8) NOT NULL,
 
