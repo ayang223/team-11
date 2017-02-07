@@ -10,7 +10,7 @@ var FilterByFocusArea = React.createClass({
   render:function(){
     var message = 'FilterByFocusArea: ' + this.state.selectValue;
     return(
-      <div className="dropdown menu">
+      <div className="medium-2 columns">
         <select value={this.state.selectValue} onChange={this.handleChange}>
           <option value="All that Kids can Be">All that Kids can Be</option>
           <option value="Building Stronger Communities">Building Stronger Communities</option>

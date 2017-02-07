@@ -19,16 +19,22 @@
      return (
        <div className="row">
        <form onFormSubmit={this.onFormSubmit}>
-       <p> Username: </p>
+         <div className="row">
          <div className="medium-6 columns center">
+           <p> Username: </p>
          <input type="text" ref="username" placeholder="Enter username here"/>
-         </div><br/><br/><br/>
+         </div>
+         </div>
+         <div className="row">
          <div className="medium-6 columns center">
           <p> Password: </p>
          <input type="password" ref="password" placeholder="Enter password here"/>
          <p className="help-text" id="passwordHelpText">Your password must be at least x characters</p>
          </div>
-         <button className="button small-centered text-center columns">Login</button>
+         </div>
+         <div className="row">
+         <button className="button small-centered text-center columns" type="submit" style={{width:150, height:40}}>Login</button>
+         </div>
        </form>
      </div>
      )

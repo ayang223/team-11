@@ -10,8 +10,9 @@ var Dashboard = React.createClass({
   render: function(){
     return(
       <div>
-        <h2>Dashboard Page</h2>
-        <div className="top-bar" style={{flexDirection: 'row'}}>
+        <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
+        <br/><br/>
+        <div className="row">
           <FilterByYear />
           <FilterByFocusArea />
           <FilterByCity />

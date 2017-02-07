@@ -10,7 +10,7 @@ var FilterByInvested = React.createClass({
   render:function(){
     var message = 'FilterByInvested: ' + this.state.selectValue;
     return(
-      <ul className="dropdown menu">
+      <ul className="medium-2 columns">
         <select value={this.state.selectValue} onChange={this.handleChange}>
           <option value="0">$0</option>
           <option value="100">$100</option>

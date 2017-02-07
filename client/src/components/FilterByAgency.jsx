@@ -10,7 +10,7 @@ var FilterByAgency = React.createClass({
   render:function(){
     var message = 'FilterByAgency: ' + this.state.selectValue;
     return(
-      <div className="dropdown menu">
+      <div className="medium-3 columns">
         <select value={this.state.selectValue} onChange={this.handleChange}>
           <option value="YMCA of Greater Vancouver">YMCA of Greater Vancouver</option>
           <option value="SUCCESS">SUCCESS</option>
