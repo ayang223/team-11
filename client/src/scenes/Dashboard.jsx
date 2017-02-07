@@ -4,6 +4,7 @@ var FilterByFocusArea = require('FilterByFocusArea');
 var FilterByCity = require('FilterByCity');
 var FilterByAgency = require('FilterByAgency');
 var FilterByInvested = require('FilterByInvested');
+var ChartDollarsCity = require('ChartDollarsCity');
 
 var Dashboard = React.createClass({
   render: function(){
@@ -16,6 +17,7 @@ var Dashboard = React.createClass({
           <FilterByCity />
           <FilterByAgency />
           <FilterByInvested />
+          <ChartDollarsCity />
         </div>
       </div>
     )
