@@ -33,7 +33,9 @@ externals: {
       FilterByFocusArea: 'src/components/FilterByFocusArea.jsx',
       FilterByCity: 'src/components/FilterByCity.jsx',
       FilterByAgency: 'src/components/FilterByAgency.jsx',
-      FilterByInvested: 'src/components/FilterByInvested.jsx'
+      FilterByInvested: 'src/components/FilterByInvested.jsx',
+      ChartDollarsCity: 'src/components/ChartDollarsCity.jsx',
+      'chartjs': require.resolve('chart.js')
     },
     extensions: ['', '.js', '.jsx',]
   },
