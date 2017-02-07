@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 // Create our app
 var app = express();
-var port = 3000;
+var port = server.listen(process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
