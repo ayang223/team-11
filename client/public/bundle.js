@@ -27170,17 +27170,16 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var data = {
-			labels: ['Red', 'Green', 'Yellow'],
+			labels: ['Vancouver', 'Surrey', 'Richmond', 'Tri-Cities', 'Langely'],
 			datasets: [{
-					data: [300, 50, 100],
-					backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-					hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+					data: [300, 50, 100, 200, 150],
+					backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33cc33', '#cc3399'],
+					hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33cc33', '#cc3399']
 			}]
 	};
 
 	var ChartDollarsCity = _react2.default.createClass({
 			displayName: 'DoughnutExample',
-
 			render: function render() {
 					return _react2.default.createElement(
 							'div',
