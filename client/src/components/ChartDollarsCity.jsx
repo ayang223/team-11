@@ -4,21 +4,27 @@ import {Doughnut} from 'react-chartjs-2';
 
 const data = {
 	labels: [
-		'Red',
-		'Green',
-		'Yellow'
+		'Vancouver',
+		'Surrey',
+		'Richmond',
+		'Tri-Cities',
+		'Langely'
 	],
 	datasets: [{
-		data: [300, 50, 100],
+		data: [300, 50, 100, 200, 150],
 		backgroundColor: [
 		'#FF6384',
 		'#36A2EB',
-		'#FFCE56'
+		'#FFCE56',
+		'#33cc33',
+		'#cc3399'
 		],
 		hoverBackgroundColor: [
 		'#FF6384',
 		'#36A2EB',
-		'#FFCE56'
+		'#FFCE56',
+		'#33cc33',
+		'#cc3399'
 		]
 	}]
 };
