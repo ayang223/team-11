@@ -25909,6 +25909,7 @@
 	            // Currently the result is in this scope, so if we want to pass this data to
 	            // the backend server, the call will have to be in here
 	            console.log(JSON.stringify(parsed));
+	            document.getElementById('json').innerHTML = JSON.stringify(parsed);
 	        };
 	        // start reading the file. When it is done, calls the onload event defined above.
 	        reader.readAsBinaryString(file);
@@ -25924,7 +25925,18 @@
 	                React.createElement('input', { ref: 'file', id: 'CSVUpload', type: 'file', name: 'file', className: 'upload-file' }),
 	                React.createElement('input', { type: 'button', ref: 'button', value: 'Upload', onClick: this.convertJSON })
 	            ),
-	            React.createElement('div', { id: 'out' })
+	            React.createElement(
+	                'h2',
+	                null,
+	                'Strint format: '
+	            ),
+	            React.createElement('div', { id: 'out' }),
+	            React.createElement(
+	                'h2',
+	                null,
+	                'JSON format: '
+	            ),
+	            React.createElement('div', { id: 'json' })
 	        );
 	    }
 	});
@@ -27168,7 +27180,6 @@
 
 	var ChartDollarsCity = _react2.default.createClass({
 			displayName: 'DoughnutExample',
-
 			render: function render() {
 					return _react2.default.createElement(
 							'div',
