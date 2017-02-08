@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
+/**
+ * This class handles all queries to the database
+ */
 public class DatabaseHandler {
 	// JDBC driver and database name
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -64,4 +67,6 @@ public class DatabaseHandler {
 
 		return userInfo;
 	}
+	
+	//TODO: Add queries for all the other tables and any other queries
 }
