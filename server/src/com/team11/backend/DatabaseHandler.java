@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 
+/**
+ * This class handles all queries to the database
+ */
 public class DatabaseHandler {
 	// JDBC driver and database name
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/united_way_andar_db";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/United_Way_Andar_DB";
 	// Database credentials
 	static final String USER = "root";
 	static final String PASS = "root";
@@ -21,7 +24,7 @@ public class DatabaseHandler {
 	public static String getUsers() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM USERS";
+		String sql = "SELECT * FROM Users";
 		String userInfo = "";
 
 		try {
@@ -64,4 +67,6 @@ public class DatabaseHandler {
 
 		return userInfo;
 	}
+	
+	//TODO: Add queries for all the other tables and any other queries
 }

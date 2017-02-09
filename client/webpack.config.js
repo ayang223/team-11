@@ -29,7 +29,13 @@ externals: {
       Account: 'src/scenes/Account.jsx',
       Import: 'src/scenes/Import.jsx',
       Dashboard: 'src/scenes/Dashboard.jsx',
-      FilterByYear: 'src/components/FilterByYear.jsx'
+      FilterByYear: 'src/components/FilterByYear.jsx',
+      FilterByFocusArea: 'src/components/FilterByFocusArea.jsx',
+      FilterByCity: 'src/components/FilterByCity.jsx',
+      FilterByAgency: 'src/components/FilterByAgency.jsx',
+      FilterByInvested: 'src/components/FilterByInvested.jsx',
+      ChartDollarsCity: 'src/components/ChartDollarsCity.jsx',
+      'chartjs': require.resolve('chart.js')
     },
     extensions: ['', '.js', '.jsx',]
   },

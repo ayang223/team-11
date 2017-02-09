@@ -34,6 +34,7 @@ var Import = React.createClass({
            // Currently the result is in this scope, so if we want to pass this data to
            // the backend server, the call will have to be in here
            console.log(JSON.stringify(parsed));
+           document.getElementById('json').innerHTML = JSON.stringify(parsed);
          };
        // start reading the file. When it is done, calls the onload event defined above.
        reader.readAsBinaryString(file);
@@ -46,8 +47,11 @@ var Import = React.createClass({
                    <input ref="file" id="CSVUpload" type="file" name="file" className="upload-file"/>
                    <input type="button" ref="button" value="Upload" onClick={this.convertJSON} />
                </form>
+               <h2>Strint format: </h2>
                <div id="out">
-
+               </div>
+               <h2>JSON format: </h2>
+               <div id="json">
                </div>
             </div>
         );

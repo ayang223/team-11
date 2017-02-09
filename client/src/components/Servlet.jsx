@@ -1,27 +1,13 @@
-
 var React = require('react');
 var Ajax = require('react-ajax');
 
 var Servlet = React.createClass({
-	getServlet:function(){
-		<Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"
-		method="POST"
-		body={JSON.stringify({“action”: “List User”,
-										“user”: “Admin”,
-										“password: “Password”,	})}
-		onResponse={this.responseHandler}/>
+	getServlet:function(e){
 
+		<Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"/>
 	},
-
-	render:function(){
-		return(
-			 <div>
-			 <p>{this.getServlet}</p>
-
-			 </div>
-			);
+	render : function(){
+		<div></div>
 	}
 
-});
-
-module.exports = Servlet;
+})
