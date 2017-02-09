@@ -1,18 +1,15 @@
+
 var React = require('react');
 var Ajax = require('react-ajax');
 
 var Servlet = React.createClass({
 	getServlet:function(){
-		// <Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"
-		// method="GET"
-		// onResponse={this.responseHandler}/>
-		$.ajax({
-			url: 'http://localhost:8080/BackendServer/DatabaseServlet',
-			type:'GET',
-			success: function(data){
-				this.setState({data:data});
-			}
-		});
+		<Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"
+		method="POST"
+		body={JSON.stringify({“action”: “List User”,
+										“user”: “Admin”,
+										“password: “Password”,	})}
+		onResponse={this.responseHandler}/>
 
 	},
 
@@ -20,6 +17,7 @@ var Servlet = React.createClass({
 		return(
 			 <div>
 			 <p>{this.getServlet}</p>
+
 			 </div>
 			);
 	}

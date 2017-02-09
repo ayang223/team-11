@@ -32,7 +32,7 @@ public class DatabaseServlet extends HttpServlet {
 		response.setContentType("text/html");
 
 		PrintWriter out = response.getWriter();
-
+		
 		out.println("Testing Backend Server...\n");
 		out.println(DatabaseHandler.getUsers());
 	}
