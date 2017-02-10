@@ -7,7 +7,7 @@ var Servlet = React.createClass({
 		<Ajax url="http://localhost:8080/BackendServer/DatabaseServlet"/>
 	},
 	render : function(){
-		<div></div>
+		<div>{this.getServlet}</div>
 	}
 
 })
