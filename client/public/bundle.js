@@ -56883,32 +56883,41 @@
 	var Ajax = __webpack_require__(405);
 
 	var Test = React.createClass({
-		displayName: 'Test',
+			displayName: 'Test',
 
-		getServlet: function getServlet() {
-			$.ajax({
-				url: "http://localhost:8080/BackendServer/DatabaseServlet",
-				dataType: "JSON",
-				success: function success(data) {
-					this.setState({ users: data });
-					console.log("success");
-				}
-			});
-		},
+			getInitialState: function getInitialState() {
+					return {
+							entries: []
+					};
+			},
+			getServlet: function getServlet() {
+					$.ajax({
+							url: "http://localhost:8080/BackendServer/DatabaseServlet",
+							dataType: "JSON",
+							success: function (data) {
+									this.setState({ users: data });
+									console.log("success");
+							}.bind(this),
+							error: function error(_error) {
+									console.log("error");
+							}
+					});
+			},
 
-		render: function render() {
-			return React.createElement(
-				'div',
-				null,
-				React.createElement(
-					'h2',
-					null,
-					'Dashboard Page'
-				),
-				'response: ',
-				this.state.users
-			);
-		}
+			render: function render() {
+					return React.createElement(
+							'div',
+							null,
+							React.createElement(
+									'h2',
+									null,
+									'Dashboard Page'
+							),
+							React.createElement('getServlet', null),
+							'response: ',
+							this.state.users
+					);
+			}
 	});
 
 	module.exports = Test;
