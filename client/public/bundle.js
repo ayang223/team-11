@@ -56891,6 +56891,7 @@
 					};
 			},
 			getServlet: function getServlet() {
+					console.log("inside getServlet");
 					$.ajax({
 							url: "http://localhost:8080/BackendServer/DatabaseServlet",
 							dataType: "JSON",

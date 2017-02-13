@@ -9,6 +9,7 @@ var Test = React.createClass({
       };
     },
 	getServlet:function(){
+		console.log("inside getServlet");
 		$.ajax({
 			url:"http://localhost:8080/BackendServer/DatabaseServlet",
 			dataType:"JSON",
@@ -17,7 +18,7 @@ var Test = React.createClass({
 				console.log("success");
 			}.bind(this),
 			error:function(error){
-				console.log("error")
+				console.log("error");
 			}
 		});
 	},
