@@ -10,17 +10,21 @@ const data = {
 		'Langely'
 	],
 	datasets: [{
-		data: [300, 50, 100],
-		hoverBorderWidth: [20, 20, 20],
+		data: [300, 50, 100, 200, 150],
+		hoverBorderWidth: [20, 20, 20, 20, 20],
 		backgroundColor: [
 		'#FF6384',
 		'#36A2EB',
-		'#FFCE56'
+		'#FFCE56',
+		'#33cc33',
+		'#cc3399'
 		],
 		hoverBackgroundColor: [
 		'#FF6384',
 		'#36A2EB',
-		'#FFCE56'
+		'#FFCE56',
+		'#33cc33',
+		'#cc3399'
 		]
 	}]
 };

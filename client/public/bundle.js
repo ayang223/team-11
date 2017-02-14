@@ -25909,6 +25909,7 @@
 	            // Currently the result is in this scope, so if we want to pass this data to
 	            // the backend server, the call will have to be in here
 	            console.log(JSON.stringify(parsed));
+	            document.getElementById('json').innerHTML = JSON.stringify(parsed);
 	        };
 	        // start reading the file. When it is done, calls the onload event defined above.
 	        reader.readAsBinaryString(file);
@@ -25924,7 +25925,18 @@
 	                React.createElement('input', { ref: 'file', id: 'CSVUpload', type: 'file', name: 'file', className: 'upload-file' }),
 	                React.createElement('input', { type: 'button', ref: 'button', value: 'Upload', onClick: this.convertJSON })
 	            ),
-	            React.createElement('div', { id: 'out' })
+	            React.createElement(
+	                'h2',
+	                null,
+	                'Strint format: '
+	            ),
+	            React.createElement('div', { id: 'out' }),
+	            React.createElement(
+	                'h2',
+	                null,
+	                'JSON format: '
+	            ),
+	            React.createElement('div', { id: 'json' })
 	        );
 	    }
 	});
@@ -27424,10 +27436,10 @@
 	var data = {
 		labels: ['Vancouver', 'Surrey', 'Richmond', 'Tri-Cities', 'Langely'],
 		datasets: [{
-			data: [300, 50, 100],
-			hoverBorderWidth: [20, 20, 20],
-			backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-			hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+			data: [300, 50, 100, 200, 150],
+			hoverBorderWidth: [20, 20, 20, 20, 20],
+			backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33cc33', '#cc3399'],
+			hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#33cc33', '#cc3399']
 		}]
 	};
 
