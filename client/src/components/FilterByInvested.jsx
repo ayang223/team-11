@@ -10,14 +10,18 @@ var FilterByInvested = React.createClass({
   render:function(){
     var message = 'FilterByInvested: ' + this.state.selectValue;
     return(
-      <ul className="medium-2 columns">
+      <div className="medium-3 columns">
         <select value={this.state.selectValue} onChange={this.handleChange}>
-          <option value="0">$0</option>
-          <option value="100">$100</option>
-          <option value="1000">$1000</option>
+          <option value="5000">less than $5000</option>
+          <option value="10000">$5000-$10000</option>
+          <option value="50000">$10000-$50000</option>
+          <option value="100000">$50000-$100000</option>
+          <option value="250000">$100000-$250000</option>
+          <option value="500000">$250000-$500000</option>
+          <option value="1000000">$50000-$1000000</option>
         </select>
         <p>{message}</p>
-      </ul>
+      </div>
     )
   }
 })

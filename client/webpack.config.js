@@ -34,6 +34,9 @@ externals: {
       FilterByCity: 'src/components/FilterByCity.jsx',
       FilterByAgency: 'src/components/FilterByAgency.jsx',
       FilterByInvested: 'src/components/FilterByInvested.jsx',
+      FilterByPopulation: 'src/components/FilterByPopulation.jsx',
+      FilterByElement: 'src/components/FilterByElement.jsx',
+      FilterByEngagement: 'src/components/FilterByEngagement.jsx',
       ChartDollarsCity: 'src/components/ChartDollarsCity.jsx',
       'chartjs': require.resolve('chart.js')
     },
