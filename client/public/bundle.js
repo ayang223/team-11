@@ -25892,7 +25892,6 @@
 	        //         alert(data);
 	        //     }
 	        // });
-
 	        e.preventDefault();
 	    },
 
@@ -25903,12 +25902,9 @@
 	        reader.onload = function () {
 	            document.getElementById('out').innerHTML = reader.result;
 	            var result = reader.result;
-	            console.log(result);
 	            var parsed = Baby.parse(result);
-	            console.log(parsed);
 	            // Currently the result is in this scope, so if we want to pass this data to
 	            // the backend server, the call will have to be in here
-	            console.log(JSON.stringify(parsed));
 	            document.getElementById('json').innerHTML = JSON.stringify(parsed);
 	        };
 	        // start reading the file. When it is done, calls the onload event defined above.
@@ -25928,7 +25924,7 @@
 	            React.createElement(
 	                'h2',
 	                null,
-	                'Strint format: '
+	                'String format: '
 	            ),
 	            React.createElement('div', { id: 'out' }),
 	            React.createElement(
@@ -56421,29 +56417,53 @@
 /* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	var React = __webpack_require__(8);
 	var Servlet = __webpack_require__(405);
+	var Ajax = __webpack_require__(406);
 
 	var Test = React.createClass({
-	  displayName: 'Test',
+			displayName: 'Test',
 
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h2',
-	        null,
-	        'Dashboard Page'
-	      ),
-	      React.createElement(Servlet, null)
-	    );
-	  }
+			getInitialState: function getInitialState() {
+					return {
+							entries: []
+					};
+			},
+			getServlet: function getServlet() {
+					console.log("inside getServlet");
+					$.ajax({
+							url: "http://localhost:8080/BackendServer/DatabaseServlet",
+							dataType: "JSON",
+							success: function (data) {
+									this.setState({ users: data });
+									console.log("success");
+							}.bind(this),
+							error: function error(_error) {
+									console.log("error");
+							}
+					});
+			},
+
+			render: function render() {
+					return React.createElement(
+							'div',
+							null,
+							React.createElement(
+									'h2',
+									null,
+									'Dashboard Page'
+							),
+							React.createElement('getServlet', null),
+							'response: ',
+							this.state.users
+					);
+			}
 	});
 
 	module.exports = Test;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ },
 /* 405 */
@@ -56462,7 +56482,11 @@
 			React.createElement(Ajax, { url: 'http://localhost:8080/BackendServer/DatabaseServlet' });
 		},
 		render: function render() {
-			React.createElement('div', null);
+			React.createElement(
+				'div',
+				null,
+				this.getServlet
+			);
 		}
 
 	});

@@ -8,7 +8,7 @@ CREATE DATABASE IF NOT EXISTS United_Way_Andar_DB;
 USE United_Way_Andar_DB;
 
 CREATE TABLE Agency (
-	id integer NOT NULL,UsersTargetPopulationProgramSubElement
+	id integer NOT NULL,
 	name varchar(128) NOT NULL,
 	postal varchar(8) NOT NULL,
 
@@ -63,7 +63,7 @@ CREATE TABLE TargetPopulation (
 	andar_id integer NOT NULL,
 	population varchar(128) NOT NULL,
 
-	PRIMARY KEY (andar_id),
+	PRIMARY KEY (andar_id, population),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
@@ -73,7 +73,7 @@ CREATE TABLE ProgramElement (
 	element varchar(128) NOT NULL,
 	level integer NOT NULL,
 
-	PRIMARY KEY (andar_id),
+	PRIMARY KEY (andar_id, element),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
@@ -82,7 +82,7 @@ CREATE TABLE ProgramSubElement (
 	andar_id integer NOT NULL,
 	subElement varchar(128) NOT NULL,
 
-	PRIMARY KEY (andar_id),
+	PRIMARY KEY (andar_id, subElement),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
@@ -100,7 +100,7 @@ CREATE TABLE GeoArea (
 	area varchar(128) NOT NULL,
 	level integer NOT NULL,
 
-	PRIMARY KEY (andar_id),
+	PRIMARY KEY (andar_id, area),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
@@ -110,7 +110,7 @@ CREATE TABLE Municipality (
 	municipality varchar(256) NOT NULL,
 	focus_percentage integer NOT NULL,
 
-	PRIMARY KEY (andar_id),
+	PRIMARY KEY (andar_id, municipality),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
@@ -128,7 +128,7 @@ CREATE TABLE DonorEngagement (
 	engagement varchar(128) NOT NULL,
 	description varchar(512),
 
-	PRIMARY KEY (andar_id),
+	PRIMARY KEY (andar_id, engagement),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
@@ -138,7 +138,7 @@ CREATE TABLE Outputs (
 	type varchar(128) NOT NULL,
 	value integer NOT NULL,
 
-	PRIMARY KEY (andar_id),
+	PRIMARY KEY (andar_id, type),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
