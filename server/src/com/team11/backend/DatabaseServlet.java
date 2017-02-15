@@ -36,7 +36,7 @@ public class DatabaseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html");
+		response.setContentType("text/json");
 
 		PrintWriter out = response.getWriter();
 		
@@ -64,6 +64,7 @@ public class DatabaseServlet extends HttpServlet {
 		
 		//Write Response body
 		response.setContentType("text/json");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 
 		PrintWriter out = response.getWriter();
 		
