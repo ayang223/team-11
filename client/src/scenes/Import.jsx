@@ -30,7 +30,7 @@ var Import = React.createClass({
            var parsed = Baby.parse(result);
            // Currently the result is in this scope, so if we want to pass this data to
            // the backend server, the call will have to be in here
-           document.getElementById('json').innerHTML = JSON.stringify(parsed);
+           document.getElementById('json').innerHTML = JSON.stringify(parsed, null, 2);
          };
        // start reading the file. When it is done, calls the onload event defined above.
        reader.readAsBinaryString(file);
