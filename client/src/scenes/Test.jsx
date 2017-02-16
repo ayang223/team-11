@@ -16,7 +16,7 @@ var Test = React.createClass({
             dataType:"json",
             success:function(data){
                console.log(data)
-               document.getElementById('out').innerHTML = data;
+               document.getElementById('out').innerHTML = JSON.stringify(data);
                 console.log("success");
             }.bind(this),
             error:function(error){
