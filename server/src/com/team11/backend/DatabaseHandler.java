@@ -40,12 +40,12 @@ public class DatabaseHandler {
 	public static boolean insertUser(int id, String username, String password, String firstName, String lastName, boolean adminPrivileges) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO USERS (id, username, password, first_name, last_name, admin_privileges) VALUES ?, ?, ?, ?, ?, ?";
+		String sql = "INSERT INTO USERS (id, username, password, first_name, last_name, admin_privileges) VALUES (?, ?, ?, ?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
 			
-			stmt.getConnection().prepareStatement(sql);
+			stmt = conn.prepareStatement(sql);
 			stmt.setInt(FIRST, id);
 			stmt.setString(SECOND, username);
 			stmt.setString(THIRD, password);
