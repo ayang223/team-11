@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {Doughnut} from 'react-chartjs-2';
 
@@ -12,6 +11,7 @@ const data = {
 	],
 	datasets: [{
 		data: [300, 50, 100, 200, 150],
+		hoverBorderWidth: [20, 20, 20, 20, 20],
 		backgroundColor: [
 		'#FF6384',
 		'#36A2EB',
@@ -36,7 +36,7 @@ var ChartDollarsCity=React.createClass({
       <div className="row">
         <h2 style={{textAlign:"left"}}>Doughnut Example</h2>
         <Doughnut data={data} />
-      </div>
+        </div>
     );
   }
 });
