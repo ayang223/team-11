@@ -5,6 +5,8 @@ var FilterByCity = require('FilterByCity');
 var FilterByAgency = require('FilterByAgency');
 var FilterByInvested = require('FilterByInvested');
 var ChartDollarsCity = require('ChartDollarsCity');
+var d3map = require('d3map');
+
 
 var Dashboard = React.createClass({
   render: function(){
@@ -19,6 +21,7 @@ var Dashboard = React.createClass({
           <FilterByAgency />
           <FilterByInvested />
           <ChartDollarsCity />
+          <d3map />
         </div>
       </div>
     )

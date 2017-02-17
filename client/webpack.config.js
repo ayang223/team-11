@@ -35,6 +35,7 @@ externals: {
       FilterByAgency: 'src/components/FilterByAgency.jsx',
       FilterByInvested: 'src/components/FilterByInvested.jsx',
       ChartDollarsCity: 'src/components/ChartDollarsCity.jsx',
+      d3map: 'src/components/d3map.jsx',
       'chartjs': require.resolve('chart.js')
     },
     extensions: ['', '.js', '.jsx',]
