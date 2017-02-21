@@ -37,6 +37,40 @@ public class DatabaseHandler {
 
 	}
 	
+	// InventoryOutput Queries
+	public static boolean insertInventoryOutput(String funds, String focus, String outcome, int programAndar, String yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
+		//TODO
+	}
+	
+	public static boolean insertTargetPopulation(int programAndar, String population) {
+		//TODO
+	}
+	
+	public static boolean insertProgramElement(int programAndar, String element, int level) {
+		//TODO
+	}
+	
+	public static boolean insertProgramSubElement(int programAndar, String subElement) {
+		//TODO
+	}
+	
+	public static boolean insertGeoArea(int programAndar, String area, int level) {
+		//TODO
+	}
+	
+	public static boolean insertMuncipality(int programAndar, String muncipality, int focusPercent) {
+		//TODO
+	}
+	
+	public static boolean insertDonorEngagement(int programAndar, String engagement, String description) {
+		//TODO
+	}
+	
+	public static boolean insertTargetPopulation(int programAndar, String type, int value) {
+		//TODO
+	}
+	
+	// User Queries
 	public static boolean insertUser(int id, String username, String password, String firstName, String lastName, boolean adminPrivileges) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
