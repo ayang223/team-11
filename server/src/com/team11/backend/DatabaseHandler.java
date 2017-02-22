@@ -62,11 +62,11 @@ public class DatabaseHandler {
 		//TODO
 	}
 	
-	public static boolean insertDonorEngagement(int programAndar, String engagement, String description) {
+	public static boolean insertDonorEngagement(int programAndar, String engagement) {
 		//TODO
 	}
 	
-	public static boolean insertTargetPopulation(int programAndar, String type, int value) {
+	public static boolean insertOutput(int programAndar, String type, int value) {
 		//TODO
 	}
 	
