@@ -84,27 +84,22 @@ public class DatabaseHandler {
 	}
 	
 	// User Queries
-	public static boolean insertUser(int id, String username, String password, String firstName, String lastName, boolean adminPrivileges) {
+	public static boolean insertUser(String username, String password, String firstName, String lastName, boolean adminPrivileges) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO USERS (id, username, password, first_name, last_name, admin_privileges) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO Users (username, password, first_name, last_name, admin_privileges) VALUES (?, ?, ?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
-			
+
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(FIRST, id);
-			stmt.setString(SECOND, username);
-			stmt.setString(THIRD, password);
-			stmt.setString(FOURTH, firstName);
-			stmt.setString(FIFTH, lastName);
-			stmt.setBoolean(SIXTH, adminPrivileges);
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			stmt.setString(3, firstName);
+			stmt.setString(4, lastName);
+			stmt.setBoolean(5, adminPrivileges);
 			int count = stmt.executeUpdate();
-			if (count > 0) {
-				success = true;
-			} else {
-				success = false;
-			}
+			success = count > 0;
 		} catch (SQLException e) {
 			success = false;
 		} catch (ClassNotFoundException e) {
