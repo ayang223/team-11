@@ -11,8 +11,8 @@ var ChartDollarsCity = require('ChartDollarsCity');
 var d3map = require('d3map');
 
 
-var Dashboard = React.createClass({
-  render: function(){
+class Dashboard extends React.Component{
+  render(){
     return(
       <div>
         <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
@@ -36,6 +36,7 @@ var Dashboard = React.createClass({
       </div>
     )
   }
-})
+}
+
 
 module.exports = Dashboard;
