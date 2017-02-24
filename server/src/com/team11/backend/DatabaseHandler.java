@@ -70,6 +70,19 @@ public class DatabaseHandler {
 		//TODO
 	}
 	
+	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
+		//TODO
+	}
+	
+	public static boolean insertAgency(int agencyAndar, String name) {
+		//TODO
+	}
+	
+	public static boolean insertLocation(int programAndar, String name, String postal) {
+		//TODO
+		//Get ID based on MySQL table count
+	}
+	
 	// User Queries
 	public static boolean insertUser(int id, String username, String password, String firstName, String lastName, boolean adminPrivileges) {
 		Connection conn = null;
