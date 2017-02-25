@@ -38,8 +38,51 @@ public class DatabaseHandler {
 	}
 	
 	// InventoryOutput Queries
-	public static boolean insertInventoryOutput(String funds, String focus, String outcome, int programAndar, String yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
-		//TODO
+	public static boolean insertInventoryOutput(String fileName, String area, String funds, String focus, String outcome, String funding, int programAndar, int yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO AndarDataOutput (file_name, area, funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, fileName);
+			stmt.setString(2, area);
+			stmt.setString(3, funds);
+			stmt.setString(4, focus);
+			stmt.setString(5, outcome);
+			stmt.setString(6, funding);
+			stmt.setInt(7, programAndar);
+			stmt.setInt(8, yearlyAllocation);
+			stmt.setString(9, grantStart);
+			stmt.setString(10, grantEnd);
+			stmt.setString(11, description);
+			stmt.setString(12, planner);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	public static boolean insertTargetPopulation(int programAndar, String population) {
