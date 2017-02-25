@@ -86,7 +86,40 @@ public class DatabaseHandler {
 	}
 	
 	public static boolean insertTargetPopulation(int programAndar, String population) {
-		//TODO
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO TargetPopulation (andar_id, population) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, population);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	public static boolean insertProgramElement(int programAndar, String element, int level) {
