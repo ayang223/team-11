@@ -123,11 +123,78 @@ public class DatabaseHandler {
 	}
 	
 	public static boolean insertProgramElement(int programAndar, String element, int level) {
-		//TODO
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO ProgramElement (andar_id, element, level) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, element);
+			stmt.setInt(3, level);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	public static boolean insertProgramSubElement(int programAndar, String subElement) {
-		//TODO
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO ProgramSubElement (andar_id, subElement) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, subElement);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	public static boolean insertGeoArea(int programAndar, String area, int level) {
