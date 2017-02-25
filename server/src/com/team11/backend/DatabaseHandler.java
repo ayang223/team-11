@@ -348,12 +348,46 @@ public class DatabaseHandler {
 		
 		return success;
 	}
-	
-	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
-		//TODO
+
+	public static boolean insertAgency(int agencyAndar, String name, String postal) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Agency (id, name, postal) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, agencyAndar);
+			stmt.setString(2, name);
+			stmt.setString(3, postal);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
-	
-	public static boolean insertAgency(int agencyAndar, String name) {
+		
+	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
 		//TODO
 	}
 	
