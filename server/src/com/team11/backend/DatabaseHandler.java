@@ -273,12 +273,80 @@ public class DatabaseHandler {
 		return success;
 	}
 	
-	public static boolean insertDonorEngagement(int programAndar, String engagement) {
-		//TODO
+	public static boolean insertDonorEngagement(int programAndar, String engagement, String description) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO DonorEngagement (andar_id, engagement, description) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, engagement);
+			stmt.setString(3, description);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	public static boolean insertOutput(int programAndar, String type, int value) {
-		//TODO
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Outputs (andar_id, type, value) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, type);
+			stmt.setInt(3, value);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
