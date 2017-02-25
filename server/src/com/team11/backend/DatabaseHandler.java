@@ -388,12 +388,82 @@ public class DatabaseHandler {
 	}
 		
 	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
-		//TODO
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Program (id, agency_andar, name, website, description, num_locations) VALUES (?, ?, ?, ?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setInt(2, agencyAndar);
+			stmt.setString(3, name);
+			stmt.setString(4, website);
+			stmt.setString(5, description);
+			stmt.setInt(6, numLocations);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	public static boolean insertLocation(int programAndar, String name, String postal) {
-		//TODO
-		//Get ID based on MySQL table count
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Location (andar_id, name, postal) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, name);
+			stmt.setString(3, postal);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
 	}
 	
 	// User Queries
