@@ -1,6 +1,5 @@
 var React = require('react');
 var Servlet = require('src/components/Servlet.jsx');
-var Ajax = require('react-ajax');
 
 var Test = React.createClass({
     getInitialState: function() {
@@ -9,19 +8,25 @@ var Test = React.createClass({
      };
    },
     getServlet:function(){
+      var username = "Main_Admin";
+      var password = "main";
         $.ajax({
             url:"http://localhost:8080/BackendServer/DatabaseServlet",
            type: "POST",
-           data: "{\"action\": \"List User\"}",
+           //data: "{\"action\": \"Login User\",\"user\": \"Main_Admin\" , \"password\" : \"main\"}",
+           data: JSON.stringify({
+             "action" : "Login User",
+             "user": username,
+             "password": password
+           }),
             dataType:"json",
             success:function(data){
                console.log(data)
                document.getElementById('out').innerHTML = JSON.stringify(data);
-                console.log("success");
             }.bind(this),
             error:function(error){
                document.getElementById('out').innerHTML = error;
-                console.log(error);
+              console.log(error);
             }
         });
     },
