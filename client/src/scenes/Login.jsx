@@ -3,6 +3,7 @@
 //  */
 import React, { PropTypes } from 'react';
 import LoginForm from '../components/LoginForm.jsx';
+import cookie from 'react-cookie';
 
 var Login = React.createClass({
   getDefaultProps: function () {
@@ -16,6 +17,9 @@ var Login = React.createClass({
         username: this.props.username,
         password: this.props.password
     };
+  },
+  saveCookie : function(username) {
+    cookie.save('userID', username, {path: '/'});
   },
   handleNewName: function (u, p) {
     this.setState({
@@ -39,7 +43,8 @@ var Login = React.createClass({
                document.getElementById('out').innerHTML = JSON.stringify(data);
                if(data.status === "success"){
                  console.log("success");
-                 //set SessionToken to hold JWT 
+                 //set SessionToken to hold JWT
+                 this.saveCookie(loginUsername);
                }
             }.bind(this),
             error:function(error){
@@ -48,6 +53,7 @@ var Login = React.createClass({
             }
         });
   },
+
   render: function () {
     var username = this.state.username;
     var password = this.state.password;

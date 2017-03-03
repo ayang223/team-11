@@ -1,5 +1,4 @@
 var React = require('react');
-var Ajax = require('react-ajax');
 
 var Servlet = React.createClass({
 	getServlet:function(e){
