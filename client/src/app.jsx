@@ -8,6 +8,7 @@ var Import = require('Import');
 var Dashboard = require('Dashboard');
 var Test = require('src/scenes/Test.jsx');
 var Logout = require('src/components/Logout.jsx')
+var AdminPage = require('src/scenes/AdminPage.jsx')
 import cookie from 'react-cookie';
 require('style!css!foundation-sites/dist/foundation.min.css')
 $(document).foundation();
@@ -30,6 +31,7 @@ ReactDOM.render(
         <Route path="/dashboard"  onEnter={validateSession} component={Dashboard}/>
         <Route path="/test" component={Test}/>
         <Route path="/logout" component={Logout}/>
+        <Route path="/adminpage" component={AdminPage}/>
         <IndexRoute component={Login}/>
     </Route>
 </Router>, document.getElementById('app'));
