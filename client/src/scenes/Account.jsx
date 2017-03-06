@@ -80,13 +80,17 @@ var Account = React.createClass({
     
     return(
       <div>
-      {isAdmin? getAdminPage :
-      <div>
+        {isAdmin? 
+          <div>
+            <p>admin page</p>
+          </div> :
+    <div>
      <h2>Account Page</h2>
      <AccountForm onNewAccount={this.handleNewAccount}/>
+     </div>
+
+    }
     </div>
-       }
-       </div>
     );
   }
 })
