@@ -1,66 +1,72 @@
-/**
- * Created by nathan on 21/01/17.
- */
-var React = require('react');
+// /**
+//  * Created by nathan on 21/01/17.
+//  */
+import React, { PropTypes } from 'react';
+import LoginForm from '../components/LoginForm.jsx';
+import cookie from 'react-cookie';
 
-var LoginForm = React.createClass({
-    onFormSubmit: function(e) {
-        e.preventDefault();
+var Login = React.createClass({
+  getDefaultProps: function () {
+    return {
+      username: '',
+      password: ''
+    };
+  },
+  getInitialState: function () {
+    return {
+        username: this.props.username,
+        password: this.props.password
+    };
+  },
+  saveCookie : function(username) {
+    cookie.save('userID', username, {path: '/'});
+  },
+  handleNewName: function (u, p) {
+    this.setState({
+      username: u,
+      password: p
+    });
+    var loginUsername = u;
+    var loginPass = p;
+    //ajax call
+        $.ajax({
+            url:"http://localhost:8080/BackendServer/DatabaseServlet",
+           type: "POST",
+           data: JSON.stringify({
+             "action" : "Login User",
+             "user": loginUsername,
+             "password": loginPass
+           }),
+            dataType:"json",
+            success:function(data){
+               console.log(data)
+               document.getElementById('out').innerHTML = JSON.stringify(data);
+               if(data.status === "success"){
+                 console.log("success");
+                 //set SessionToken to hold JWT
+                 this.saveCookie(loginUsername);
+               }
+            }.bind(this),
+            error:function(error){
+               document.getElementById('out').innerHTML = error;
+                console.log(error);
+            }
+        });
+  },
 
-        var username = this.refs.username.value;
-        var password = this.refs.password.value;
+  render: function () {
+    var username = this.state.username;
+    var password = this.state.password;
+    return (
+      <div>
+        <LoginForm onNewName={this.handleNewName}/>
+        <h1> Hello {username}</h1>
+        <h2> This is your password: {password}</h2>
+        <div id="out"></div>
+      </div>
+    );
+  }
+});
 
-        if (username.length > 0 && password.length > 0) {
-            this.refs.username.value = '';
-            this.refs.password.value = '';
-            this.props.onNewLogin(username, password);
-        }
-    },
-    render: function() {
-        return (
-            <div className="row">
-                <form onFormSubmit={this.onFormSubmit}>
-                    <p>
-                        Username:
-                    </p>
-                    <div className="medium-6 columns center">
-                        <input type="text" ref="username" placeholder="Enter username here"/>
-                    </div><br/><br/><br/>
-                    <div className="medium-6 columns center">
-                        <p>
-                            Password:
-                        </p>
-                        <input type="password" ref="password" placeholder="Enter password here"/>
-                        <p className="help-text" id="passwordHelpText">Your password must be at least x characters</p>
-                    </div>
-                    <button className="button small-centered text-center columns">Login</button>
-                </form>
-            </div>
-        )
-    }
-})
-
-class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: this.props.username,
-            password: this.props.password
-        };
-    }
-
-    handleNewLogin(username, password) {
-        this.setState({username: username, password: password});
-    }
-
-    render() {
-        return (
-            <div>
-                <h2>Login Page</h2>
-                <LoginForm onNewLogin={this.handleNewLogin}/>
-            </div>
-        )
-    }
-}
 
 module.exports = Login;
