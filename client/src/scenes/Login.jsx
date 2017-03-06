@@ -5,6 +5,7 @@ import React, { PropTypes } from 'react';
 import LoginForm from '../components/LoginForm.jsx';
 import cookie from 'react-cookie';
 import sha256 from 'js-sha256';
+var {hashHistory} = require('react-router');
 
 var Login = React.createClass({
   getDefaultProps: function () {
@@ -46,6 +47,8 @@ var Login = React.createClass({
                  console.log("success");
                  //set SessionToken to hold JWT
                  this.saveCookie(loginUsername);
+                 window.alert("Successfully logged in");
+                 hashHistory.push('/dashboard');
                }
             }.bind(this),
             error:function(error){
@@ -62,7 +65,6 @@ var Login = React.createClass({
       <div>
         <LoginForm onNewName={this.handleNewName}/>
         <h1> Hello {username}</h1>
-        <h2> This is your password: {password}</h2>
         <div id="out"></div>
       </div>
     );
