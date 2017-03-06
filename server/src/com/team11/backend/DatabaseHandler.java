@@ -599,6 +599,75 @@ public class DatabaseHandler {
 		return responseJson;
 	}
 
+	public static boolean changePassword(String user, String newPassword) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "UPDATE Users SET password=? WHERE username=?";
+		boolean success = true;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, newPassword);
+			stmt.setString(2, user);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
+	}
+
+	public static boolean deleteUser(String user) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "DELETE FROM Users WHERE username=?";
+		boolean success = true;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
+	}
+
 	private static Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName(JDBC_DRIVER);
 		Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
