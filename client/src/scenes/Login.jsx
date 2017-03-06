@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import LoginForm from '../components/LoginForm.jsx';
 import cookie from 'react-cookie';
+import sha256 from 'js-sha256';
 
 var Login = React.createClass({
   getDefaultProps: function () {
@@ -27,7 +28,7 @@ var Login = React.createClass({
       password: p
     });
     var loginUsername = u;
-    var loginPass = p;
+    var loginPass = sha256(p);
     //ajax call
         $.ajax({
             url:"http://localhost:8080/BackendServer/DatabaseServlet",
