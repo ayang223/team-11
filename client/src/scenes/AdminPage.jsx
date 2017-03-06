@@ -1,6 +1,6 @@
 var React = require('react');
 
-var getAdminPage = React.createClass({
+var AdminPage = React.createClass({
   getUsers:function(){
     $a.jax({
       url:"http://localhost:8080/BackendServer/DatabaseServlet",
