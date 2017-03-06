@@ -17,8 +17,26 @@ public class DashboardLogic {
 
 	public static JsonObject getDashboard(JsonObject requestJson) {
 		JsonObject responseJson = new JsonObject();
-		responseJson = RequestHandler.getStatusFailed();
+		responseJson = generateDashboardData();
 		return responseJson;
+	}
+
+	private static JsonObject generateDashboardData() {
+		JsonObject dashboardJson = new JsonObject();
+		dashboardJson.add("Program", DatabaseHandler.getProgram());
+		dashboardJson.add("Location", DatabaseHandler.getLocation());
+		dashboardJson.add("Agency", DatabaseHandler.getAgency());
+		dashboardJson.add("InventoryOutput", DatabaseHandler.getInventoryOutput());
+		dashboardJson.add("Target Population", DatabaseHandler.getTargetPopulation());
+		dashboardJson.add("Program Element", DatabaseHandler.getProgramElement());
+		dashboardJson.add("Program SubElement", DatabaseHandler.getProgramSubElement());
+		dashboardJson.add("Element Directory", DatabaseHandler.getElementDirectory());
+		dashboardJson.add("Geo Area", DatabaseHandler.getGeoArea());
+		dashboardJson.add("Municipality", DatabaseHandler.getMunicipality());
+		dashboardJson.add("Area Directory", DatabaseHandler.getAreaDirectory());
+		dashboardJson.add("Donor Engagement", DatabaseHandler.getDonorEngagement());
+		dashboardJson.add("Outputs", DatabaseHandler.getOutputs());
+		return dashboardJson;
 	}
 
 	public static JsonObject importOutput(JsonObject requestJson) {
