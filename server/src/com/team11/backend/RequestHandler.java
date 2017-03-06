@@ -15,7 +15,8 @@ public class RequestHandler {
 	private static final String CREATE_USER = "Create User";
 	private static final String DELETE_USER = "Delete User";
 	private static final String GET_DASHBOARD = "Get Dashboard";
-	private static final String IMPORT_DATA = "Import Data";
+	private static final String IMPORT_OUTPUT = "Import Output";
+	private static final String IMPORT_PROGRAMS = "Import Programs";
 	private static final String LIST_USER = "List User";
 	private static final String LOGIN_USER = "Login User";
 
@@ -43,9 +44,10 @@ public class RequestHandler {
 		case GET_DASHBOARD:
 			responseJson = DashboardLogic.getDashboard(requestJson);
 			break;
-		case IMPORT_DATA:
-			//TODO: Fix this later, it's split into 2!!
+		case IMPORT_OUTPUT:
 			responseJson = DashboardLogic.importOutput(requestJson);
+			break;
+		case IMPORT_PROGRAMS:
 			responseJson = DashboardLogic.importPrograms(requestJson);
 			break;
 		case LIST_USER:
