@@ -21,7 +21,7 @@ var Login = React.createClass({
     };
   },
   saveCookie : function(username) {
-    cookie.save('userID', username, {path: '/'});
+    cookie.save('userID', username, {path: '/', maxAge:7200 }); // expires in two hours
   },
   handleNewName: function (u, p) {
     this.setState({
