@@ -37,27 +37,452 @@ public class DatabaseHandler {
 
 	}
 	
-	public static boolean insertUser(int id, String username, String password, String firstName, String lastName, boolean adminPrivileges) {
+	// InventoryOutput Queries
+	public static boolean insertInventoryOutput(String fileName, String area, String funds, String focus, String outcome, String funding, int programAndar, int yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO USERS (id, username, password, first_name, last_name, admin_privileges) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO AndarDataOutput (file_name, area, funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
-			
+
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(FIRST, id);
-			stmt.setString(SECOND, username);
-			stmt.setString(THIRD, password);
-			stmt.setString(FOURTH, firstName);
-			stmt.setString(FIFTH, lastName);
-			stmt.setBoolean(SIXTH, adminPrivileges);
+			stmt.setString(1, fileName);
+			stmt.setString(2, area);
+			stmt.setString(3, funds);
+			stmt.setString(4, focus);
+			stmt.setString(5, outcome);
+			stmt.setString(6, funding);
+			stmt.setInt(7, programAndar);
+			stmt.setInt(8, yearlyAllocation);
+			stmt.setString(9, grantStart);
+			stmt.setString(10, grantEnd);
+			stmt.setString(11, description);
+			stmt.setString(12, planner);
 			int count = stmt.executeUpdate();
-			if (count > 0) {
-				success = true;
-			} else {
-				success = false;
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
 			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertTargetPopulation(int programAndar, String population) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO TargetPopulation (andar_id, population) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, population);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertProgramElement(int programAndar, String element, int level) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO ProgramElement (andar_id, element, level) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, element);
+			stmt.setInt(3, level);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertProgramSubElement(int programAndar, String subElement) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO ProgramSubElement (andar_id, subElement) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, subElement);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertGeoArea(int programAndar, String area, int level) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO GeoArea (andar_id, area, level) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, area);
+			stmt.setInt(3, level);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertMuncipality(int programAndar, String municipality, int focusPercent) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, municipality);
+			stmt.setInt(3, focusPercent);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertDonorEngagement(int programAndar, String engagement, String description) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO DonorEngagement (andar_id, engagement, description) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, engagement);
+			stmt.setString(3, description);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertOutput(int programAndar, String type, int value) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Outputs (andar_id, type, value) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, type);
+			stmt.setInt(3, value);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+
+	public static boolean insertAgency(int agencyAndar, String name, String postal) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Agency (id, name, postal) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, agencyAndar);
+			stmt.setString(2, name);
+			stmt.setString(3, postal);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+		
+	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Program (id, agency_andar, name, website, description, num_locations) VALUES (?, ?, ?, ?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setInt(2, agencyAndar);
+			stmt.setString(3, name);
+			stmt.setString(4, website);
+			stmt.setString(5, description);
+			stmt.setInt(6, numLocations);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertLocation(int programAndar, String name, String postal) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Location (andar_id, name, postal) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, name);
+			stmt.setString(3, postal);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	// User Queries
+	public static boolean insertUser(String username, String password, String firstName, String lastName, boolean adminPrivileges) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Users (username, password, first_name, last_name, admin_privileges) VALUES (?, ?, ?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			stmt.setString(3, firstName);
+			stmt.setString(4, lastName);
+			stmt.setBoolean(5, adminPrivileges);
+			int count = stmt.executeUpdate();
+			success = count > 0;
 		} catch (SQLException e) {
 			success = false;
 		} catch (ClassNotFoundException e) {
@@ -172,6 +597,75 @@ public class DatabaseHandler {
 		}
 
 		return responseJson;
+	}
+
+	public static boolean changePassword(String user, String newPassword) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "UPDATE Users SET password=? WHERE username=?";
+		boolean success = true;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, newPassword);
+			stmt.setString(2, user);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
+	}
+
+	public static boolean deleteUser(String user) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "DELETE FROM Users WHERE username=?";
+		boolean success = true;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
 	}
 
 	private static Connection getConnection() throws ClassNotFoundException, SQLException {
