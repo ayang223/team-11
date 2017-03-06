@@ -43,11 +43,10 @@ public class RequestHandler {
 		case GET_DASHBOARD:
 			responseJson = DashboardLogic.getDashboard(requestJson);
 			break;
-		case IMPORT_DATA:
-			//TODO: Fix this later, it's split into 2!!
-			responseJson = DashboardLogic.importOutput(requestJson);
-			responseJson = DashboardLogic.importPrograms(requestJson);
-			break;
+		  case IMPORT_DATA:
+			   responseJson = DashboardLogic.importOutput(requestJson);
+			   responseJson = DashboardLogic.importPrograms(requestJson);
+			   break;
 		case LIST_USER:
 			responseJson = UserManager.listUser(requestJson);
 			break;
