@@ -149,7 +149,7 @@ CREATE TABLE Location (
 	True: Admin user*/
 CREATE TABLE Users (
 	id integer NOT NULL AUTO_INCREMENT,
-	username varchar(32) NOT NULL,
+	username varchar(32) NOT NULL UNIQUE,
 	password varchar(32) NOT NULL,
 	first_name varchar(32),
 	last_name varchar(32),
