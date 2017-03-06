@@ -73,16 +73,27 @@ var Account = React.createClass({
   },
 
   render: function() {
+    var isAdmin = true;
     var oldpassword = this.state.oldpassword;
     var newpassword = this.state.newpassword;
     var verifynewpassword = this.state.verifynewpassword;
-    return (
-     <div>
+    
+    return(
+      <div>
+        {isAdmin? 
+          <div>
+            <p>admin page</p>
+          </div> :
+    <div>
      <h2>Account Page</h2>
      <AccountForm onNewAccount={this.handleNewAccount}/>
      </div>
+
+    }
+    </div>
     );
   }
 });
+
 
 module.exports = Account;
