@@ -80,7 +80,7 @@ var Account = React.createClass({
     
     return(
       <div>
-        {isAdmin? 
+        {isAdmin?
           <div>
             <p>admin page</p>
           </div> :
