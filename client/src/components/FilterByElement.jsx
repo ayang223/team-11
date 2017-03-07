@@ -2,7 +2,7 @@ var React = require('react');
 
 var FilterByElement = React.createClass({
   getInitialState:function(){
-    return {selectedValue: 'other'};
+    return {selectValue: '(nothing selected)'};
   },
   handleChange: function(e){
     this.setState({selectValue: e.target.value});
@@ -11,6 +11,7 @@ var FilterByElement = React.createClass({
     var message = 'FilterByElement: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
+        <label>Select element</label>
         <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
           <option value="Learning Support">Learning Support</option>
           <option value="Social and Emotional Health">Social and Emotional Health </option>
@@ -22,7 +23,7 @@ var FilterByElement = React.createClass({
           <option value="Food Redistribution">Food Redistribution</option>
           <option value="Information and Referral">Information and Referral</option>
         </select>
-        <p>{message}</p>
+        <label>{message}</label>
       </div>
     )
   }

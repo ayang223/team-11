@@ -23,12 +23,14 @@ var Dashboard = React.createClass({
           <FilterByInvested />
           <FilterByAgency />
         </div>
+        <br/>
         <div className="row">
             <FilterByFocusArea />
             <FilterByPopulation />
             <FilterByElement />
             <FilterByEngagement />
         </div>
+        <br/>
         <div className="panel"  style={{width: 450, height: 450}} >
           <ChartDollarsCity />
           <d3map />

@@ -2,7 +2,7 @@ var React = require('react');
 
 var FilterByCity = React.createClass({
   getInitialState:function(){
-    return {selectedValue: 'Vancouver'};
+    return {selectValue: '(nothing selected)'};
   },
   handleChange: function(e){
     this.setState({selectValue: e.target.value});
@@ -11,6 +11,7 @@ var FilterByCity = React.createClass({
     var message = 'FilterByCity: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
+        <label>Select city</label>
         <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
           <option value="Vancouver">Vancouver</option>
           <option value="Richmond">Richmond</option>
@@ -19,7 +20,7 @@ var FilterByCity = React.createClass({
           <option value="Delta">Delta</option>
           <option value="Langely">Langely</option>
         </select>
-        <p>{message}</p>
+        <label>{message}</label>
       </div>
     )
   }

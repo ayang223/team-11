@@ -2,7 +2,7 @@ var React = require('react');
 
 var FilterByAgency = React.createClass({
   getInitialState:function(){
-    return {selectedValue: 'SUCCESS'};
+    return {selectValue: '(nothing selected)'};
   },
   handleChange: function(e){
     this.setState({selectValue: e.target.value});
@@ -11,12 +11,13 @@ var FilterByAgency = React.createClass({
     var message = 'FilterByAgency: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
+        <label>Select agency</label>
         <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
           <option value="YMCA of Greater Vancouver">YMCA of Greater Vancouver</option>
           <option value="SUCCESS">SUCCESS</option>
           <option value="Big Brothers of Greater Vancouver">Big Brothers of Greater Vancouver</option>
         </select>
-        <p>{message}</p>
+        <label>{message}</label>
       </div>
     )
   }
