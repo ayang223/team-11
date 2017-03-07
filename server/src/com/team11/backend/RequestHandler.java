@@ -44,7 +44,7 @@ public class RequestHandler {
 			responseJson = DashboardLogic.getDashboard(requestJson);
 			break;
 		case IMPORT_DATA:
-			responseJson = DashboardLogic.importData(requestJson);
+			responseJson = DashboardLogic.importOutput(requestJson);
 			break;
 		case LIST_USER:
 			responseJson = UserManager.listUser(requestJson);

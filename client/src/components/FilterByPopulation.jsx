@@ -11,7 +11,7 @@ var FilterByPopulation = React.createClass({
     var message = 'FilterByPopulation: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
-        <select value={this.state.selectValue} onChange={this.handleChange}>
+        <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
           <option value="earlychildhood">Early Childhood</option>
           <option value="middleyears">Middle Years</option>
           <option value="families">Families</option>

@@ -11,7 +11,7 @@ var FilterByCity = React.createClass({
     var message = 'FilterByCity: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
-        <select value={this.state.selectValue} onChange={this.handleChange}>
+        <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
           <option value="Vancouver">Vancouver</option>
           <option value="Richmond">Richmond</option>
           <option value="Burnaby">Burnaby</option>

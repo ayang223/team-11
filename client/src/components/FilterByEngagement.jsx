@@ -2,7 +2,7 @@ var React = require('react');
 
 var FilterByEngagement = React.createClass({
   getInitialState:function(){
-    return {selectedValue: '2017'};
+    return {selectedValue: 'UW Speaker'};
   },
   handleChange: function(e){
     this.setState({selectValue: e.target.value});
@@ -11,12 +11,12 @@ var FilterByEngagement = React.createClass({
     var message = 'FilterByEngagement: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
-        <select value={this.state.selectValue} onChange={this.handleChange}>
-          <option value="uw">UW Speaker</option>
-          <option value="dayofcaring">Day of Caring</option>
-          <option value="volunteer">Volunteer Opportunities</option>
-          <option value="agencytour">Agency Tour</option>
-          <option value="agencyfair">Agency Fair</option>
+        <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
+          <option value="UW Speaker">UW Speaker</option>
+          <option value="Day of Caring">Day of Caring</option>
+          <option value="Volunteer Opportunities">Volunteer Opportunities</option>
+          <option value="Agency Tour">Agency Tour</option>
+          <option value="Agency Fair">Agency Fair</option>
         </select>
         <p>{message}</p>
       </div>

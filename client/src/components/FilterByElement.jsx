@@ -11,16 +11,16 @@ var FilterByElement = React.createClass({
     var message = 'FilterByElement: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
-        <select value={this.state.selectValue} onChange={this.handleChange}>
-          <option value="learning">Learning Support</option>
-          <option value="social">Social and Emotional Health </option>
-          <option value="connections">Connections/Healthy Relationships</option>
-          <option value="health">Physical Health and Recreational Activities</option>
-          <option value="life">Life Skills</option>
-          <option value="system">System Change </option>
-          <option value="address">Address Program Barriers/Access</option>
-          <option value="food">Food Redistribution</option>
-          <option value="information">Information and Referral</option>
+        <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
+          <option value="Learning Support">Learning Support</option>
+          <option value="Social and Emotional Health">Social and Emotional Health </option>
+          <option value="Connections/Healthy Relationships">Connections/Healthy Relationships</option>
+          <option value="Physical Health and Recreational Activities">Physical Health and Recreational Activities</option>
+          <option value="Life Skills">Life Skills</option>
+          <option value="System Change ">System Change </option>
+          <option value="Address Program Barriers/Access">Address Program Barriers/Access</option>
+          <option value="Food Redistribution">Food Redistribution</option>
+          <option value="Information and Referral">Information and Referral</option>
         </select>
         <p>{message}</p>
       </div>
