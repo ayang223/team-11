@@ -20,8 +20,13 @@ var Login = React.createClass({
         password: this.props.password
     };
   },
-  saveCookie : function(username) {
+  saveCookie : function(username, data) {
     cookie.save('userID', username, {path: '/', maxAge:7200 }); // expires in two hours
+    if(data.admin === true){
+      cookie.save('admin', true, {path:'/', maxAge:7200});
+    }else{
+      cookie.save('admin', false, {path:'/', maxAge:7200});
+    }
   },
   handleNewName: function (u, p) {
     this.setState({
@@ -46,7 +51,7 @@ var Login = React.createClass({
                if(data.status === "success"){
                  console.log("success");
                  //set SessionToken to hold JWT
-                 this.saveCookie(loginUsername);
+                 this.saveCookie(loginUsername, data);
                  window.alert("Successfully logged in");
                  hashHistory.push('/dashboard');
                }

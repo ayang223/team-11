@@ -7,19 +7,26 @@
 
 
 
- var isLoggedIn = true;
-
- function checkAdmin(){
+var isLoggedIn = true;
+var isAdmin = true;
+ function checkLogin(){
    if(typeof cookie.load('userID') === "undefined"){
      isLoggedIn=false;
    }else{
      isLoggedIn=true;
    }
+   if(cookie.load('admin') === 'true'){
+     isAdmin = true;
+   }
+   else {
+     isAdmin=false;
+   }
  }
+
 
  var Nav = React.createClass({
    render: function () {
-     checkAdmin();
+     checkLogin();
      return (
          <div className="top-bar">
            <div className="top-bar-left">
@@ -37,9 +44,7 @@
               <li>
                   <Link to="/test" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Test</Link>
               </li>
-              <li>
-                <Link to="/adminpage" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>AdminPage</Link>
-              </li>
+
              </ul>
            </div>
            <div className="top-bar-right">
@@ -47,9 +52,15 @@
                  {isLoggedIn?
                    <div className="top-bar-right">
                      <ul className="menu">
-                       <li>
-                      <Link to="/account" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Account</Link>
-                      </li>
+                       {isAdmin?
+                         <li>
+                         <Link to="/adminpage" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Admin Account</Link>
+                       </li>
+                     :
+                     <li>
+                    <Link to="/account" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Account</Link>
+                    </li>
+                   }
                       <li>
                       <Link to="/logout" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Logout</Link>
                       </li>

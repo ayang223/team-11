@@ -7,6 +7,7 @@ class Logout extends React.Component{
     var sure = window.confirm("Are you sure?")
     if(sure){
       cookie.remove('userID', []);
+      cookie.remove('admin', []);
       hashHistory.push('/login');
     }
   }
