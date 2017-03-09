@@ -1,7 +1,7 @@
 var React = require('react');
 
 var AccountForm = React.createClass({
-  onFormSubmit: function(e){
+  createNewAccount:function(e){
     e.preventDefault();
 
     var username = this.refs.username.value;
@@ -17,7 +17,33 @@ var AccountForm = React.createClass({
       this.refs.fname.value = '';
       this.refs.lname.value = '';
       this.props.onNewAccount(username,password,verifypassword,fname,lname);
-    }
+    }else{ alert("error in input");
+    return 
+  }
+
+  if(password.length != verifypassword.length || password != verifypassword){
+    alert("passwords do not match");
+    return
+  }
+
+    $.ajax({
+      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      type:"POST",
+      data: JSON.stringify({
+        "action" : "Create User",
+        "username" : username,
+        "password" : password,
+        "first_name" : fname,
+        "last_name" : lname,
+        "admin_privileges" : false  // admin privilege default to false
+      }),
+      success:function(data){
+        console.log(data)
+      }.bind(this),
+      error:function(error){
+        console.log(error);
+      }
+    })
   },
 
   render: function(){
@@ -54,8 +80,8 @@ var AccountForm = React.createClass({
         <input type="text" ref ="lname" placeholder="Please enter last name." />
         </div>
         </div>
-        <div classNAme="row">
-        <button className="button small0centered text-center coloumns" type="submit" style={{width:150, height:40}}>Create account</button>
+        <div className="row">
+        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.createNewAccount}>Create account</button>
         </div>
       </form>
       </div>
@@ -76,25 +102,30 @@ var AdminPage = React.createClass({
     };
     
   },
+componentWillMount:function() {
+  console.log("compnenet will mounth")
+  var getUsers = $.ajax({
+    url:"http://localhost:8080/BackendServer/DatabaseServlet",
+    type: "POST",
+    data: JSON.stringify({
+      "action" : "List User"
+      }),
+    dataType:"json",
+    success:function(data){
+      console.log(data)
+      document.getElementById('out').innerHTML = JSON.stringify(data);
+      }.bind(this),
+      error:function(error){
+        document.getElementById('out').innerHTML = error;
+        console.log(error);
+        }
+        });
+},
 
-  getUsers:function(){
-    $.ajax({
-      url:"http://localhost:8080/BackendServer/DatabaseServlet",
-      type: "POST",
-      data: JSON.stringify({
-        "action" : "List User"
-        }),
-      dataType:"json",
-      success:function(data){
-        console.log(data)
-        document.getElementById('out').innerHTML = JSON.stringify(data);
-        }.bind(this),
-        error:function(error){
-          document.getElementById('out').innerHTML = error;
-          console.log(error);
-          }
-          });
-    },
+  componentDidMount:function() {
+    console.log("Component did mount")
+  },
+
   handleNewAccount:function(username, password, verifypassword, fname, lname){
     this.setState({
       username:username,
@@ -109,7 +140,8 @@ var AdminPage = React.createClass({
     return(
      <div>
        <h2>Admin Page</h2>
-       <input type="button" ref="button" value="Get Users" onClick={this.getUsers} />
+       <p>List of users: </p>
+       <p>{this.getUsers}</p>
        <div id="out">
        </div>
        <div>
