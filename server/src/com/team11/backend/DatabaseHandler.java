@@ -22,7 +22,7 @@ public class DatabaseHandler {
 	static final String DB_URL = "jdbc:mysql://localhost:3306/United_Way_Andar_DB";
 	// Database credentials
 	static final String USER = "root";
-	static final String PASS = "lighting123";
+	static final String PASS = "root";
 	// Database column numbers
 	static final int FIRST = 1;
 	static final int SECOND = 2;
