@@ -21,13 +21,21 @@ function validateSession(nextState, replace, callback) {
       callback();
     }
 }
+function validateSessionAdmin(nextState, replace, callback) {
+    if (typeof cookie.load('userID') === "undefined" && typeof cookie.load('admin') === 'false') {
+        window.alert("Only Admin can import");
+        hashHistory.push('/dashboard');
+    }else{
+      callback();
+    }
+}
 
 ReactDOM.render(
     <Router history={hashHistory}>
     <Route path="/" component={Main}>
         <Route path="/login" component={Login}/>
         <Route path="/account" onEnter={validateSession} component={Account} />
-        <Route path="/import"  onEnter={validateSession} component={Import} />
+        <Route path="/import"  onEnter={validateSessionAdmin} component={Import} />
         <Route path="/dashboard"  onEnter={validateSession} component={Dashboard}/>
         <Route path="/test" component={Test}/>
         <Route path="/logout" component={Logout}/>
