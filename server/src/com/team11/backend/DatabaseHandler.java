@@ -22,7 +22,7 @@ public class DatabaseHandler {
 	static final String DB_URL = "jdbc:mysql://localhost:3306/United_Way_Andar_DB";
 	// Database credentials
 	static final String USER = "root";
-	static final String PASS = "root";
+	static final String PASS = "lighting123";
 	// Database column numbers
 	static final int FIRST = 1;
 	static final int SECOND = 2;
@@ -40,27 +40,25 @@ public class DatabaseHandler {
 	}
 	
 	// InventoryOutput Queries
-	public static boolean insertInventoryOutput(String fileName, String area, String funds, String focus, String outcome, String funding, int programAndar, int yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
+	public static boolean insertInventoryOutput(String funds, String focus, String outcome, String funding, int programAndar, int yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO AndarDataOutput (file_name, area, funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO AndarDataOutput (funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
 
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, fileName);
-			stmt.setString(2, area);
-			stmt.setString(3, funds);
-			stmt.setString(4, focus);
-			stmt.setString(5, outcome);
-			stmt.setString(6, funding);
-			stmt.setInt(7, programAndar);
-			stmt.setInt(8, yearlyAllocation);
-			stmt.setString(9, grantStart);
-			stmt.setString(10, grantEnd);
-			stmt.setString(11, description);
-			stmt.setString(12, planner);
+			stmt.setString(1, funds);
+			stmt.setString(2, focus);
+			stmt.setString(3, outcome);
+			stmt.setString(4, funding);
+			stmt.setInt(5, programAndar);
+			stmt.setInt(6, yearlyAllocation);
+			stmt.setString(7, grantStart);
+			stmt.setString(8, grantEnd);
+			stmt.setString(9, description);
+			stmt.setString(10, planner);
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
@@ -351,10 +349,10 @@ public class DatabaseHandler {
 		return success;
 	}
 
-	public static boolean insertAgency(int agencyAndar, String name, String postal) {
+	public static boolean insertAgency(int agencyAndar, String name) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Agency (id, name, postal) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO Agency (id, name, postal) VALUES (?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -362,7 +360,6 @@ public class DatabaseHandler {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, agencyAndar);
 			stmt.setString(2, name);
-			stmt.setString(3, postal);
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
