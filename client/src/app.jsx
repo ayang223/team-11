@@ -6,7 +6,6 @@ var Login = require('Login');
 var Account = require('Account');
 var Import = require('Import');
 var Dashboard = require('Dashboard');
-var Test = require('src/scenes/Test.jsx');
 var Logout = require('src/components/Logout.jsx')
 var AdminPage = require('src/scenes/AdminPage.jsx')
 import cookie from 'react-cookie';
@@ -37,7 +36,6 @@ ReactDOM.render(
         <Route path="/account" onEnter={validateSession} component={Account} />
         <Route path="/import"  onEnter={validateSessionAdmin} component={Import} />
         <Route path="/dashboard"  onEnter={validateSession} component={Dashboard}/>
-        <Route path="/test" component={Test}/>
         <Route path="/logout" component={Logout}/>
         <Route path="/adminpage" component={AdminPage}/>
         <IndexRoute component={Login}/>
