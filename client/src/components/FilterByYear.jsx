@@ -1,18 +1,24 @@
 var React = require('react');
+var array = [];
 
 var FilterByYear = React.createClass({
   getInitialState:function(){
-    return {selectValue: '(nothing selected)'};
+    return {
+      selectValue:'(nothing selected)'};
   },
   handleChange: function(e){
-    this.setState({selectValue: e.target.value});
+    this.setState({selectValue: array});
+    array.push(JSON.stringify(e.target.value));
+    //alert(array);
   },
-  render:function(){
+
+  render:
+  function(){
     var message = 'FilterByYear: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
         <label>Select year</label>
-        <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
+        <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
           <option value="2017/18">2017/18</option>
           <option value="2016/17">2016/17</option>
           <option value="2015/16">2015/16</option>
@@ -20,7 +26,7 @@ var FilterByYear = React.createClass({
         <label>{message}</label>
       </div>
     )
-  }
+  },
 })
 
 module.exports = FilterByYear;
