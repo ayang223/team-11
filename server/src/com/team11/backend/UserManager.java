@@ -9,6 +9,7 @@ import com.team11.backend.DatabaseHandler;
 public class UserManager {
 
 	private static final String USERNAME = "username";
+	private static final String USER = "user";
 	private static final String PASSWORD = "password";
 	private static final String NEW_PASSWORD = "new_password";
 	private static final String FIRST_NAME = "first_name";
@@ -21,11 +22,11 @@ public class UserManager {
 
 	public static JsonObject changePassword(JsonObject requestJson) {
 		JsonObject responseJson = new JsonObject();
-		if (!requestJson.has(USERNAME) || !requestJson.has(NEW_PASSWORD)) {
+		if (!requestJson.has(USER) || !requestJson.has(NEW_PASSWORD)) {
 			responseJson = RequestHandler.getStatusFailed();
 			return responseJson;
 		}
-		String username = requestJson.get(USERNAME).getAsString();
+		String username = requestJson.get(USER).getAsString();
 		String newPassword = requestJson.get(NEW_PASSWORD).getAsString();
 		
 		boolean success = DatabaseHandler.changePassword(username, newPassword);

@@ -1,3 +1,4 @@
+import sha256 from 'js-sha256';
 var React = require('react');
 
 var AccountForm = React.createClass({
@@ -25,6 +26,7 @@ var AccountForm = React.createClass({
     alert("passwords do not match");
     return
   }
+  var encryptedPassword = sha256(password);
 
     $.ajax({
       url:"http://localhost:8080/BackendServer/DatabaseServlet",
@@ -32,7 +34,7 @@ var AccountForm = React.createClass({
       data: JSON.stringify({
         "action" : "Create User",
         "username" : username,
-        "password" : password,
+        "password" : encryptedPassword,
         "first_name" : fname,
         "last_name" : lname,
         "admin_privileges" : false  // admin privilege default to false
@@ -49,6 +51,7 @@ var AccountForm = React.createClass({
   render: function(){
     return(
       <div className="row">
+      <h2> Create new account </h2>
       <form onFormAccount={this.onFormAccount}>
         <div className="row">
         <div className="medium-6 columns">
@@ -140,7 +143,7 @@ componentWillMount:function() {
     return(
      <div>
        <h2>Admin Page</h2>
-       <p>List of users: </p>
+       <h2>List of users: </h2>
        <p>{this.getUsers}</p>
        <div id="out">
        </div>
