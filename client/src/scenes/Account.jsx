@@ -7,7 +7,7 @@ var AccountForm = React.createClass({
    onFormSubmit: function(e){
      e.preventDefault();
 
-     var username = Login.username;
+     var username = cookie.load('userID');
 
      var oldpassword = this.refs.oldpassword.value;
      var newpassword = this.refs.newpassword.value;
@@ -20,21 +20,22 @@ var AccountForm = React.createClass({
        this.props.onNewAccount(oldpassword,newpassword,verifynewpassword);
      }
 
-    // var encryptedNewPassword = sha256(newpassword);
-    //  $.ajax({
-    //   url: "http://localhost:8080/BackendServer/DatabaseServlet",
-    //   data: JSON.stringify({
-    //     "action":
-    //     "user":
-    //     "new_password":
-    //   }),
-    //   success:function(data){
-    //     console.log(data)
-    //   }.bind(this),
-    //   error:function(error){
-    //     console.log(error);
-    //   }
-    // })
+     var encryptedNewPassword = sha256(newpassword);
+     $.ajax({
+      url: "http://localhost:8080/BackendServer/DatabaseServlet",
+      type:"POST",
+      data: JSON.stringify({
+        "action":"Change Password",
+        "user": username,
+        "new_password": encryptedNewPassword
+      }),
+      success:function(data){
+        console.log(data)
+      }.bind(this),
+      error:function(error){
+        console.log(error);
+      }
+    })
    },
 
      render: function(){
@@ -60,10 +61,7 @@ var AccountForm = React.createClass({
          </div>
          </div>
          <div className="row">
-         <button className="button small-centered text-center columns" type="submit" style={{width:150, height:40}}>Create account</button>
-         </div>
-         <div>
-         <p> {cookie.load('userID')} </p>
+         <button className="button small-centered text-center columns" type="submit" style={{width:150, height:40}} onClick={this.onFormSubmit}>Change password</button>
          </div>
      </form>
      </div>
