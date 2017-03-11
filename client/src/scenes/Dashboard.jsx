@@ -8,11 +8,11 @@ var FilterByPopulation = require('FilterByPopulation');
 var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
 var ChartDollarsCity = require('ChartDollarsCity');
-var d3map = require('d3map');
+var D3Map = require('d3map');
 
 
-var Dashboard = React.createClass({
-  render: function(){
+class Dashboard extends React.Component{
+  render(){
     return(
       <div>
         <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
@@ -33,11 +33,12 @@ var Dashboard = React.createClass({
         <br/>
         <div className="panel"  style={{width: 450, height: 450}} >
           <ChartDollarsCity />
-          <d3map />
+          <D3Map />
         </div>
       </div>
     )
   }
-})
+}
+
 
 module.exports = Dashboard;

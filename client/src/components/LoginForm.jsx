@@ -28,7 +28,7 @@ var LoginForm = React.createClass({
                         <p>
                             Password:
                         </p>
-                        <input type="text" ref="password" placeholder="Enter password here"/>
+                        <input type="password" ref="password" placeholder="Enter password here"/>
                         <p className="help-text" id="passwordHelpText">Your password must be at least x characters</p>
                     </div>
                     <button className="button small-centered text-center columns">Login</button>
