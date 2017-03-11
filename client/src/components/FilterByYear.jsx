@@ -8,8 +8,17 @@ var FilterByYear = React.createClass({
   },
   handleChange: function(e){
     this.setState({selectValue: array});
-    array.push(JSON.stringify(e.target.value));
-    //alert(array);
+    var newSelection = JSON.stringify(e.target.value);
+    var isPresent = false;
+    var i;
+    for(i = 0; i < array.length; i++){
+      if(newSelection === array[i]){
+        isPresent = true;
+      }
+    }
+    if(!isPresent){
+      array.push(JSON.stringify(e.target.value));
+    }
   },
 
   render:
