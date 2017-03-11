@@ -20,6 +20,12 @@ var AccountForm = React.createClass({
        this.props.onNewAccount(oldpassword,newpassword,verifynewpassword);
      }
 
+     if(newpassword.length != verifynewpassword.length || newpassword != verifynewpassword){
+    alert("passwords do not match");
+    return
+  }
+
+
      var encryptedNewPassword = sha256(newpassword);
      $.ajax({
       url: "http://localhost:8080/BackendServer/DatabaseServlet",
