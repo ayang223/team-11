@@ -8,7 +8,7 @@ var FilterByPopulation = require('FilterByPopulation');
 var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
 var ChartDollarsCity = require('ChartDollarsCity');
-var d3map = require('d3map');
+var D3Map = require('d3map');
 
 
 class Dashboard extends React.Component{
@@ -31,7 +31,7 @@ class Dashboard extends React.Component{
         </div>
         <div className="panel"  style={{width: 450, height: 450}} >
           <ChartDollarsCity />
-          <d3map />
+          <D3Map />
         </div>
       </div>
     )
