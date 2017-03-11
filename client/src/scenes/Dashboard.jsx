@@ -12,6 +12,9 @@ var D3Map = require('d3map');
 
 
 class Dashboard extends React.Component{
+  generateGraphs(){
+    console.log("generate!");
+  }
   render(){
     return(
       <div>
@@ -29,12 +32,17 @@ class Dashboard extends React.Component{
             <FilterByPopulation />
             <FilterByElement />
             <FilterByEngagement />
+            <button className="button info" onClick={this.generateGraphs}>Generate</button>
         </div>
         <br/>
-        <div className="panel"  style={{width: 450, height: 450}} >
+        <div className="row">
+        <div className="medium-3 columns"  style={{width: 450, height: 450}} >
           <ChartDollarsCity />
-          <D3Map />
-        </div>
+          </div>
+          <div className="medium-3 columns"  style={{width: 450, height: 450}} >
+              <D3Map />
+            </div>
+            </div>
       </div>
     )
   }
