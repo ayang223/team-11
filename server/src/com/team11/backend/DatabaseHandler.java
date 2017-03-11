@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.team11.backend.RequestHandler;
 
@@ -37,27 +39,1067 @@ public class DatabaseHandler {
 
 	}
 	
-	public static boolean insertUser(int id, String username, String password, String firstName, String lastName, boolean adminPrivileges) {
+	// InventoryOutput Queries
+	public static boolean insertInventoryOutput(String funds, String focus, String outcome, String funding, int programAndar, int yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO USERS (id, username, password, first_name, last_name, admin_privileges) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO AndarDataOutput (funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
-			
+
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(FIRST, id);
-			stmt.setString(SECOND, username);
-			stmt.setString(THIRD, password);
-			stmt.setString(FOURTH, firstName);
-			stmt.setString(FIFTH, lastName);
-			stmt.setBoolean(SIXTH, adminPrivileges);
+			stmt.setString(1, funds);
+			stmt.setString(2, focus);
+			stmt.setString(3, outcome);
+			stmt.setString(4, funding);
+			stmt.setInt(5, programAndar);
+			stmt.setInt(6, yearlyAllocation);
+			stmt.setString(7, grantStart);
+			stmt.setString(8, grantEnd);
+			stmt.setString(9, description);
+			stmt.setString(10, planner);
 			int count = stmt.executeUpdate();
-			if (count > 0) {
-				success = true;
-			} else {
-				success = false;
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
 			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertTargetPopulation(int programAndar, String population) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO TargetPopulation (andar_id, population) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, population);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertProgramElement(int programAndar, String element, int level) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO ProgramElement (andar_id, element, level) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, element);
+			stmt.setInt(3, level);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertProgramSubElement(int programAndar, String subElement) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO ProgramSubElement (andar_id, subElement) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, subElement);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertGeoArea(int programAndar, String area, int level) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO GeoArea (andar_id, area, level) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, area);
+			stmt.setInt(3, level);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertMuncipality(int programAndar, String municipality, int focusPercent) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, municipality);
+			stmt.setInt(3, focusPercent);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertDonorEngagement(int programAndar, String engagement, String description) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO DonorEngagement (andar_id, engagement, description) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, engagement);
+			stmt.setString(3, description);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertOutput(int programAndar, String type, int value) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Outputs (andar_id, type, value) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, type);
+			stmt.setInt(3, value);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+
+	public static boolean insertAgency(int agencyAndar, String name) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Agency (id, name, postal) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, agencyAndar);
+			stmt.setString(2, name);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+		
+	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Program (id, agency_andar, name, website, description, num_locations) VALUES (?, ?, ?, ?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setInt(2, agencyAndar);
+			stmt.setString(3, name);
+			stmt.setString(4, website);
+			stmt.setString(5, description);
+			stmt.setInt(6, numLocations);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	public static boolean insertLocation(int programAndar, String name, String postal) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Location (andar_id, name, postal) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, programAndar);
+			stmt.setString(2, name);
+			stmt.setString(3, postal);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	// Get Dashboard Queries
+	
+	public static JsonArray getProgram() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Program";
+		JsonArray program = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int id = rs.getInt("id");
+				int agency_andar = rs.getInt("agency_andar");
+				String name = rs.getString("name");
+				String website = rs.getString("website");
+				String description = rs.getString("description");
+				int num_locations = rs.getInt("num_locations");
+				row.addProperty("id", id);
+				row.addProperty("agency_andar", agency_andar);
+				row.addProperty("name", name);
+				row.addProperty("website", website);
+				row.addProperty("description", description);
+				row.addProperty("num_locations", num_locations);
+				
+				program.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return program;
+	}
+	
+	public static JsonArray getLocation() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Location";
+		JsonArray location = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int id = rs.getInt("id");
+				int andar_id = rs.getInt("andar_id");
+				String name = rs.getString("name");
+				String postal = rs.getString("postal");
+				row.addProperty("id", id);
+				row.addProperty("andar_id", andar_id);
+				row.addProperty("name", name);
+				row.addProperty("postal", postal);
+				
+				location.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return location;
+	}
+	
+	public static JsonArray getAgency() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Agency";
+		JsonArray agency = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String postal = rs.getString("postal");
+				row.addProperty("id", id);
+				row.addProperty("name", name);
+				row.addProperty("postal", postal);
+				
+				agency.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return agency;
+	}
+	
+	public static JsonArray getInventoryOutput() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM InventoryOutput";
+		JsonArray inventoryOutput = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				String filename = rs.getString("filename");
+				String area = rs.getString("area");
+				String funds = rs.getString("funds");
+				String focus = rs.getString("focus");
+				String outcome = rs.getString("outcome");
+				String funding = rs.getString("funding");
+				int program_andar = rs.getInt("program_andar");
+				int yearly_allocation = rs.getInt("yearly_allocation");
+				String grant_date = rs.getDate("grant_date").toString();
+				String grant_end = rs.getDate("grant_end").toString();
+				String description = rs.getString("description");
+				String planner = rs.getString("planner");
+				row.addProperty("filename", filename);
+				row.addProperty("area", area);
+				row.addProperty("funds", funds);
+				row.addProperty("focus", focus);
+				row.addProperty("outcome", outcome);
+				row.addProperty("funding", funding);
+				row.addProperty("program_andar", program_andar);
+				row.addProperty("yearly_allocation", yearly_allocation);
+				row.addProperty("grant_date", grant_date);
+				row.addProperty("grant_end", grant_end);
+				row.addProperty("description", description);
+				row.addProperty("planner", planner);
+				
+				inventoryOutput.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return inventoryOutput;
+	}
+	
+	public static JsonArray getTargetPopulation() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Target Population";
+		JsonArray targetPopulation = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int andar_id = rs.getInt("andar_id");
+				String population = rs.getString("population");
+				row.addProperty("population", population);
+				row.addProperty("andar_id", andar_id);
+				
+				targetPopulation.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return targetPopulation;
+	}
+	
+	public static JsonArray getProgramElement() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Program Element";
+		JsonArray programElement = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int andar_id = rs.getInt("andar_id");
+				String element = rs.getString("element");
+				int level = rs.getInt("level");
+				row.addProperty("andar_id", andar_id);
+				row.addProperty("element", element);
+				row.addProperty("level", level);
+				
+				programElement.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return programElement;
+	}
+	
+	public static JsonArray getProgramSubElement() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Program SubElement";
+		JsonArray programSubElement = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int andar_id = rs.getInt("andar_id");
+				String subElement = rs.getString("subElement");
+				row.addProperty("andar_id", andar_id);
+				row.addProperty("subElement", subElement);
+				
+				programSubElement.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return programSubElement;
+	}
+	
+	public static JsonArray getElementDirectory() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Element Directory";
+		JsonArray elementDirectory = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				String element = rs.getString("element");
+				String subElement = rs.getString("subElement");
+				row.addProperty("element", element);
+				row.addProperty("subElement", subElement);
+				
+				elementDirectory.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return elementDirectory;
+	}
+	
+	public static JsonArray getGeoArea() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Geo Area";
+		JsonArray geoArea = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int andar_id = rs.getInt("andar_id");
+				String area = rs.getString("area");
+				int level = rs.getInt("level");
+				row.addProperty("andar_id", andar_id);
+				row.addProperty("area", area);
+				row.addProperty("level", level);
+				
+				geoArea.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return geoArea;
+	}
+	
+	public static JsonArray getMunicipality() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Municipality";
+		JsonArray municipalityTable = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int andar_id = rs.getInt("andar_id");
+				String municipality = rs.getString("municipality");
+				int focus_percentage = rs.getInt("focus_percentage");
+				row.addProperty("andar_id", andar_id);
+				row.addProperty("municipality", municipality);
+				row.addProperty("focus_percentage", focus_percentage);
+				
+				municipalityTable.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return municipalityTable;
+	}
+	
+	public static JsonArray getAreaDirectory() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Area Directory";
+		JsonArray areaDirectory = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				String geoArea = rs.getString("geoArea");
+				String municipality = rs.getString("municipality");
+				row.addProperty("geoArea", geoArea);
+				row.addProperty("municipality", municipality);
+				
+				areaDirectory.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return areaDirectory;
+	}
+	
+	public static JsonArray getDonorEngagement() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Donor Engagement";
+		JsonArray donorEngagement = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int andar_id = rs.getInt("andar_id");
+				String engagement = rs.getString("engagement");
+				String description = rs.getString("description");
+				row.addProperty("andar_id", andar_id);
+				row.addProperty("engagement", engagement);
+				row.addProperty("description", description);
+				
+				donorEngagement.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return donorEngagement;
+	}
+	
+	public static JsonArray getOutputs() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Outputs";
+		JsonArray outputs = new JsonArray();
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject row = new JsonObject();
+				int andar_id = rs.getInt("andar_id");
+				String type = rs.getString("type");
+				int value = rs.getInt("value");
+				row.addProperty("andar_id", andar_id);
+				row.addProperty("type", type);
+				row.addProperty("value", value);
+				
+				outputs.add(row);
+			}
+		} catch (SQLException e) {
+			// Do nothing
+		} catch (ClassNotFoundException e) {
+			// Do nothing
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return outputs;
+	}
+	
+	// User Queries
+	public static boolean insertUser(String username, String password, String firstName, String lastName, boolean adminPrivileges) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Users (username, password, first_name, last_name, admin_privileges) VALUES (?, ?, ?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			stmt.setString(2, password);
+			stmt.setString(3, firstName);
+			stmt.setString(4, lastName);
+			stmt.setBoolean(5, adminPrivileges);
+			int count = stmt.executeUpdate();
+			success = count > 0;
 		} catch (SQLException e) {
 			success = false;
 		} catch (ClassNotFoundException e) {
@@ -147,6 +1189,9 @@ public class DatabaseHandler {
 
 			if (rs.isBeforeFirst()) {
 				responseJson = RequestHandler.getStatusSuccess();
+				rs.next();
+				Boolean isAdmin = rs.getBoolean("admin_privileges");
+				responseJson.addProperty("admin", isAdmin);
 			} else {
 				responseJson = RequestHandler.getStatusFailed();
 			}
@@ -172,6 +1217,75 @@ public class DatabaseHandler {
 		}
 
 		return responseJson;
+	}
+
+	public static boolean changePassword(String user, String newPassword) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "UPDATE Users SET password=? WHERE username=?";
+		boolean success = true;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, newPassword);
+			stmt.setString(2, user);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
+	}
+
+	public static boolean deleteUser(String user) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "DELETE FROM Users WHERE username=?";
+		boolean success = true;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
 	}
 
 	private static Connection getConnection() throws ClassNotFoundException, SQLException {

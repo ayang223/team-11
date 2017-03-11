@@ -1,66 +1,86 @@
-/**
- * Created by nathan on 21/01/17.
- */
-var React = require('react');
+// /**
+//  * Created by nathan on 21/01/17.
+//  */
+import React, { PropTypes } from 'react';
+import LoginForm from '../components/LoginForm.jsx';
+import cookie from 'react-cookie';
+import sha256 from 'js-sha256';
+var {hashHistory} = require('react-router');
 
-var LoginForm = React.createClass({
-    onFormSubmit: function(e) {
-        e.preventDefault();
-
-        var username = this.refs.username.value;
-        var password = this.refs.password.value;
-
-        if (username.length > 0 && password.length > 0) {
-            this.refs.username.value = '';
-            this.refs.password.value = '';
-            this.props.onNewLogin(username, password);
-        }
-    },
-    render: function() {
-        return (
-            <div className="row">
-                <form onFormSubmit={this.onFormSubmit}>
-                    <p>
-                        Username:
-                    </p>
-                    <div className="medium-6 columns center">
-                        <input type="text" ref="username" placeholder="Enter username here"/>
-                    </div><br/><br/><br/>
-                    <div className="medium-6 columns center">
-                        <p>
-                            Password:
-                        </p>
-                        <input type="password" ref="password" placeholder="Enter password here"/>
-                        <p className="help-text" id="passwordHelpText">Your password must be at least x characters</p>
-                    </div>
-                    <button className="button small-centered text-center columns">Login</button>
-                </form>
-            </div>
-        )
+var Login = React.createClass({
+  getDefaultProps: function () {
+    return {
+      username: '',
+      password: ''
+    };
+  },
+  getInitialState: function () {
+    return {
+        username: this.props.username,
+        password: this.props.password
+    };
+  },
+  saveCookie : function(username, data) {
+    cookie.save('userID', username, {path: '/', maxAge:7200 }); // expires in two hours
+    if(data.admin === true){
+      cookie.save('admin', true, {path:'/', maxAge:7200});
+    }else{
+      cookie.save('admin', false, {path:'/', maxAge:7200});
     }
-})
+  },
+  handleNewName: function (u, p) {
+    this.setState({
+      username: u,
+      password: p
+    });
+    var loginUsername = u;
+    var loginPass = sha256(p);
+    //ajax call
+        $.ajax({
+            url:"http://localhost:8080/BackendServer/DatabaseServlet",
+           type: "POST",
+           data: JSON.stringify({
+             "action" : "Login User",
+             "user": loginUsername,
+             "password": loginPass
+           }),
+            dataType:"json",
+            success:function(data){
+               console.log(data)
+               document.getElementById('out').innerHTML = JSON.stringify(data);
+               if(data.status === "success"){
+                 console.log("success");
+                 //set SessionToken to hold JWT
+                 this.saveCookie(loginUsername, data);
+                 window.alert("Successfully logged in");
+                 hashHistory.push('/dashboard');
+               }
+            }.bind(this),
+            error:function(error){
+               document.getElementById('out').innerHTML = error;
+                console.log(error);
+            }
+        });
+  },
 
-class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: this.props.username,
-            password: this.props.password
-        };
-    }
+  getUser:function(){
+    return{
+      username
+    };
+  },
 
-    handleNewLogin(username, password) {
-        this.setState({username: username, password: password});
-    }
+  render: function () {
+    var username = this.state.username;
+    var password = this.state.password;
+    return (
+      <div>
+        <LoginForm onNewName={this.handleNewName}/>
+        <h1> Hello {username}</h1>
+        <div id="out"></div>
+      </div>
+    );
+  }
+});
 
-    render() {
-        return (
-            <div>
-                <h2>Login Page</h2>
-                <LoginForm onNewLogin={this.handleNewLogin}/>
-            </div>
-        )
-    }
-}
 
 module.exports = Login;

@@ -149,8 +149,8 @@ CREATE TABLE Location (
 	True: Admin user*/
 CREATE TABLE Users (
 	id integer NOT NULL AUTO_INCREMENT,
-	username varchar(32) NOT NULL,
-	password varchar(32) NOT NULL,
+	username varchar(32) NOT NULL UNIQUE,
+	password varchar(64) NOT NULL,
 	first_name varchar(32),
 	last_name varchar(32),
 	admin_privileges boolean NOT NULL,
@@ -160,5 +160,5 @@ CREATE TABLE Users (
 
 /* Initialization of main administrator account*/
 INSERT INTO Users
-VALUES (0, 'Main_Admin', 'main', NULL, NULL, TRUE);
+VALUES (0, 'Main_Admin', '0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605', NULL, NULL, TRUE);
 
