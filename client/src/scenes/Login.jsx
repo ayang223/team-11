@@ -63,6 +63,12 @@ var Login = React.createClass({
         });
   },
 
+  getUser:function(){
+    return{
+      username
+    };
+  },
+
   render: function () {
     var username = this.state.username;
     var password = this.state.password;

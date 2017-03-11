@@ -8,7 +8,6 @@ import com.team11.backend.DatabaseHandler;
  */
 public class UserManager {
 
-	private static final String USERNAME = "username";
 	private static final String USER = "user";
 	private static final String PASSWORD = "password";
 	private static final String NEW_PASSWORD = "new_password";
@@ -26,40 +25,40 @@ public class UserManager {
 			responseJson = RequestHandler.getStatusFailed();
 			return responseJson;
 		}
-		String username = requestJson.get(USER).getAsString();
+		String user = requestJson.get(USER).getAsString();
 		String newPassword = requestJson.get(NEW_PASSWORD).getAsString();
 		
-		boolean success = DatabaseHandler.changePassword(username, newPassword);
+		boolean success = DatabaseHandler.changePassword(user, newPassword);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
 	}
 
 	public static JsonObject createUser(JsonObject requestJson) {
 		JsonObject responseJson = new JsonObject();
-		if (!requestJson.has(USERNAME) || !requestJson.has(PASSWORD) || !requestJson.has(FIRST_NAME) || !requestJson.has(LAST_NAME) || !requestJson.has(ADMIN_PRIVILEGES)) {
+		if (!requestJson.has(USER) || !requestJson.has(PASSWORD) || !requestJson.has(FIRST_NAME) || !requestJson.has(LAST_NAME) || !requestJson.has(ADMIN_PRIVILEGES)) {
 			responseJson = RequestHandler.getStatusFailed();
 			return responseJson;
 		}
-		String username = requestJson.get(USERNAME).getAsString();
+		String user = requestJson.get(USER).getAsString();
 		String password = requestJson.get(PASSWORD).getAsString();
 		String firstName = requestJson.get(FIRST_NAME).getAsString();
 		String lastName = requestJson.get(LAST_NAME).getAsString();
 		boolean adminPrivileges = requestJson.get(ADMIN_PRIVILEGES).getAsBoolean();
 		
-		boolean success = DatabaseHandler.insertUser(username, password, firstName, lastName, adminPrivileges);
+		boolean success = DatabaseHandler.insertUser(user, password, firstName, lastName, adminPrivileges);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
 	}
 
 	public static JsonObject deleteUser(JsonObject requestJson) {
 		JsonObject responseJson = new JsonObject();
-		if (!requestJson.has(USERNAME)) {
+		if (!requestJson.has(USER)) {
 			responseJson = RequestHandler.getStatusFailed();
 			return responseJson;
 		}
-		String username = requestJson.get(USERNAME).getAsString();
+		String user = requestJson.get(USER).getAsString();
 		
-		boolean success = DatabaseHandler.deleteUser(username);
+		boolean success = DatabaseHandler.deleteUser(user);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
 	}

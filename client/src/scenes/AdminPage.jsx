@@ -33,7 +33,7 @@ var AccountForm = React.createClass({
       type:"POST",
       data: JSON.stringify({
         "action" : "Create User",
-        "username" : username,
+        "user" : username,
         "password" : encryptedPassword,
         "first_name" : fname,
         "last_name" : lname,
@@ -95,80 +95,52 @@ var AccountForm = React.createClass({
 
 })
 
-var ChangePasswordForm = React.createClass({
-
- changePassword:function(e){
+var DeleteUserForm = React.createClass({
+ 
+  deleteUser:function(e){
     e.preventDefault();
 
     var username = this.refs.username.value;
-    var newPassword = this.refs.newPassword.value;
-    var verifyNewPassword = this.refs.verifyNewPassword.value;
 
-    if(username.length > 0 && newPassword.length > 0 && verifyNewPassword.length){
-    this.refs.username.value = '';
-    this.refs.newPassword.value = '';
-    this.refs.verifyNewPassword.value = '';
-    this.props.onChangePassword(username,newPassword,verifyNewPassword);
-    }else{ alert("error in input");
-    return 
-  }
-
-    if(newPassword.length != verifyNewPassword.length || newPassword != verifyNewPassword){
-    alert("passwords do not match");
-    return
-  }
-  var encryptedNewPassword = sha256(newPassword);
-  $.ajax({
-    url:"http://localhost:8080/BackendServer/DatabaseServlet",
-    type: "POST",
-    data: JASON.stringify({
-      "action" : "Change Password",
-      "user" : username,
-      "new_password" : encryptedNewPassword,
-    }),
-    success:function(data){
-      console.log(data)
-    }.bind(this),
-    error:function(error){
-      console.log(error);
+    if(username.length > 0){
+       this.props.onDeleteUser(username)
+    } else{
+      alert("no user entered");
+      return
     }
-  })
 
-
+    $.ajax({
+      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      type: "POST",
+      data: JSON.stringify({
+        "action": "Delete User",
+        "user" : username
+      }),
+      success:function(data){
+        console.log(data)
+      }.bind(this),
+      error:function(error){
+        console.log(error);
+      }
+    })
   },
 
   render:function(){
     return(
-       <div className="row">
-      <h2>Change password</h2>
-      <form onFormAccount={this.onFormAccount}>
+      <div className="row">
+      <h2> Delete an User  </h2>
+      <form onDeleteUserForm={this.onDeleteUserForm}>
         <div className="row">
         <div className="medium-6 columns">
-        <p>Username: </p>
+        <p> Username: </p>
         <input type="text" ref="username" placeholder="Please enter username. "/>
         </div>
         </div>
-        <div className = "row">
-        <div className = "medium-6 coloumns">
-        <p> Password: </p>
-        <input type="password" ref ="password" placeholder="Please enter password." />
-        </div>
-        </div>
-        <div className="row">
-        <div className="medium-6 columns">
-        <p> Verify password: </p>
-        <input type="password" ref ="verifypassword" placeholder="Please re-enter password." />
-        </div>
-        </div>
-        <div className="row">
-        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.changePassword}>Change password</button>
-        </div>
+         <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.deleteUser}>Delete user</button>
       </form>
-       </div>
-
+      </div>
       )
   }
-
 })
 
 
@@ -181,6 +153,7 @@ var AdminPage = React.createClass({
       verifypassword:'',
       fname:'',
       lname:'',
+      username: '',
     };
     
   },
@@ -218,11 +191,9 @@ componentWillMount:function() {
     })
   },
 
-  handlePasswordChange:function(username, newPassword, verifyNewPassword){
+  handleDeleteUser:function(username){
     this.setState({
-      username:username,
-      newPassword : newPassword,
-      verifyNewPassword: verifyNewPassword
+      username:username
     })
   },
 
@@ -238,7 +209,7 @@ componentWillMount:function() {
        <AccountForm onNewAccount={this.handleNewAccount}/>
        </div>
        <div>
-       <ChangePasswordForm onChangePassword={this.handlePasswordChange}/>
+       <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
        </div>
      </div>
       )

@@ -1,8 +1,13 @@
+import sha256 from 'js-sha256';
+import Login from '../scenes/Login.jsx';
+import cookie from 'react-cookie';
 var React = require('react');
 
 var AccountForm = React.createClass({
    onFormSubmit: function(e){
      e.preventDefault();
+
+     var username = Login.username;
 
      var oldpassword = this.refs.oldpassword.value;
      var newpassword = this.refs.newpassword.value;
@@ -14,6 +19,22 @@ var AccountForm = React.createClass({
        this.refs.verifynewpassword.value = '';
        this.props.onNewAccount(oldpassword,newpassword,verifynewpassword);
      }
+
+    // var encryptedNewPassword = sha256(newpassword);
+    //  $.ajax({
+    //   url: "http://localhost:8080/BackendServer/DatabaseServlet",
+    //   data: JSON.stringify({
+    //     "action":
+    //     "user":
+    //     "new_password":
+    //   }),
+    //   success:function(data){
+    //     console.log(data)
+    //   }.bind(this),
+    //   error:function(error){
+    //     console.log(error);
+    //   }
+    // })
    },
 
      render: function(){
@@ -40,6 +61,9 @@ var AccountForm = React.createClass({
          </div>
          <div className="row">
          <button className="button small-centered text-center columns" type="submit" style={{width:150, height:40}}>Create account</button>
+         </div>
+         <div>
+         <p> {cookie.load('userID')} </p>
          </div>
      </form>
      </div>
