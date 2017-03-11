@@ -21,8 +21,8 @@ function validateSession(nextState, replace, callback) {
     }
 }
 function validateSessionAdmin(nextState, replace, callback) {
-    if (typeof cookie.load('userID') === "undefined" && typeof cookie.load('admin') === 'false') {
-        window.alert("Only Admin can import");
+    if (typeof cookie.load('userID') === "undefined" || cookie.load('admin') === 'false') {
+        window.alert("Only Admins can import");
         hashHistory.push('/dashboard');
     }else{
       callback();
