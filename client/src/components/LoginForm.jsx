@@ -18,7 +18,7 @@ var LoginForm = React.createClass({
         return (
             <div className="row">
                 <form onSubmit={this.onFormSubmit}>
-                    <p>
+                    <p style={{margin:"10px"}}>
                         Username :
                     </p>
                     <div className="medium-6 columns center">
@@ -29,7 +29,7 @@ var LoginForm = React.createClass({
                             Password:
                         </p>
                         <input type="password" ref="password" placeholder="Enter password here"/>
-                        <p className="help-text" id="passwordHelpText">Your password must be at least x characters</p>
+                        <p className="help-text" id="passwordHelpText">If you don't have an account, speak to an Administrator to set up one</p>
                     </div>
                     <button className="button small-centered text-center columns">Login</button>
                 </form>

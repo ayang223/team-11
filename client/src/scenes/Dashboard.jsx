@@ -20,6 +20,8 @@ class Dashboard extends React.Component{
   }
   generateGraphs(){
     console.log("generate!");
+    //Need to pull data from all filters, if any filter's props are undefined we need to default to get all here or the backend.. ?
+
   }
   componentWillMount(){
     var _this = this;
@@ -51,7 +53,6 @@ class Dashboard extends React.Component{
         <div>
           <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
           <br/>
-          <div id='errorOut'></div>
           <div className="row">
             <FilterByYear />
             <FilterByCity />
@@ -67,7 +68,6 @@ class Dashboard extends React.Component{
               <button className="button info" onClick={this.generateGraphs}>Generate</button>
           </div>
           <br/>
-          <div id="errorOut"></div>
           <div className="row">
           <div className="medium-3 columns"  style={{width: 450, height: 450}} >
             <ChartDollarsCity />
