@@ -361,7 +361,7 @@ public class DatabaseHandler {
 	public static boolean insertAgency(int agencyAndar, String name) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT IGNORE INTO Agency (id, name, postal) VALUES (?, ?)";
+		String sql = "INSERT IGNORE INTO Agency (id, name) VALUES (?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();

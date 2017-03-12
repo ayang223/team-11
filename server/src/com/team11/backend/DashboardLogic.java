@@ -39,35 +39,34 @@ public class DashboardLogic {
 	public static JsonObject importOutput(JsonObject requestJson) {
 		boolean success = true;
 		JsonArray arrayJson = requestJson.get("data").getAsJsonArray();
-		JsonObject itemJson = new JsonObject();
+		JsonArray itemJson = new JsonArray();
 				
 		// Store column headers into an array list
 		// JSON range for InventoryOutput array elements: FIELD 1-158
 		ArrayList<String> headers = new ArrayList<String>();
-		itemJson = arrayJson.get(0).getAsJsonObject();
+		itemJson = arrayJson.get(0).getAsJsonArray();
 		
-		for (int column = 1; column <= arrayJson.get(0).getAsJsonObject().size(); column++) {
-			String field = "FIELD" + Integer.toString(column);
-			String fieldHeader = itemJson.get(field).getAsString();
+		for (int column = 0; column < itemJson.size()-1; column++) {
+			String fieldHeader = itemJson.get(column).getAsString();
 			headers.add(fieldHeader);
 		}
 		
 		// Data extraction and query insertion
 		// Data starts at index 1 of arrayJson
-		for (int i = 1; i < arrayJson.size(); i++) {
-			itemJson = arrayJson.get(i).getAsJsonObject();
+		for (int i = 1; i < arrayJson.size()-1; i++) {
+			itemJson = arrayJson.get(i).getAsJsonArray();
 			
 			// Get InventoryOutput table data
-			String funds = itemJson.get("FIELD1").getAsString();
-			String focus = itemJson.get("FIELD2").getAsString();
-			String outcome = itemJson.get("FIELD3").getAsString();
-			String funding = itemJson.get("FIELD4").getAsString();
-			int programAndar = itemJson.get("FIELD7").getAsInt();
-			float yearlyAllocation = itemJson.get("FIELD9").getAsFloat();
-			String grantStart = itemJson.get("FIELD10").getAsString(); 
-			String grantEnd = itemJson.get("FIELD11").getAsString();
-			String description = itemJson.get("FIELD12").getAsString();
-			String planner = itemJson.get("FIELD13").getAsString();
+			String funds = itemJson.get(0).getAsString();
+			String focus = itemJson.get(1).getAsString();
+			String outcome = itemJson.get(2).getAsString();
+			String funding = itemJson.get(3).getAsString();
+			int programAndar = itemJson.get(6).getAsInt();
+			float yearlyAllocation = itemJson.get(8).getAsFloat();
+			String grantStart = itemJson.get(9).getAsString(); 
+			String grantEnd = itemJson.get(10).getAsString();
+			String description = itemJson.get(11).getAsString();
+			String planner = itemJson.get(12).getAsString();
 			
 			// Fixes any formatting for InventoryOutput variables
 			grantStart = grantStart.substring(0,4) + "-" + grantStart.substring(4,6) + "-" + grantStart.substring(6,8);
@@ -79,11 +78,10 @@ public class DashboardLogic {
 			}
 			
 			// Variable to help check what data we're looking at
-			// First data category starts at FIELD14
+			// First data category starts at index 13
 			String dataCategory = "";
-			String fieldName;
 			String temp;
-			int fieldNum = 14;
+			int fieldNum = 13;
 			
 			dataCategory = checkCategory(headers, fieldNum, dataCategory);
 			fieldNum++;
@@ -91,11 +89,10 @@ public class DashboardLogic {
 			// NOTE: This procedure must match the csv column ordering
 			// Get variables and inserts into "Target Population" table
 			while (dataCategory.equals("Target Population")) {
-				fieldName = "FIELD" + Integer.toString(fieldNum);
-				temp = itemJson.get(fieldName).getAsString();
+				temp = itemJson.get(fieldNum).getAsString();
 				
 				if (temp.equals("1")) {
-					String populationItem = headers.get(fieldNum-1);
+					String populationItem = headers.get(fieldNum);
 					success = DatabaseHandler.insertTargetPopulation(programAndar, populationItem);
 					if (!success) {
 						return RequestHandler.getStatusFailed();
@@ -113,8 +110,7 @@ public class DashboardLogic {
 				String programCategory = "";
 				programCategory = checkProgram(headers, fieldNum, programCategory);
 
-				fieldName = "FIELD" + Integer.toString(fieldNum);
-				int level = itemJson.get(fieldName).getAsInt();
+				int level = itemJson.get(fieldNum).getAsInt();
 				
 				success = DatabaseHandler.insertProgramElement(programAndar, programCategory, level);
 				if (!success) {
@@ -123,10 +119,9 @@ public class DashboardLogic {
 				fieldNum++;
 				
 				// Stores subelement values
-				fieldName = "FIELD" + Integer.toString(fieldNum);
-				temp = itemJson.get(fieldName).getAsString();
+				temp = itemJson.get(fieldNum).getAsString();
 				
-				String header = headers.get(fieldNum-1);
+				String header = headers.get(fieldNum);
 				dataCategory = checkCategory(headers, fieldNum, dataCategory);
 				if (dataCategory.equals("Program Elements")) {
 					
@@ -138,9 +133,8 @@ public class DashboardLogic {
 						
 						fieldNum++;
 						
-						fieldName = "FIELD" + Integer.toString(fieldNum);
-						temp = itemJson.get(fieldName).getAsString();
-						header = headers.get(fieldNum-1);
+						temp = itemJson.get(fieldNum).getAsString();
+						header = headers.get(fieldNum);
 						
 						dataCategory = checkCategory(headers, fieldNum, dataCategory);
 					} 
@@ -156,9 +150,8 @@ public class DashboardLogic {
 				geoArea = checkGeoArea(headers, fieldNum, geoArea);
 				String currArea = geoArea;
 				
-				fieldName = "FIELD" + Integer.toString(fieldNum);
 				int level;
-				String levelString = itemJson.get(fieldName).getAsString();
+				String levelString = itemJson.get(fieldNum).getAsString();
 				
 				if (!levelString.equals("")){
 					level = Integer.parseInt(levelString);
@@ -167,12 +160,11 @@ public class DashboardLogic {
 					// Do nothing
 				}
 					fieldNum++;
-					fieldName = "FIELD" + Integer.toString(fieldNum);
 					
 					while (currArea.equals(geoArea) && dataCategory.equals("Geographic Focus Area")){
-						String muncipality = headers.get(fieldNum-1);
+						String muncipality = headers.get(fieldNum);
 						int focusPercent;
-						String percentString = itemJson.get(fieldName).getAsString(); 
+						String percentString = itemJson.get(fieldNum).getAsString(); 
 						
 						if (!percentString.equals("")){
 							focusPercent = Integer.parseInt(percentString);
@@ -185,7 +177,6 @@ public class DashboardLogic {
 						}
 						
 						fieldNum++;
-						fieldName = "FIELD" + Integer.toString(fieldNum);
 						geoArea = checkGeoArea(headers, fieldNum, currArea);
 						dataCategory = checkCategory(headers, fieldNum, dataCategory);
 					} 
@@ -195,11 +186,10 @@ public class DashboardLogic {
 			
 			// Get variables and inserts into "Donor Engagement" table
 			while (dataCategory.equals("Donor Engagement")) {
-				fieldName = "FIELD" + Integer.toString(fieldNum);
-				temp = itemJson.get(fieldName).getAsString();
+				temp = itemJson.get(fieldNum).getAsString();
 				
 				if (temp.equals("1")) {
-					String donorEngagement = headers.get(fieldNum-1);
+					String donorEngagement = headers.get(fieldNum);
 					success = DatabaseHandler.insertDonorEngagement(programAndar, donorEngagement, temp);
 					if (!success) {
 						return RequestHandler.getStatusFailed();
@@ -213,11 +203,10 @@ public class DashboardLogic {
 			
 			// Get variables and inserts into "Outputs" table
 			while (dataCategory.equals("Outputs") && fieldNum <= headers.size()) {
-				fieldName = "FIELD" + Integer.toString(fieldNum);
-				String value = itemJson.get(fieldName).getAsString();
+				String value = itemJson.get(fieldNum).getAsString();
 				
 				if (!value.equals("")) {
-					String output = headers.get(fieldNum-1);
+					String output = headers.get(fieldNum);
 					success = DatabaseHandler.insertOutput(programAndar, output, Integer.parseInt(value));
 					if (!success) {
 						return RequestHandler.getStatusFailed();
@@ -238,27 +227,23 @@ public class DashboardLogic {
 		// JSON range for Postal codes: FIELD 1-?
 		boolean success = true;
 		JsonArray arrayJson = requestJson.get("data").getAsJsonArray();
-		JsonObject itemJson = new JsonObject();
+		JsonArray itemJson = new JsonArray();
 
-		String fieldName;
+		for (int row = 1; row < arrayJson.size()-1; row++) {
+			itemJson = arrayJson.get(row).getAsJsonArray();
 
-		for (int row = 1; row <= arrayJson.size(); row++) {
-			itemJson = arrayJson.get(row).getAsJsonObject();
-
-			int agencyAndar = itemJson.get("FIELD1").getAsInt();
-			String agencyName = itemJson.get("FIELD2").getAsString();
-			int programAndar = itemJson.get("FIELD3").getAsInt();
-			String programName = itemJson.get("FIELD4").getAsString();
-			String website = itemJson.get("FIELD5").getAsString();
-			String description = itemJson.get("FIELD6").getAsString();
+			int agencyAndar = itemJson.get(0).getAsInt();
+			String agencyName = itemJson.get(1).getAsString();
+			int programAndar = itemJson.get(2).getAsInt();
+			String programName = itemJson.get(3).getAsString();
+			String website = itemJson.get(4).getAsString();
+			String description = itemJson.get(5).getAsString();
 
 			int numLocations = 0;
 
-			for (int column = 8; column <= itemJson.size(); column = column + 2) {
-				fieldName = "FIELD" + Integer.toString(column);
-				String locationName = itemJson.get(fieldName).getAsString();
-				fieldName = "FIELD" + Integer.toString(column + 1);
-				String locationPostal = itemJson.get(fieldName).getAsString();
+			for (int column = 7; column < itemJson.size(); column = column + 2) {
+				String locationName = itemJson.get(column).getAsString();
+				String locationPostal = itemJson.get(column+1).getAsString();
 
 				if (!locationName.equals("") || !locationPostal.equals("")) {
 					numLocations++;
@@ -266,21 +251,20 @@ public class DashboardLogic {
 			}
 
 			// These query has to happen before the location queries
+			
+			success = DatabaseHandler.insertAgency(agencyAndar, agencyName);
+			if (!success) {
+				return RequestHandler.getStatusFailed();
+			}
+			
 			success = DatabaseHandler.insertProgram(programAndar, agencyAndar, programName, website, description, numLocations);
 			if (!success) {
 				return RequestHandler.getStatusFailed();
 			}
 
-			success = DatabaseHandler.insertAgency(agencyAndar, agencyName);
-			if (!success) {
-				return RequestHandler.getStatusFailed();
-			}
-
-			for (int column = 8; column <= arrayJson.get(row).getAsJsonArray().size(); column = column + 2) {
-				fieldName = "FIELD" + Integer.toString(column);
-				String locationName = itemJson.get(fieldName).getAsString();
-				fieldName = "FIELD" + Integer.toString(column + 1);
-				String locationPostal = itemJson.get(fieldName).getAsString();
+			for (int column = 7; column < itemJson.size(); column = column + 2) {
+				String locationName = itemJson.get(column).getAsString();
+				String locationPostal = itemJson.get(column+1).getAsString();
 
 				if (!locationName.equals("") || !locationPostal.equals("")) {
 					success = DatabaseHandler.insertLocation(programAndar, locationName, locationPostal);
