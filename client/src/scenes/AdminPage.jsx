@@ -200,7 +200,7 @@ componentWillMount:function() {
   render:function(){
     return(
      <div>
-       <h2>Admin Page</h2>
+       <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
        <h2>List of users: </h2>
        <p>{this.getUsers}</p>
        <div id="out">

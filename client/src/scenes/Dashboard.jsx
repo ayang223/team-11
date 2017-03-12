@@ -54,7 +54,7 @@ class Dashboard extends React.Component{
     if(this.state.data){
       return(
         <div>
-          <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
+          <h2 style={{margin:"20px", textAlign: "center"}}>Dashboard Page</h2>
           <br/>
           <div className="row">
             <FilterByYear />
