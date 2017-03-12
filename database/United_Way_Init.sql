@@ -127,8 +127,8 @@ CREATE TABLE Program (
 CREATE TABLE Location (
 	id integer NOT NULL AUTO_INCREMENT,
 	andar_id integer NOT NULL,
-	name varchar(128) NOT NULL,
-	postal varchar(8) NOT NULL,
+	name varchar(128),
+	postal varchar(8), 
 
 	PRIMARY KEY (id),
 
