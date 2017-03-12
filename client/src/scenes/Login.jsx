@@ -7,6 +7,15 @@ import cookie from 'react-cookie';
 import sha256 from 'js-sha256';
 var {hashHistory} = require('react-router');
 
+var divStyle={
+  padding: "10%"
+}
+
+var h1style={
+  align: "center",
+  margin: "20px"
+}
+
 var Login = React.createClass({
   getDefaultProps: function () {
     return {
@@ -74,10 +83,12 @@ var Login = React.createClass({
     var password = this.state.password;
     return (
       <div>
+      <div className="centered" style={divStyle}>
+      <h2 style={h1style}>Welcome! Please login to continue </h2>
         <LoginForm onNewName={this.handleNewName}/>
-        <h1> Hello {username}</h1>
         <div id="out"></div>
       </div>
+    </div>
     );
   }
 });

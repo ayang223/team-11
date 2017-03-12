@@ -21,11 +21,11 @@ var AccountForm = React.createClass({
      }
 
      if(newpassword.length != verifynewpassword.length || newpassword != verifynewpassword){
-    alert("passwords do not match");
-    return
-  }
+       alert("passwords do not match");
+       return
+     }
 
-
+     var encryptedOldPassword = sha256(oldpassword);
      var encryptedNewPassword = sha256(newpassword);
      $.ajax({
       url: "http://localhost:8080/BackendServer/DatabaseServlet",
@@ -33,6 +33,7 @@ var AccountForm = React.createClass({
       data: JSON.stringify({
         "action":"Change Password",
         "user": username,
+        "old_password": encryptedOldPassword,
         "new_password": encryptedNewPassword
       }),
       success:function(data){
@@ -104,7 +105,7 @@ var Account = React.createClass({
     var oldpassword = this.state.oldpassword;
     var newpassword = this.state.newpassword;
     var verifynewpassword = this.state.verifynewpassword;
-    
+
     return(
       <div>
      <h2>Account Page</h2>
