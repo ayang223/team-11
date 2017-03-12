@@ -4,6 +4,8 @@
  var React = require('react');
  var {Link} = require('react-router');
  import cookie from 'react-cookie';
+var logo = 'src/css/unitedWay.png';
+
 
 var navStyle ={
   backgroundColor: "DimGrey",

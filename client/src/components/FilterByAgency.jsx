@@ -19,15 +19,27 @@ var FilterByAgency = React.createClass({
       array.push(JSON.stringify(e.target.value));
     }
   },
+  createMetadata : function(data){
+    var metadata = {};
+    var agency = data.Agency;
+    var agencyNames = [];
+    for(var i =0; i< agency.length; i++){
+      agencyNames.push(agency[i].name)
+    }
+    return agencyNames;
+  },
   render:function(){
-    var message = 'FilterByAgency: ' + this.state.selectValue;
+    var dataFromDash = this.props.data;
+    var message = 'Filter Agencies: ' + this.state.selectValue;
+    var agencyNames = this.createMetadata(dataFromDash);
+    const listItems = agencyNames.map((name) =>
+          <option key={name} value={name} style={{margin:"2px"}}>{name}</option>
+        );
     return(
       <div className="medium-3 columns">
-        <label>Select agency</label>
+        <label>Select Agency</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="YMCA of Greater Vancouver">YMCA of Greater Vancouver</option>
-          <option value="SUCCESS">SUCCESS</option>
-          <option value="Big Brothers of Greater Vancouver">Big Brothers of Greater Vancouver</option>
+          {listItems}
         </select>
         <label>{message}</label>
       </div>
