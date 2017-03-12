@@ -32,9 +32,6 @@ var isAdmin = true;
            <div className="top-bar-left">
              <ul className="menu">
              <li className="menu-text">United Way</li>
-             <li>
-               <Link to="/" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Home</Link>
-              </li>
               <li>
                 <Link to="/import" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Import</Link>
               </li>

@@ -28,16 +28,24 @@ function validateSessionAdmin(nextState, replace, callback) {
       callback();
     }
 }
+function isLoggedIn(nextState, replace, callback){
+  if(typeof cookie.load('userID') !== "undefined"){
+    window.alert("You are already logged in! Redirecting you to Dashboard Page. ");
+    hashHistory.push('/dashboard');
+  }else{
+    callback();
+  }
+}
 
 ReactDOM.render(
     <Router history={hashHistory}>
     <Route path="/" component={Main}>
-        <Route path="/login" component={Login}/>
+        <Route path="/login" component={Login} onEnter={isLoggedIn}/>
         <Route path="/account" onEnter={validateSession} component={Account} />
         <Route path="/import"  onEnter={validateSessionAdmin} component={Import} />
         <Route path="/dashboard"  onEnter={validateSession} component={Dashboard}/>
         <Route path="/logout" component={Logout}/>
         <Route path="/adminpage" component={AdminPage}/>
-        <IndexRoute component={Login}/>
+        <IndexRoute component={Login} onEnter={isLoggedIn}/>
     </Route>
 </Router>, document.getElementById('app'));
