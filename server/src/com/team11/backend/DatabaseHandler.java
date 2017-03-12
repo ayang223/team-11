@@ -1182,22 +1182,29 @@ public class DatabaseHandler {
 		return responseJson;
 	}
 
-	public static boolean changePassword(String user, String newPassword) {
+	public static boolean changePassword(String user, String oldPassword, String newPassword) {
+		boolean verified = false;
+
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "UPDATE Users SET password=? WHERE username=?";
-		boolean success = true;
+		String sql = "SELECT * FROM Users WHERE username=? AND password=?";
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, newPassword);
-			stmt.setString(2, user);
-			int count = stmt.executeUpdate();
-			success = count > 0;
+			stmt.setString(FIRST, user);
+			stmt.setString(SECOND, oldPassword);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.isBeforeFirst()) {
+				verified = true;
+				rs.next();
+			} else {
+				verified = false;
+			}
 		} catch (SQLException e) {
-			success = false;
+			verified = false;
 		} catch (ClassNotFoundException e) {
-			success = false;
+			verified = false;
 		} finally {
 			if (stmt != null) {
 				try {
@@ -1214,7 +1221,42 @@ public class DatabaseHandler {
 				}
 			}
 		}
-		return success;
+
+		if (verified) {
+			conn = null;
+			stmt = null;
+			sql = "UPDATE Users SET password=? WHERE username=?";
+			boolean success = true;
+			try {
+				conn = getConnection();
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, newPassword);
+				stmt.setString(2, user);
+				int count = stmt.executeUpdate();
+				success = count > 0;
+			} catch (SQLException e) {
+				success = false;
+			} catch (ClassNotFoundException e) {
+				success = false;
+			} finally {
+				if (stmt != null) {
+					try {
+						stmt.close();
+					} catch (SQLException e) {
+						// Do nothing
+					}
+				}
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						// Do nothing
+					}
+				}
+			}
+			return success;
+		}
+		return false;
 	}
 
 	public static boolean deleteUser(String user) {

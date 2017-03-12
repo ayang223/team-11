@@ -10,6 +10,7 @@ public class UserManager {
 
 	private static final String USER = "user";
 	private static final String PASSWORD = "password";
+	private static final String OLD_PASSWORD = "old_password";
 	private static final String NEW_PASSWORD = "new_password";
 	private static final String FIRST_NAME = "first_name";
 	private static final String LAST_NAME = "last_name";
@@ -21,14 +22,15 @@ public class UserManager {
 
 	public static JsonObject changePassword(JsonObject requestJson) {
 		JsonObject responseJson = new JsonObject();
-		if (!requestJson.has(USER) || !requestJson.has(NEW_PASSWORD)) {
+		if (!requestJson.has(USER) || !requestJson.has(OLD_PASSWORD) || !requestJson.has(NEW_PASSWORD)) {
 			responseJson = RequestHandler.getStatusFailed();
 			return responseJson;
 		}
 		String user = requestJson.get(USER).getAsString();
+		String oldPassword = requestJson.get(OLD_PASSWORD).getAsString();
 		String newPassword = requestJson.get(NEW_PASSWORD).getAsString();
 		
-		boolean success = DatabaseHandler.changePassword(user, newPassword);
+		boolean success = DatabaseHandler.changePassword(user, oldPassword, newPassword);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
 	}
