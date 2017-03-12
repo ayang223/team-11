@@ -9,7 +9,9 @@ class Main extends React.Component{
     return(
       <div>
       <Nav />
+      <div className="small-11 small-centered columns">
       {this.props.children}
+    </div>
     </div>
     )
   }
