@@ -635,20 +635,16 @@ public class DatabaseHandler {
 
 			while (rs.next()) {
 				JsonObject row = new JsonObject();
-				String filename = rs.getString("filename");
-				String area = rs.getString("area");
 				String funds = rs.getString("funds");
 				String focus = rs.getString("focus");
 				String outcome = rs.getString("outcome");
 				String funding = rs.getString("funding");
 				int program_andar = rs.getInt("program_andar");
-				int yearly_allocation = rs.getInt("yearly_allocation");
+				float yearly_allocation = rs.getFloat("yearly_allocation");
 				String grant_date = rs.getDate("grant_date").toString();
 				String grant_end = rs.getDate("grant_end").toString();
 				String description = rs.getString("description");
 				String planner = rs.getString("planner");
-				row.addProperty("filename", filename);
-				row.addProperty("area", area);
 				row.addProperty("funds", funds);
 				row.addProperty("focus", focus);
 				row.addProperty("outcome", outcome);
@@ -790,8 +786,10 @@ public class DatabaseHandler {
 			while (rs.next()) {
 				JsonObject row = new JsonObject();
 				int andar_id = rs.getInt("andar_id");
+				String element = rs.getString("element");
 				String subElement = rs.getString("subElement");
 				row.addProperty("andar_id", andar_id);
+				row.addProperty("element", element);
 				row.addProperty("subElement", subElement);
 				
 				programSubElement.add(row);
@@ -818,50 +816,6 @@ public class DatabaseHandler {
 		}
 
 		return programSubElement;
-	}
-	
-	public static JsonArray getElementDirectory() {
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Element Directory";
-		JsonArray elementDirectory = new JsonArray();
-		try {
-			conn = getConnection();
-
-			stmt = conn.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				JsonObject row = new JsonObject();
-				String element = rs.getString("element");
-				String subElement = rs.getString("subElement");
-				row.addProperty("element", element);
-				row.addProperty("subElement", subElement);
-				
-				elementDirectory.add(row);
-			}
-		} catch (SQLException e) {
-			// Do nothing
-		} catch (ClassNotFoundException e) {
-			// Do nothing
-		} finally {
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					// Do nothing
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// Do nothing
-				}
-			}
-		}
-
-		return elementDirectory;
 	}
 	
 	public static JsonArray getGeoArea() {

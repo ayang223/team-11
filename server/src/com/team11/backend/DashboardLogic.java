@@ -28,7 +28,6 @@ public class DashboardLogic {
 		dashboardJson.add("Target Population", DatabaseHandler.getTargetPopulation());
 		dashboardJson.add("Program Element", DatabaseHandler.getProgramElement());
 		dashboardJson.add("Program SubElement", DatabaseHandler.getProgramSubElement());
-		dashboardJson.add("Element Directory", DatabaseHandler.getElementDirectory());
 		dashboardJson.add("Geo Area", DatabaseHandler.getGeoArea());
 		dashboardJson.add("Municipality", DatabaseHandler.getMunicipality());
 		dashboardJson.add("Area Directory", DatabaseHandler.getAreaDirectory());
