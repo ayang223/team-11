@@ -1,3 +1,4 @@
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 var React = require('react');
 var Baby = require('babyparse');
 
@@ -8,8 +9,15 @@ var Import = React.createClass({
 
         // TODO: need to do a call to the backend to give the data
         // $.ajax({
-        //     url: '',
+        //     url:"http://localhost:8080/BackendServer/DatabaseServlet",
         //     data: fd,
+          data: JSON.stringify({
+          "action" : "Save Data From Imported CSV",
+          "name": "Csv name",
+          "field1": "info1",
+          "field2": "info2",
+          "field3": "info3"
+        }),
         //     processData: false,
         //     contentType: false,
         //     type: 'POST',
@@ -49,6 +57,16 @@ var Import = React.createClass({
                <h2>JSON format: </h2>
                <div id="json">
                </div>
+               <h2>Button: <input type="radio" value="RButton" name="Rbutton"/> just for test</h2>
+               you need: npm install react-radio-buttons --save
+                 <RadioGroup onChange={ this.onChange } horizontal>
+                   <RadioButton value="1">
+                     for program
+                   </RadioButton>
+                   <RadioButton value="2">
+                     for inventory output
+                   </RadioButton>
+                 </RadioGroup>
             </div>
         );
     }
