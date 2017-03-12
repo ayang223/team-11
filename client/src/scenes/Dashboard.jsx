@@ -8,6 +8,8 @@ var FilterByPopulation = require('FilterByPopulation');
 var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
 var ChartDollarsCity = require('ChartDollarsCity');
+var ChartMoneyInvested = require('ChartMoneyInvested');
+var TableExample = require('TableExample');
 var D3Map = require('d3map');
 
 
@@ -37,7 +39,7 @@ class Dashboard extends React.Component{
             alert("Error Message: Something happened during the request to get data from server");
           }else{
            _this.setState({
-               data: result
+               data: JSON.stringify(result)
              })
            }
         }.bind(this),
@@ -71,6 +73,8 @@ class Dashboard extends React.Component{
           <div className="row">
           <div className="medium-3 columns"  style={{width: 450, height: 450}} >
             <ChartDollarsCity />
+            <ChartMoneyInvested data={this.state.data}/>
+            <TableExample />
             </div>
             <div className="medium-3 columns"  style={{width: 450, height: 450}} >
                 <D3Map />
