@@ -2,22 +2,22 @@ import { RadioGroup, RadioButton } from 'react-radio-buttons';
 var React = require('react');
 var Baby = require('babyparse');
 
+
 var Import = React.createClass({
     uploadFile: function (e) {
         var fd = new FormData();
         fd.append('file', this.refs.file.getDOMNode().files[0]);
-
         // TODO: need to do a call to the backend to give the data
         // $.ajax({
         //     url:"http://localhost:8080/BackendServer/DatabaseServlet",
         //     data: fd,
-          data: JSON.stringify({
-          "action" : "Save Data From Imported CSV",
-          "name": "Csv name",
-          "field1": "info1",
-          "field2": "info2",
-          "field3": "info3"
-        }),
+        //   data: JSON.stringify({
+        //   "action" : "Save Data From Imported CSV",
+        //   "name": "Csv name",
+        //   "field1": "info1",
+        //   "field2": "info2",
+        //   "field3": "info3"
+        // }),
         //     processData: false,
         //     contentType: false,
         //     type: 'POST',
@@ -25,7 +25,7 @@ var Import = React.createClass({
         //         alert(data);
         //     }
         // });
-        e.preventDefault()
+        // e.preventDefault()
     },
 
     convertJSON : function(e){
@@ -44,12 +44,68 @@ var Import = React.createClass({
        reader.readAsBinaryString(file);
     },
 
+      importProgram : function(e){
+        var file = document.getElementById('CSVUpload').files[0];
+         var reader = new FileReader();
+         reader.onload = function () {
+             var result = reader.result;
+             var parsed = Baby.parse(result);
+             var program = JSON.stringify(parsed, null, 2);
+             console(program+"program!")
+           };
+        $.ajax({
+             url:"http://localhost:8080/BackendServer/DatabaseServlet",
+             type: "POST",
+             data: JSON.stringify({
+               "action" : "Import Programs",
+               "program" : program,
+             }),
+             dataType:"json",
+             success:function(data){
+                console.log(data)
+              }.bind(this),
+              error:function(error){
+                console.log(error);
+            }
+          });
+        },
+
+      importOutput : function(e){
+        var file = document.getElementById('CSVUpload').files[0];
+         var reader = new FileReader();
+         reader.onload = function () {
+             var result = reader.result;
+             var parsed = Baby.parse(result);
+             var output = JSON.stringify(parsed, null, 2);
+             console(output+"output!")
+           };
+        $.ajax({
+           url:"http://localhost:8080/BackendServer/DatabaseServlet",
+           type: "POST",
+           data: JSON.stringify({
+             "action" : "Import Output",
+             "output": output,
+           }),
+           dataType:"json",
+           success:function(data){
+              console.log(data)
+              if(data.status === "success"){
+              console.log("success");
+            }
+          }.bind(this),
+          error:function(error){
+            console.log(error);
+          }
+        });
+      },
+
     render: function() {
         return (
             <div>
                <form ref="uploadForm" className="uploader" encType="multipart/form-data" >
                    <input ref="file" id="CSVUpload" type="file" name="file" className="upload-file"/>
                    <input type="button" ref="button" value="Upload" onClick={this.convertJSON} />
+                   <br/><br/>
                </form>
                <h2>String format: </h2>
                <div id="out">
@@ -57,16 +113,17 @@ var Import = React.createClass({
                <h2>JSON format: </h2>
                <div id="json">
                </div>
-               <h2>Button: <input type="radio" value="RButton" name="Rbutton"/> just for test</h2>
-               you need npm install react-radio-buttons --save
-                 <RadioGroup onChange={ this.onChange } horizontal>
-                   <RadioButton value="1">
-                     for program
+               Reminder: you need npm install react-radio-buttons --save
+               <br/><br/>
+                 <RadioGroup  horizontal>
+                   <RadioButton value="program" onClick={this.importProgram}>
+                     for programs
                    </RadioButton>
-                   <RadioButton value="2">
+                   <RadioButton value="output" onClick={this.importOutput}>
                      for inventory output
                    </RadioButton>
                  </RadioGroup>
+                 <br/><br/>
             </div>
         );
     }
