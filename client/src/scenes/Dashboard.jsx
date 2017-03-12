@@ -39,7 +39,7 @@ class Dashboard extends React.Component{
             alert("Error Message: Something happened during the request to get data from server");
           }else{
            _this.setState({
-               data: JSON.stringify(result)
+               data: result
              })
            }
         }.bind(this),
