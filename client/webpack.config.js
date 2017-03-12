@@ -38,6 +38,8 @@ externals: {
       FilterByElement: 'src/components/FilterByElement.jsx',
       FilterByEngagement: 'src/components/FilterByEngagement.jsx',
       ChartDollarsCity: 'src/components/ChartDollarsCity.jsx',
+      ChartMoneyInvested: 'src/components/ChartMoneyInvested.jsx',
+      TableExample: 'src/components/TableExample.jsx',
       d3map: 'src/components/d3map.jsx',
       'chartjs': require.resolve('chart.js')
     },
@@ -52,6 +54,12 @@ externals: {
         },
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_component)/
+      },
+      { 
+        test: /\.css$/, 
+        loader: "style-loader!css-loader",
+        include: /fixed-data-table/,
+        exclude: /foundation-sites/,
       }
     ]
   },
