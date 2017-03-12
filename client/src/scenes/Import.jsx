@@ -3,7 +3,8 @@ var React = require('react');
 var Baby = require('babyparse');
 
 var buttonStyle={
-  margin : "20px"
+  margin : "20px",
+  align: "center"
 }
 
 var Import = React.createClass({
@@ -73,7 +74,7 @@ var Import = React.createClass({
                   success:function(data){
                     if(data.status === 'failed'){
                       alert("Error Message: Something happened during the request to send data from server, please contact your Administrator");
-                      document.getElementById('errorOut').innerHTML = "Upload Failed, may be bad connection to Database, or the data already exists";
+                      document.getElementById('errorOut').innerHTML = "Upload Failed, possibly bad connection to database, or the data already exists. Please contact your Administrator";
                     }else{
                       document.getElementById('errorOut').innerHTML = "Upload Success!";
                     }
@@ -91,15 +92,17 @@ var Import = React.createClass({
 
     render: function() {
         return (
-            <div>
+            <div className="row" style={{padding: "10%"}}>
+              <h2 style={{margin:"20px"}}>Welcome to the Import Page!</h2>
+              <p className="help-text" style={{margin:"20px", textAlign: "center"}}>You can import new Andar Data below. Please click the appropriate upload button depending on the data you are uploading</p>
                <form ref="uploadForm" className="uploader" encType="multipart/form-data" >
                    <input className="button success button" style={buttonStyle}  ref="file" id="CSVUpload" type="file" name="file" className="upload-file"/>
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Program File" onClick={this.importProgram} />
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Output File" onClick={this.importOutput} />
                    <br/><br/>
                </form>
-               <h2>Status of upload:</h2>
-               <div id="errorOut"></div>
+               <h3 style={{margin: "20px"}}>Status of Upload</h3>
+               <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here</div>
                <br/><br/>
 
                  <br/><br/>

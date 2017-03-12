@@ -13,7 +13,9 @@ var divStyle={
 
 var h1style={
   align: "center",
-  margin: "20px"
+  margin: "20px",
+  padding: "10px",
+  textAlign: "center"
 }
 
 var Login = React.createClass({
