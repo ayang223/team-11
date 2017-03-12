@@ -1,18 +1,30 @@
 var React = require('react');
+var array = [];
 
 var FilterByElement = React.createClass({
   getInitialState:function(){
     return {selectValue: '(nothing selected)'};
   },
   handleChange: function(e){
-    this.setState({selectValue: e.target.value});
+    this.setState({selectValue: array});
+    var newSelection = JSON.stringify(e.target.value);
+    var isPresent = false;
+    var i;
+    for(i = 0; i < array.length; i++){
+      if(newSelection === array[i]){
+        isPresent = true;
+      }
+    }
+    if(!isPresent){
+      array.push(JSON.stringify(e.target.value));
+    }
   },
   render:function(){
     var message = 'FilterByElement: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
         <label>Select element</label>
-        <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
+      <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
           <option value="Learning Support">Learning Support</option>
           <option value="Social and Emotional Health">Social and Emotional Health </option>
           <option value="Connections/Healthy Relationships">Connections/Healthy Relationships</option>

@@ -58,7 +58,7 @@ var Import = React.createClass({
                <div id="json">
                </div>
                <h2>Button: <input type="radio" value="RButton" name="Rbutton"/> just for test</h2>
-               you need: npm install react-radio-buttons --save
+               you need npm install react-radio-buttons --save
                  <RadioGroup onChange={ this.onChange } horizontal>
                    <RadioButton value="1">
                      for program

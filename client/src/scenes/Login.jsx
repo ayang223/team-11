@@ -4,6 +4,8 @@
 import React, { PropTypes } from 'react';
 import LoginForm from '../components/LoginForm.jsx';
 import cookie from 'react-cookie';
+import sha256 from 'js-sha256';
+var {hashHistory} = require('react-router');
 
 var Login = React.createClass({
   getDefaultProps: function () {
@@ -18,8 +20,13 @@ var Login = React.createClass({
         password: this.props.password
     };
   },
-  saveCookie : function(username) {
-    cookie.save('userID', username, {path: '/'});
+  saveCookie : function(username, data) {
+    cookie.save('userID', username, {path: '/', maxAge:7200 }); // expires in two hours
+    if(data.admin === true){
+      cookie.save('admin', true, {path:'/', maxAge:7200});
+    }else{
+      cookie.save('admin', false, {path:'/', maxAge:7200});
+    }
   },
   handleNewName: function (u, p) {
     this.setState({
@@ -27,7 +34,7 @@ var Login = React.createClass({
       password: p
     });
     var loginUsername = u;
-    var loginPass = p;
+    var loginPass = sha256(p);
     //ajax call
         $.ajax({
             url:"http://localhost:8080/BackendServer/DatabaseServlet",
@@ -44,7 +51,9 @@ var Login = React.createClass({
                if(data.status === "success"){
                  console.log("success");
                  //set SessionToken to hold JWT
-                 this.saveCookie(loginUsername);
+                 this.saveCookie(loginUsername, data);
+                 window.alert("Successfully logged in");
+                 hashHistory.push('/dashboard');
                }
             }.bind(this),
             error:function(error){
@@ -54,6 +63,12 @@ var Login = React.createClass({
         });
   },
 
+  getUser:function(){
+    return{
+      username
+    };
+  },
+
   render: function () {
     var username = this.state.username;
     var password = this.state.password;
@@ -61,7 +76,6 @@ var Login = React.createClass({
       <div>
         <LoginForm onNewName={this.handleNewName}/>
         <h1> Hello {username}</h1>
-        <h2> This is your password: {password}</h2>
         <div id="out"></div>
       </div>
     );

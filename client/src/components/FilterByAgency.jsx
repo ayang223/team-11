@@ -1,18 +1,30 @@
 var React = require('react');
+var array = [];
 
 var FilterByAgency = React.createClass({
   getInitialState:function(){
     return {selectValue: '(nothing selected)'};
   },
   handleChange: function(e){
-    this.setState({selectValue: e.target.value});
+    this.setState({selectValue: array});
+    var newSelection = JSON.stringify(e.target.value);
+    var isPresent = false;
+    var i;
+    for(i = 0; i < array.length; i++){
+      if(newSelection === array[i]){
+        isPresent = true;
+      }
+    }
+    if(!isPresent){
+      array.push(JSON.stringify(e.target.value));
+    }
   },
   render:function(){
     var message = 'FilterByAgency: ' + this.state.selectValue;
     return(
       <div className="medium-3 columns">
         <label>Select agency</label>
-        <select multiple="multiple" size="3" value={this.state.selectValue} onChange={this.handleChange}>
+      <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
           <option value="YMCA of Greater Vancouver">YMCA of Greater Vancouver</option>
           <option value="SUCCESS">SUCCESS</option>
           <option value="Big Brothers of Greater Vancouver">Big Brothers of Greater Vancouver</option>
