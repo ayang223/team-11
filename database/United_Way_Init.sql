@@ -9,14 +9,12 @@ USE United_Way_Andar_DB;
 
 /* file_name is the unique name given by the person adding the data */
 CREATE TABLE AndarDataOutput (
-	file_name varchar(32) NOT NULL,
-	area varchar(32) NOT NULL,
 	funds varchar(16) NOT NULL,
 	focus varchar (32) NOT NULL,
 	outcome varchar (64) NOT NULL,
 	funding varchar (64) NOT NULL,
 	program_andar integer NOT NULL,
-	yearly_allocation integer NOT NULL,
+	yearly_allocation float(14,2) NOT NULL,
 	grant_start date NOT NULL,
 	grant_end date NOT NULL,
 	description varchar(512),
@@ -47,20 +45,14 @@ CREATE TABLE ProgramElement (
 
 CREATE TABLE ProgramSubElement (
 	andar_id integer NOT NULL,
+	element varchar(128) NOT NULL,
 	subElement varchar(128) NOT NULL,
 
-	PRIMARY KEY (andar_id, subElement),
+	PRIMARY KEY (andar_id, element, subElement),
 
 	FOREIGN KEY (andar_id) REFERENCES AndarDataOutput(program_andar)
 );
 
-/* Maps Program Element and Program SubElement values */
-CREATE TABLE ElementDirectory (
-	element varchar(128) NOT NULL,
-	subElement varchar(128) NOT NULL,
-
-	PRIMARY KEY (element, subElement)
-);
 
 /* level is 100 = Yes/True, 200 = No/False */
 CREATE TABLE GeoArea (
@@ -114,7 +106,6 @@ CREATE TABLE Outputs (
 CREATE TABLE Agency (
 	id integer NOT NULL,
 	name varchar(128) NOT NULL,
-	postal varchar(8) NOT NULL,
 
 	PRIMARY KEY (id)
 );

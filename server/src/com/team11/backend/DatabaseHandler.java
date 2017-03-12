@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 public class DatabaseHandler {
 	// JDBC driver and database name
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/United_Way_Andar_DB";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/united_way_andar_db";
 	// Database credentials
 	static final String USER = "root";
 	static final String PASS = "root";
@@ -40,10 +40,10 @@ public class DatabaseHandler {
 	}
 	
 	// InventoryOutput Queries
-	public static boolean insertInventoryOutput(String funds, String focus, String outcome, String funding, int programAndar, int yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
+	public static boolean insertInventoryOutput(String funds, String focus, String outcome, String funding, int programAndar, float yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO AndarDataOutput (funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT IGNORE INTO AndarDataOutput (funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -54,7 +54,7 @@ public class DatabaseHandler {
 			stmt.setString(3, outcome);
 			stmt.setString(4, funding);
 			stmt.setInt(5, programAndar);
-			stmt.setInt(6, yearlyAllocation);
+			stmt.setFloat(6, yearlyAllocation);
 			stmt.setString(7, grantStart);
 			stmt.setString(8, grantEnd);
 			stmt.setString(9, description);
@@ -62,6 +62,7 @@ public class DatabaseHandler {
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertInventoryOutput");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -88,7 +89,7 @@ public class DatabaseHandler {
 	public static boolean insertTargetPopulation(int programAndar, String population) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO TargetPopulation (andar_id, population) VALUES (?, ?)";
+		String sql = "INSERT IGNORE INTO TargetPopulation (andar_id, population) VALUES (?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -99,6 +100,7 @@ public class DatabaseHandler {
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertTargetPop");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -125,7 +127,7 @@ public class DatabaseHandler {
 	public static boolean insertProgramElement(int programAndar, String element, int level) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO ProgramElement (andar_id, element, level) VALUES (?, ?, ?)";
+		String sql = "INSERT IGNORE INTO ProgramElement (andar_id, element, level) VALUES (?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -137,6 +139,7 @@ public class DatabaseHandler {
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertProgramElement");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -160,20 +163,22 @@ public class DatabaseHandler {
 		return success;
 	}
 	
-	public static boolean insertProgramSubElement(int programAndar, String subElement) {
+	public static boolean insertProgramSubElement(int programAndar, String element, String subElement) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO ProgramSubElement (andar_id, subElement) VALUES (?, ?)";
+		String sql = "INSERT IGNORE INTO ProgramSubElement (andar_id, element, subElement) VALUES (?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, programAndar);
-			stmt.setString(2, subElement);
+			stmt.setString(2, element);
+			stmt.setString(3, subElement);
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertProgramSubElement");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -200,7 +205,7 @@ public class DatabaseHandler {
 	public static boolean insertGeoArea(int programAndar, String area, int level) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO GeoArea (andar_id, area, level) VALUES (?, ?, ?)";
+		String sql = "INSERT IGNORE INTO GeoArea (andar_id, area, level) VALUES (?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -212,6 +217,7 @@ public class DatabaseHandler {
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertGeo");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -238,7 +244,7 @@ public class DatabaseHandler {
 	public static boolean insertMuncipality(int programAndar, String municipality, int focusPercent) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?)";
+		String sql = "INSERT IGNORE INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -250,6 +256,7 @@ public class DatabaseHandler {
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertMuncipality");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -276,7 +283,7 @@ public class DatabaseHandler {
 	public static boolean insertDonorEngagement(int programAndar, String engagement, String description) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO DonorEngagement (andar_id, engagement, description) VALUES (?, ?, ?)";
+		String sql = "INSERT IGNORE INTO DonorEngagement (andar_id, engagement, description) VALUES (?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -288,6 +295,7 @@ public class DatabaseHandler {
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertDonor");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -314,7 +322,7 @@ public class DatabaseHandler {
 	public static boolean insertOutput(int programAndar, String type, int value) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Outputs (andar_id, type, value) VALUES (?, ?, ?)";
+		String sql = "INSERT IGNORE INTO Outputs (andar_id, type, value) VALUES (?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -326,6 +334,7 @@ public class DatabaseHandler {
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
+			System.out.println("Fail: insertOutput");
 			success = false;
 		} catch (ClassNotFoundException e) {
 			success = false;
@@ -352,7 +361,7 @@ public class DatabaseHandler {
 	public static boolean insertAgency(int agencyAndar, String name) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Agency (id, name, postal) VALUES (?, ?)";
+		String sql = "INSERT IGNORE INTO Agency (id, name, postal) VALUES (?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -389,7 +398,7 @@ public class DatabaseHandler {
 	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Program (id, agency_andar, name, website, description, num_locations) VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT IGNORE INTO Program (id, agency_andar, name, website, description, num_locations) VALUES (?, ?, ?, ?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -430,7 +439,7 @@ public class DatabaseHandler {
 	public static boolean insertLocation(int programAndar, String name, String postal) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Location (andar_id, name, postal) VALUES (?, ?, ?)";
+		String sql = "INSERT IGNORE INTO Location (andar_id, name, postal) VALUES (?, ?, ?)";
 		boolean success = true;
 		try {
 			conn = getConnection();

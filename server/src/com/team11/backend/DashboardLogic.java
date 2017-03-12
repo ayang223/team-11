@@ -38,8 +38,8 @@ public class DashboardLogic {
 	}
 
 	public static JsonObject importOutput(JsonObject requestJson) {
-		
-		JsonArray arrayJson = requestJson.getAsJsonArray();
+		boolean success = true;
+		JsonArray arrayJson = requestJson.get("data").getAsJsonArray();
 		JsonObject itemJson = new JsonObject();
 				
 		// Store column headers into an array list
@@ -47,7 +47,7 @@ public class DashboardLogic {
 		ArrayList<String> headers = new ArrayList<String>();
 		itemJson = arrayJson.get(0).getAsJsonObject();
 		
-		for (int column = 1; column <= arrayJson.get(0).getAsJsonArray().size(); column++) {
+		for (int column = 1; column <= arrayJson.get(0).getAsJsonObject().size(); column++) {
 			String field = "FIELD" + Integer.toString(column);
 			String fieldHeader = itemJson.get(field).getAsString();
 			headers.add(fieldHeader);
@@ -64,7 +64,7 @@ public class DashboardLogic {
 			String outcome = itemJson.get("FIELD3").getAsString();
 			String funding = itemJson.get("FIELD4").getAsString();
 			int programAndar = itemJson.get("FIELD7").getAsInt();
-			int yearlyAllocation = itemJson.get("FIELD9").getAsInt();
+			float yearlyAllocation = itemJson.get("FIELD9").getAsFloat();
 			String grantStart = itemJson.get("FIELD10").getAsString(); 
 			String grantEnd = itemJson.get("FIELD11").getAsString();
 			String description = itemJson.get("FIELD12").getAsString();
@@ -74,7 +74,10 @@ public class DashboardLogic {
 			grantStart = grantStart.substring(0,4) + "-" + grantStart.substring(4,6) + "-" + grantStart.substring(6,8);
 			grantEnd = grantEnd.substring(0,4) + "-" + grantEnd.substring(4,6) + "-" + grantEnd.substring(6,8);
 			
-			DatabaseHandler.insertInventoryOutput(funds, focus, outcome, funding, programAndar,yearlyAllocation, grantStart, grantEnd, description, planner);
+			success = DatabaseHandler.insertInventoryOutput(funds, focus, outcome, funding, programAndar,yearlyAllocation, grantStart, grantEnd, description, planner);
+			if (!success) {
+				return RequestHandler.getStatusFailed();
+			}
 			
 			// Variable to help check what data we're looking at
 			// First data category starts at FIELD14
@@ -93,8 +96,11 @@ public class DashboardLogic {
 				temp = itemJson.get(fieldName).getAsString();
 				
 				if (temp.equals("1")) {
-					String populationItem = headers.get(fieldNum);
-					DatabaseHandler.insertTargetPopulation(programAndar, populationItem);
+					String populationItem = headers.get(fieldNum-1);
+					success = DatabaseHandler.insertTargetPopulation(programAndar, populationItem);
+					if (!success) {
+						return RequestHandler.getStatusFailed();
+					}
 				}
 				
 				fieldNum++;
@@ -107,26 +113,41 @@ public class DashboardLogic {
 				// Stores program element
 				String programCategory = "";
 				programCategory = checkProgram(headers, fieldNum, programCategory);
+
 				fieldName = "FIELD" + Integer.toString(fieldNum);
 				int level = itemJson.get(fieldName).getAsInt();
 				
-				DatabaseHandler.insertProgramElement(programAndar, programCategory, level);
+				success = DatabaseHandler.insertProgramElement(programAndar, programCategory, level);
+				if (!success) {
+					return RequestHandler.getStatusFailed();
+				}
 				fieldNum++;
 				
 				// Stores subelement values
 				fieldName = "FIELD" + Integer.toString(fieldNum);
 				temp = itemJson.get(fieldName).getAsString();
 				
-				while (!temp.equals("100") && !temp.equals("200") && !temp.equals("300") && dataCategory.equals("Program Elements")){
-					DatabaseHandler.insertProgramSubElement(programAndar, temp);
+				String header = headers.get(fieldNum-1);
+				dataCategory = checkCategory(headers, fieldNum, dataCategory);
+				if (dataCategory.equals("Program Elements")) {
 					
-					fieldNum++;
-					
-					fieldName = "FIELD" + Integer.toString(fieldNum);
-					temp = itemJson.get(fieldName).getAsString();
-					
-					dataCategory = checkCategory(headers, fieldNum, dataCategory);
-				}
+					while (!temp.equals("100") && !temp.equals("200") && !temp.equals("300") && dataCategory.equals("Program Elements")){
+						success = DatabaseHandler.insertProgramSubElement(programAndar, programCategory, header);
+						if (!success) {
+							return RequestHandler.getStatusFailed();
+						}
+						
+						fieldNum++;
+						
+						fieldName = "FIELD" + Integer.toString(fieldNum);
+						temp = itemJson.get(fieldName).getAsString();
+						header = headers.get(fieldNum-1);
+						
+						dataCategory = checkCategory(headers, fieldNum, dataCategory);
+					} 
+				} else {
+					break;
+				}	
 			}
 			fieldNum++;
 			
@@ -137,23 +158,40 @@ public class DashboardLogic {
 				String currArea = geoArea;
 				
 				fieldName = "FIELD" + Integer.toString(fieldNum);
-				int level = itemJson.get(fieldName).getAsInt();
+				int level;
+				String levelString = itemJson.get(fieldName).getAsString();
 				
-				fieldNum++;
-				
-				DatabaseHandler.insertGeoArea(programAndar, geoArea, level);
-				
-				while (currArea.equals(geoArea) && dataCategory.equals("Geographic Focus Area")){
-					String muncipality = headers.get(fieldNum-1);
-					int focusPercent = itemJson.get(fieldName).getAsInt();
-					
-					DatabaseHandler.insertMuncipality(programAndar, muncipality, focusPercent);
-					
+				if (!levelString.equals("")){
+					level = Integer.parseInt(levelString);
+					success = DatabaseHandler.insertGeoArea(programAndar, geoArea, level);
+				} else {
+					// Do nothing
+				}
 					fieldNum++;
-					geoArea = checkGeoArea(headers, fieldNum, currArea);
-					dataCategory = checkCategory(headers, fieldNum, dataCategory);
-				} 
-			}
+					fieldName = "FIELD" + Integer.toString(fieldNum);
+					
+					while (currArea.equals(geoArea) && dataCategory.equals("Geographic Focus Area")){
+						String muncipality = headers.get(fieldNum-1);
+						int focusPercent;
+						String percentString = itemJson.get(fieldName).getAsString(); 
+						
+						if (!percentString.equals("")){
+							focusPercent = Integer.parseInt(percentString);
+							success = DatabaseHandler.insertMuncipality(programAndar, muncipality, focusPercent);
+							if (!success) {
+								return RequestHandler.getStatusFailed();
+							}
+						} else {
+							// Do nothing
+						}
+						
+						fieldNum++;
+						fieldName = "FIELD" + Integer.toString(fieldNum);
+						geoArea = checkGeoArea(headers, fieldNum, currArea);
+						dataCategory = checkCategory(headers, fieldNum, dataCategory);
+					} 
+				}
+
 			fieldNum++;
 			
 			// Get variables and inserts into "Donor Engagement" table
@@ -162,8 +200,11 @@ public class DashboardLogic {
 				temp = itemJson.get(fieldName).getAsString();
 				
 				if (temp.equals("1")) {
-					String donorEngagement = headers.get(fieldNum);
-					DatabaseHandler.insertDonorEngagement(programAndar, donorEngagement, temp);
+					String donorEngagement = headers.get(fieldNum-1);
+					success = DatabaseHandler.insertDonorEngagement(programAndar, donorEngagement, temp);
+					if (!success) {
+						return RequestHandler.getStatusFailed();
+					}
 				}
 				
 				fieldNum++;
@@ -177,16 +218,18 @@ public class DashboardLogic {
 				String value = itemJson.get(fieldName).getAsString();
 				
 				if (!value.equals("")) {
-					String donorEngagement = headers.get(fieldNum);
-					DatabaseHandler.insertOutput(programAndar, donorEngagement, Integer.parseInt(value));
+					String output = headers.get(fieldNum-1);
+					success = DatabaseHandler.insertOutput(programAndar, output, Integer.parseInt(value));
+					if (!success) {
+						return RequestHandler.getStatusFailed();
+					}
 				}
 				
-				dataCategory = checkCategory(headers, fieldNum, dataCategory);
+				fieldNum++;
 			}
 		}
 		
-		JsonObject responseJson = RequestHandler.getStatusSuccess();
-		return responseJson;
+		return RequestHandler.getStatusSuccess();
 	}
 
 	public static JsonObject importPrograms(JsonObject requestJson) {
@@ -194,8 +237,8 @@ public class DashboardLogic {
 		// Parse the request JSON data and insert into database with
 		// queries in DatabaseHandler
 		// JSON range for Postal codes: FIELD 1-?
-
-		JsonArray arrayJson = requestJson.getAsJsonArray();
+		boolean success = true;
+		JsonArray arrayJson = requestJson.get("data").getAsJsonArray();
 		JsonObject itemJson = new JsonObject();
 
 		String fieldName;
@@ -212,7 +255,7 @@ public class DashboardLogic {
 
 			int numLocations = 0;
 
-			for (int column = 7; column <= arrayJson.get(row).getAsJsonArray().size(); column = column + 2) {
+			for (int column = 8; column <= itemJson.size(); column = column + 2) {
 				fieldName = "FIELD" + Integer.toString(column);
 				String locationName = itemJson.get(fieldName).getAsString();
 				fieldName = "FIELD" + Integer.toString(column + 1);
@@ -223,25 +266,33 @@ public class DashboardLogic {
 				}
 			}
 
-			// These query have to happen before the location queries
-			DatabaseHandler.insertProgram(programAndar, agencyAndar, programName, website, description, numLocations);
-			// Why do we need a main postal???
-			DatabaseHandler.insertAgency(agencyAndar, agencyName);
+			// These query has to happen before the location queries
+			success = DatabaseHandler.insertProgram(programAndar, agencyAndar, programName, website, description, numLocations);
+			if (!success) {
+				return RequestHandler.getStatusFailed();
+			}
 
-			for (int column = 7; column <= arrayJson.get(row).getAsJsonArray().size(); column = column + 2) {
+			success = DatabaseHandler.insertAgency(agencyAndar, agencyName);
+			if (!success) {
+				return RequestHandler.getStatusFailed();
+			}
+
+			for (int column = 8; column <= arrayJson.get(row).getAsJsonArray().size(); column = column + 2) {
 				fieldName = "FIELD" + Integer.toString(column);
 				String locationName = itemJson.get(fieldName).getAsString();
 				fieldName = "FIELD" + Integer.toString(column + 1);
 				String locationPostal = itemJson.get(fieldName).getAsString();
 
 				if (!locationName.equals("") || !locationPostal.equals("")) {
-					DatabaseHandler.insertLocation(programAndar, locationName, locationPostal);
+					success = DatabaseHandler.insertLocation(programAndar, locationName, locationPostal);
+					if (!success) {
+						return RequestHandler.getStatusFailed();
+					}
 				}
 			}
 		}
 		
-		JsonObject responseJson = RequestHandler.getStatusSuccess();
-		return responseJson;
+		return RequestHandler.getStatusSuccess();
 	}
 
 	// Checks categories
@@ -254,7 +305,6 @@ public class DashboardLogic {
 		} else {
 			switch (newCategory) {
 			case "Target Population":
-			case "Information and Referral":
 			case "Program Elements":
 			case "Geographic Focus Area":
 			case "Donor Engagement":
@@ -269,10 +319,11 @@ public class DashboardLogic {
 	private static String checkProgram(ArrayList<String> headers, int fieldNum, String currArea) {
 
 		String newArea = headers.get(fieldNum-1);
+		
 		if (currArea.equals(newArea)) {
 			return currArea;
 		} else {
-			switch (currArea) {
+			switch (newArea) {
 			case "Learning Support ":
 			case "Social and Emotional Health ":
 			case "Connections/Healthy Relationships":
@@ -296,7 +347,7 @@ public class DashboardLogic {
 		if (currElement.equals(newElement)) {
 			return currElement;
 		} else {
-			switch (currElement) {
+			switch (newElement) {
 			case "First Nation Territories":
 			case "Fraser Valley Regional District":
 			case "Metro Vancouver Regional District":
