@@ -24,7 +24,6 @@
     "react-d3-map": "^0.8.3",
     "react-dom": "^0.14.7",
     "react-google-charts": "^1.4.2",
-    "react-radio-buttons": "^1.1.0",
     "react-router": "^2.0.0",
     "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",

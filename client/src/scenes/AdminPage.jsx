@@ -19,7 +19,7 @@ var AccountForm = React.createClass({
       this.refs.lname.value = '';
       this.props.onNewAccount(username,password,verifypassword,fname,lname);
     }else{ alert("error in input");
-    return 
+    return
   }
 
   if(password.length != verifypassword.length || password != verifypassword){
@@ -48,7 +48,7 @@ var AccountForm = React.createClass({
     })
   },
 
- 
+
 
   render: function(){
     return(
@@ -96,7 +96,7 @@ var AccountForm = React.createClass({
 })
 
 var DeleteUserForm = React.createClass({
- 
+
   deleteUser:function(e){
     e.preventDefault();
 
@@ -155,7 +155,7 @@ var AdminPage = React.createClass({
       lname:'',
       username: '',
     };
-    
+
   },
 componentWillMount:function() {
   console.log("compnenet will mounth")

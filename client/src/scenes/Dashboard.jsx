@@ -38,6 +38,7 @@ class Dashboard extends React.Component{
             document.getElementById('errorOut').innerHTML = "Couldn't finish request, database returned: " + JSON.stringify(result.status);
             alert("Error Message: Something happened during the request to get data from server");
           }else{
+            console.log(result);
            _this.setState({
                data: result
              })
