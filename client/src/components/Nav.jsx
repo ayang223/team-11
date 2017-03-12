@@ -5,6 +5,18 @@
  var {Link} = require('react-router');
  import cookie from 'react-cookie';
 
+var navStyle ={
+  backgroundColor: "DimGrey",
+  textAlign: "center"
+}
+var eachItem ={
+  backgroundColor : "DimGrey",
+  color: "White"
+}
+
+var activeItem =  {
+  color: 'Black', fontWeight: 'bold'
+}
 
 
 var isLoggedIn = true;
@@ -28,42 +40,42 @@ var isAdmin = true;
    render: function () {
      checkLogin();
      return (
-         <div className="top-bar">
+         <div className="top-bar" style={navStyle}>
            <div className="top-bar-left">
-             <ul className="menu">
+             <ul className="menu" style={eachItem}>
              <li className="menu-text">United Way</li>
               <li>
-                <Link to="/import" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Import</Link>
+                  <Link  style={eachItem} to="/import" activeClassName="active" activeStyle={activeItem}>Import</Link>
               </li>
               <li>
-                <Link to="/dashboard" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Dashboard</Link>
+                <Link  style={eachItem} to="/dashboard" activeClassName="active" activeStyle={activeItem}>Dashboard</Link>
               </li>
              </ul>
            </div>
-           <div className="top-bar-right">
-             <ul className="menu">
+           <div className="top-bar-right" >
+             <ul className="menu" style={eachItem}>
                  {isLoggedIn?
                    <div className="top-bar-right">
-                     <ul className="menu">
+                     <ul className="menu"  style={eachItem}>
                        {isAdmin?
                          <li>
-                         <Link to="/adminpage" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Admin Account</Link>
+                         <Link style={eachItem} to="/adminpage" activeClassName="active" activeStyle={activeItem}>Admin Account</Link>
                        </li>
                      :
                      <li>
-                    <Link to="/account" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Account</Link>
+                    <Link style={eachItem} to="/account" activeClassName="active" activeStyle={activeItem}>Account</Link>
                     </li>
                    }
                       <li>
-                      <Link to="/logout" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Logout</Link>
+                      <Link style={eachItem} to="/logout" activeClassName="active" activeStyle={activeItem}>Logout</Link>
                       </li>
                     </ul>
                   </div>
                      :
                      <div className="top-bar-right">
-                       <ul className="menu">
+                       <ul className="menu" style={eachItem}>
                          <li>
-                       <Link to="/login" activeClassName="active" activeStyle={{fontWeight: 'bold'}}>Login</Link>
+                       <Link style={eachItem} to="/login" activeClassName="active" activeStyle={activeItem}>Login</Link>
                        </li>
                      </ul>
                    </div>
