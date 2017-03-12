@@ -591,10 +591,8 @@ public class DatabaseHandler {
 				JsonObject row = new JsonObject();
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
-				String postal = rs.getString("postal");
 				row.addProperty("id", id);
 				row.addProperty("name", name);
-				row.addProperty("postal", postal);
 				
 				agency.add(row);
 			}
@@ -625,7 +623,7 @@ public class DatabaseHandler {
 	public static JsonArray getInventoryOutput() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM InventoryOutput";
+		String sql = "SELECT * FROM AndarDataOutput";
 		JsonArray inventoryOutput = new JsonArray();
 		try {
 			conn = getConnection();
@@ -641,7 +639,7 @@ public class DatabaseHandler {
 				String funding = rs.getString("funding");
 				int program_andar = rs.getInt("program_andar");
 				float yearly_allocation = rs.getFloat("yearly_allocation");
-				String grant_date = rs.getDate("grant_date").toString();
+				String grant_date = rs.getDate("grant_start").toString();
 				String grant_end = rs.getDate("grant_end").toString();
 				String description = rs.getString("description");
 				String planner = rs.getString("planner");
@@ -685,7 +683,7 @@ public class DatabaseHandler {
 	public static JsonArray getTargetPopulation() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Target Population";
+		String sql = "SELECT * FROM TargetPopulation";
 		JsonArray targetPopulation = new JsonArray();
 		try {
 			conn = getConnection();
@@ -729,7 +727,7 @@ public class DatabaseHandler {
 	public static JsonArray getProgramElement() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Program Element";
+		String sql = "SELECT * FROM ProgramElement";
 		JsonArray programElement = new JsonArray();
 		try {
 			conn = getConnection();
@@ -775,7 +773,7 @@ public class DatabaseHandler {
 	public static JsonArray getProgramSubElement() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Program SubElement";
+		String sql = "SELECT * FROM ProgramSubElement";
 		JsonArray programSubElement = new JsonArray();
 		try {
 			conn = getConnection();
@@ -821,7 +819,7 @@ public class DatabaseHandler {
 	public static JsonArray getGeoArea() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Geo Area";
+		String sql = "SELECT * FROM GeoArea";
 		JsonArray geoArea = new JsonArray();
 		try {
 			conn = getConnection();
@@ -913,7 +911,7 @@ public class DatabaseHandler {
 	public static JsonArray getAreaDirectory() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Area Directory";
+		String sql = "SELECT * FROM AreaDirectory";
 		JsonArray areaDirectory = new JsonArray();
 		try {
 			conn = getConnection();
@@ -957,7 +955,7 @@ public class DatabaseHandler {
 	public static JsonArray getDonorEngagement() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Donor Engagement";
+		String sql = "SELECT * FROM DonorEngagement";
 		JsonArray donorEngagement = new JsonArray();
 		try {
 			conn = getConnection();
