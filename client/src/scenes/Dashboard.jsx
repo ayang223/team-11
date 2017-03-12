@@ -12,39 +12,76 @@ var D3Map = require('d3map');
 
 
 class Dashboard extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      data: null
+    }
+  }
   generateGraphs(){
     console.log("generate!");
   }
+  componentWillMount(){
+    var _this = this;
+    var getData = $.ajax({
+        url:"http://localhost:8080/BackendServer/DatabaseServlet",
+        dataType:"json",
+        type: "POST",data: JSON.stringify({
+         "action" : "Get Dashboard"
+       }),
+        success:function(result){
+          if(result.status === 'failed'){
+            document.getElementById('errorOut').innerHTML = "Couldn't finish request, database returned: " + JSON.stringify(result.status);
+            alert("Error Message: Something happened during the request to get data from server");
+          }else{
+           _this.setState({
+               data: result
+             })
+           }
+        }.bind(this),
+        error:function(error){
+           document.getElementById('errorOut').innerHTML = error;
+           console.log(error);
+        }
+    });
+  }
   render(){
-    return(
-      <div>
-        <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
-        <br/>
-        <div className="row">
-          <FilterByYear />
-          <FilterByCity />
-          <FilterByInvested />
-          <FilterByAgency />
-        </div>
-        <br/>
-        <div className="row">
-            <FilterByFocusArea />
-            <FilterByPopulation />
-            <FilterByElement />
-            <FilterByEngagement />
-            <button className="button info" onClick={this.generateGraphs}>Generate</button>
-        </div>
-        <br/>
-        <div className="row">
-        <div className="medium-3 columns"  style={{width: 450, height: 450}} >
-          <ChartDollarsCity />
+    if(this.state.data){
+      return(
+        <div>
+          <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
+          <br/>
+          <div id='errorOut'></div>
+          <div className="row">
+            <FilterByYear />
+            <FilterByCity />
+            <FilterByInvested />
+            <FilterByAgency />
           </div>
+          <br/>
+          <div className="row">
+              <FilterByFocusArea />
+              <FilterByPopulation />
+              <FilterByElement />
+              <FilterByEngagement />
+              <button className="button info" onClick={this.generateGraphs}>Generate</button>
+          </div>
+          <br/>
+          <div id="errorOut"></div>
+          <div className="row">
           <div className="medium-3 columns"  style={{width: 450, height: 450}} >
-              <D3Map />
+            <ChartDollarsCity />
             </div>
-            </div>
+            <div className="medium-3 columns"  style={{width: 450, height: 450}} >
+                <D3Map />
+              </div>
+        </div>
       </div>
-    )
+      );
+    }
+    return (<div>Loading...
+    <div id='errorOut'></div>
+  </div>);
   }
 }
 
