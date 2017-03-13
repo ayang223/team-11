@@ -20,7 +20,7 @@ var FilterByFocusArea = React.createClass({
     }
   },
 
-createMetaData:function(data){
+createMetadata:function(data){
     var metadata = {};
     var focusarea = data.AndarDataOutput;
     var focusArr = []; 
@@ -35,7 +35,7 @@ createMetaData:function(data){
   render:function(){
     var dataFromDash = this.props.data;
     var message = 'FilterByFocusArea: ' + this.state.selectValue;
-    var focusArr = this.createMetaData(dataFromDash);
+    var focusArr = this.createMetadata(dataFromDash);
     const listItems = focusArr.map((focus) =>
       <option key={focus} value={focus} style={{margin:"2px"}}>{focus}</option>
       );
