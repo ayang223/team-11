@@ -89,6 +89,7 @@ public class DatabaseHandler {
 	public static boolean insertTargetPopulation(int programAndar, String population) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
+		System.out.printf("%d %s", programAndar, population);
 		String sql = "INSERT IGNORE INTO TargetPopulation (andar_id, population) VALUES (?, ?)";
 		boolean success = true;
 		try {
@@ -241,7 +242,7 @@ public class DatabaseHandler {
 		return success;
 	}
 	
-	public static boolean insertMuncipality(int programAndar, String municipality, int focusPercent) {
+	public static boolean insertMunicipality(int programAndar, String municipality, int focusPercent) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		String sql = "INSERT IGNORE INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?)";
@@ -358,6 +359,44 @@ public class DatabaseHandler {
 		return success;
 	}
 
+	public static boolean insertAreaDirectory(String geoArea, String municipality) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT IGNORE INTO AreaDirectory (geoArea, municipality) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, geoArea);
+			stmt.setString(2, municipality);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			System.out.println("Fail: insertAreaDirectory");
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
 	public static boolean insertAgency(int agencyAndar, String name) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -1180,29 +1219,22 @@ public class DatabaseHandler {
 		return responseJson;
 	}
 
-	public static boolean changePassword(String user, String oldPassword, String newPassword) {
-		boolean verified = false;
-
+	public static boolean changePassword(String user, String newPassword) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT * FROM Users WHERE username=? AND password=?";
+		String sql = "UPDATE Users SET password=? WHERE username=?";
+		boolean success = true;
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(FIRST, user);
-			stmt.setString(SECOND, oldPassword);
-			ResultSet rs = stmt.executeQuery();
-
-			if (rs.isBeforeFirst()) {
-				verified = true;
-				rs.next();
-			} else {
-				verified = false;
-			}
+			stmt.setString(1, newPassword);
+			stmt.setString(2, user);
+			int count = stmt.executeUpdate();
+			success = count > 0;
 		} catch (SQLException e) {
-			verified = false;
+			success = false;
 		} catch (ClassNotFoundException e) {
-			verified = false;
+			success = false;
 		} finally {
 			if (stmt != null) {
 				try {
@@ -1219,42 +1251,7 @@ public class DatabaseHandler {
 				}
 			}
 		}
-
-		if (verified) {
-			conn = null;
-			stmt = null;
-			sql = "UPDATE Users SET password=? WHERE username=?";
-			boolean success = true;
-			try {
-				conn = getConnection();
-				stmt = conn.prepareStatement(sql);
-				stmt.setString(1, newPassword);
-				stmt.setString(2, user);
-				int count = stmt.executeUpdate();
-				success = count > 0;
-			} catch (SQLException e) {
-				success = false;
-			} catch (ClassNotFoundException e) {
-				success = false;
-			} finally {
-				if (stmt != null) {
-					try {
-						stmt.close();
-					} catch (SQLException e) {
-						// Do nothing
-					}
-				}
-				if (conn != null) {
-					try {
-						conn.close();
-					} catch (SQLException e) {
-						// Do nothing
-					}
-				}
-			}
-			return success;
-		}
-		return false;
+		return success;
 	}
 
 	public static boolean deleteUser(String user) {
@@ -1297,4 +1294,5 @@ public class DatabaseHandler {
 
 		return conn;
 	}
+
 }

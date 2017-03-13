@@ -41,6 +41,7 @@ externals: {
       ChartMoneyInvested: 'src/components/ChartMoneyInvested.jsx',
       TableExample: 'src/components/TableExample.jsx',
       TableAdmin: 'src/components/TableAdmin.jsx',
+      TableProgramInfo: 'src/components/TableProgramInfo.jsx',
       d3map: 'src/components/d3map.jsx',
       'chartjs': require.resolve('chart.js')
     },
