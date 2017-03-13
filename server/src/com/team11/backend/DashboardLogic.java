@@ -176,10 +176,10 @@ public class DashboardLogic {
 							// Do nothing
 						}
 						
-						success = DatabaseHandler.insertAreaDirectory(geoArea, municipality);
+						/*success = DatabaseHandler.insertAreaDirectory(geoArea, municipality);
 						if (!success) {
 							return RequestHandler.getStatusFailed();
-						}
+						}*/
 						
 						fieldNum++;
 						geoArea = checkGeoArea(headers, fieldNum, currArea);
