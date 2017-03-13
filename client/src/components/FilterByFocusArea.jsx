@@ -19,15 +19,31 @@ var FilterByFocusArea = React.createClass({
       array.push(JSON.stringify(e.target.value));
     }
   },
+
+createMetaData:function(data){
+    var metadata = {};
+    var focusarea = data.AndarDataOutput;
+    var focusArr = []; 
+    for (var i =0; i< focusarea.length; i++){
+      if(focusArr.includes(focusarea[i].focus)){
+        console.log("focus true")
+      } else focusArr.push(focusarea[i].focus)
+    }
+    return focusArr;
+  },  
+
   render:function(){
+    var dataFromDash = this.props.data;
     var message = 'FilterByFocusArea: ' + this.state.selectValue;
+    var focusArr = this.createMetaData(dataFromDash);
+    const listItems = focusArr.map((focus) =>
+      <option key={focus} value={focus} style={{margin:"2px"}}>{focus}</option>
+      );
     return(
       <div className="medium-3 columns">
         <label>Select focus area</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="All that Kids can Be">All that Kids can Be</option>
-          <option value="Building Stronger Communities">Building Stronger Communities</option>
-          <option value="Other">Other</option>
+          {listItems}
         </select>
         <label>{message}</label>
       </div>
