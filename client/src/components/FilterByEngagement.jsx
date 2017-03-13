@@ -20,7 +20,7 @@ var FilterByEngagement = React.createClass({
     }
   },
 
-  createMetaData:function(data){
+  createMetadata:function(data){
     var metadata = {};
     var donorEngagement = data.DonorEngagement;
     var engagementArr = []; 
@@ -35,7 +35,7 @@ var FilterByEngagement = React.createClass({
   render:function(){
     var dataFromDash = this.props.data;
     var message = 'FilterByEngagement: ' + this.state.selectValue;
-    var engagementArr = this.createMetaData(dataFromDash);
+    var engagementArr = this.createMetadata(dataFromDash);
     const listItems = engagementArr.map((engagement) =>
       <option key={engagement} value={engagement} style={{margin:"2px"}}>{engagement}</option>
       );    

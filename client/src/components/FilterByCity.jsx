@@ -20,7 +20,7 @@ var FilterByCity = React.createClass({
     }
   },
 
-  createMetaData:function(data){
+  createMetadata:function(data){
     var metadata = {};
     var city = data.Municipality;
     var cityArr = []; 
@@ -35,7 +35,7 @@ var FilterByCity = React.createClass({
   render:function(){
     var dataFromDash = this.props.data;
     var message = 'FilterByCity: ' + this.state.selectValue;
-    var cityArr = this.createMetaData(dataFromDash);
+    var cityArr = this.createMetadata(dataFromDash);
     const listItems = cityArr.map((municipality) =>
       <option key={municipality} value={municipality} style={{margin:"2px"}}>{municipality}</option>
       );
