@@ -1,0 +1,12 @@
+
+.modal-header{
+      background-color: #5cb85c;
+      color: blue;
+      padding: 100;
+      text-align: center;
+      font-size: 60px;
+}
+
+.modal-footer {
+      background-color: #f9f9f9;
+  }
