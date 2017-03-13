@@ -9,6 +9,7 @@ var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
 var ChartDollarsCity = require('ChartDollarsCity');
 var ChartMoneyInvested = require('ChartMoneyInvested');
+var ChartGeographicInvestedCityGrouping = require('ChartGeographicInvestedCityGrouping');
 var TableExample = require('TableExample');
 var TableProgramInfo = require('TableProgramInfo');
 var D3Map = require('d3map');
@@ -76,12 +77,13 @@ class Dashboard extends React.Component{
           <div className="medium-3 columns"  style={{width: 1000, height: 1000}} >
             <ChartDollarsCity />
             <ChartMoneyInvested data={this.state.data}/>
+            <ChartGeographicInvestedCityGrouping data={this.state.data}/>
             <TableExample />
             <D3Map data={this.state.data}/>
             <TableProgramInfo data={this.state.data}/>
-            </div>
-            <div className="medium-3 columns"  style={{width: 450, height: 450}} >
-              </div>
+          </div>
+          <div className="medium-3 columns"  style={{width: 450, height: 450}} >
+          </div>
         </div>
       </div>
       );
