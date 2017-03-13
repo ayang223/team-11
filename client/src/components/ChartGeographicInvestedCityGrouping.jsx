@@ -154,13 +154,12 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
     }
 
     datasetInfo.label = "Geographic Distribution";
-    datasetInfo.backgroundColor = "#FF6384";
-    datasetInfo.hoverBackgroundColor = "rgba(255,99,132,0.4)";
-    datasetInfo.hoverBorderWidth = 1;
+    datasetInfo.backgroundColor = ["#023fa5", "#7d87b9", "#bec1d4", "#d6bcc0", "#bb7784", "#8e063b", "#4a6fe3", "#8595e1", "#b5bbe3", "#e6afb9", "#e07b91", "#d33f6a", "#11c638", "#8dd593", "#c6dec7", "#ead3c6", "#f0b98d", "#ef9708"];
+    datasetInfo.hoverBorderWidth = 5;
 
     datasetInfo.data = [];
     for (var i = 0; i < cityGroups.length; i++) {
-        datasetInfo.data.push(totalInvested[cityGroups[i]]);
+      datasetInfo.data.push(totalInvested[cityGroups[i]]);
     }
     metadata.datasets.push(datasetInfo);
 
@@ -168,9 +167,9 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
   },
   render() {
     var dataFromDash = this.props.data;
-    var title = "Geographic Distribution based on Money Invested with City Groupings:"
+    var title = "Geographic Distribution based on Money Invested with City Groupings:";
 
-    var metadata = this.createMetadata(dataFromDash)
+    var metadata = this.createMetadata(dataFromDash);
 
     return (
       <div className="row">
