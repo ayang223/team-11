@@ -90,7 +90,7 @@ public class DashboardLogic {
 			// Get variables and inserts into "Target Population" table
 			while (dataCategory.equals("Target Population")) {
 				temp = itemJson.get(fieldNum).getAsString();
-				
+
 				if (temp.equals("1")) {
 					String populationItem = headers.get(fieldNum);
 					success = DatabaseHandler.insertTargetPopulation(programAndar, populationItem);
@@ -162,19 +162,24 @@ public class DashboardLogic {
 					fieldNum++;
 					
 					while (currArea.equals(geoArea) && dataCategory.equals("Geographic Focus Area")){
-						String muncipality = headers.get(fieldNum);
+						String municipality = headers.get(fieldNum);
 						int focusPercent;
 						String percentString = itemJson.get(fieldNum).getAsString(); 
 						
 						if (!percentString.equals("")){
 							focusPercent = Integer.parseInt(percentString);
-							success = DatabaseHandler.insertMuncipality(programAndar, muncipality, focusPercent);
+							success = DatabaseHandler.insertMunicipality(programAndar, municipality, focusPercent);
 							if (!success) {
 								return RequestHandler.getStatusFailed();
 							}
 						} else {
 							// Do nothing
 						}
+						
+						/*success = DatabaseHandler.insertAreaDirectory(geoArea, municipality);
+						if (!success) {
+							return RequestHandler.getStatusFailed();
+						}*/
 						
 						fieldNum++;
 						geoArea = checkGeoArea(headers, fieldNum, currArea);
@@ -202,7 +207,7 @@ public class DashboardLogic {
 			fieldNum++;
 			
 			// Get variables and inserts into "Outputs" table
-			while (dataCategory.equals("Outputs") && fieldNum <= headers.size()) {
+			while (dataCategory.equals("Outputs") && fieldNum < headers.size()) {
 				String value = itemJson.get(fieldNum).getAsString();
 				
 				if (!value.equals("")) {
@@ -281,7 +286,7 @@ public class DashboardLogic {
 	// Checks categories
 	private static String checkCategory(ArrayList<String> headers, int fieldNum, String currCategory) {
 
-		String newCategory = headers.get(fieldNum-1);
+		String newCategory = headers.get(fieldNum);
 		
 		if (currCategory.equals(newCategory)) {
 			return currCategory;
@@ -301,7 +306,7 @@ public class DashboardLogic {
 
 	private static String checkProgram(ArrayList<String> headers, int fieldNum, String currArea) {
 
-		String newArea = headers.get(fieldNum-1);
+		String newArea = headers.get(fieldNum);
 		
 		if (currArea.equals(newArea)) {
 			return currArea;
@@ -325,7 +330,7 @@ public class DashboardLogic {
 
 	private static String checkGeoArea(ArrayList<String> headers, int fieldNum, String currElement) {
 
-		String newElement = headers.get(fieldNum-1);
+		String newElement = headers.get(fieldNum);
 		
 		if (currElement.equals(newElement)) {
 			return currElement;

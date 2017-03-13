@@ -27,10 +27,9 @@ public class UserManager {
 			return responseJson;
 		}
 		String user = requestJson.get(USER).getAsString();
-		String oldPassword = requestJson.get(OLD_PASSWORD).getAsString();
 		String newPassword = requestJson.get(NEW_PASSWORD).getAsString();
 		
-		boolean success = DatabaseHandler.changePassword(user, oldPassword, newPassword);
+		boolean success = DatabaseHandler.changePassword(user, newPassword);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
 	}

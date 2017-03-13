@@ -148,10 +148,10 @@ var DeleteUserForm = React.createClass({
   }
 })
 
-
 var AdminPage = React.createClass({
 
   getInitialState() {
+
     return{
       username: '',
       password:'',
@@ -159,28 +159,32 @@ var AdminPage = React.createClass({
       fname:'',
       lname:'',
       username: '',
+      data: ''
     };
 
   },
-componentWillMount:function() {
-  console.log("compnenet will mounth")
-  var getUsers = $.ajax({
-    url:"http://localhost:8080/BackendServer/DatabaseServlet",
-    type: "POST",
-    data: JSON.stringify({
-      "action" : "List User"
-      }),
-    dataType:"json",
-    success:function(data){
-      console.log(data)
-      document.getElementById('out').innerHTML = JSON.stringify(data);
-      }.bind(this),
-      error:function(error){
-        document.getElementById('out').innerHTML = error;
-        console.log(error);
-        }
-        });
-},
+
+  componentWillMount:function() {
+    var _this = this;
+    console.log("compnenet will mount")
+    var getUsers = $.ajax({
+      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      type: "POST",
+      data: JSON.stringify({
+        "action" : "List User"
+        }),
+      dataType:"json",
+      success:function(data){
+        console.log(data)
+        this.setState({
+          data: data
+        })
+        }.bind(this),
+        error:function(error){
+          console.log(error);
+          }
+          });
+  },
 
   componentDidMount:function() {
     console.log("Component did mount")
@@ -192,27 +196,42 @@ componentWillMount:function() {
       password:password,
       verifypassword:verifypassword,
       fname:fname,
-      lname,lname
-    })
+      lname:lname
+    });
   },
 
   handleDeleteUser:function(username){
     this.setState({
       username:username
-    })
+    });
   },
 
-
+  refreshList: function() {
+    var getUsers = $.ajax({
+      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      type: "POST",
+      data: JSON.stringify({
+        "action" : "List User"
+        }),
+      dataType:"json",
+      success:function(data){
+        this.setState({
+          data: data
+        })
+      }.bind(this),
+      error:function(error){
+        console.log(error);
+      }
+    });
+  },
 
   render:function(){
     return(
      <div>
        <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
        <h2>List of users: </h2>
-       <p>{this.getUsers}</p>
-       <TableAdmin data={this.getUsers} />
-       <div id="out">
-       </div>
+       <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
+       <TableAdmin data={this.state.data} />
        <div>
        <AccountForm onNewAccount={this.handleNewAccount}/>
        </div>
