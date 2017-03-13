@@ -162,18 +162,23 @@ public class DashboardLogic {
 					fieldNum++;
 					
 					while (currArea.equals(geoArea) && dataCategory.equals("Geographic Focus Area")){
-						String muncipality = headers.get(fieldNum);
+						String municipality = headers.get(fieldNum);
 						int focusPercent;
 						String percentString = itemJson.get(fieldNum).getAsString(); 
 						
 						if (!percentString.equals("")){
 							focusPercent = Integer.parseInt(percentString);
-							success = DatabaseHandler.insertMuncipality(programAndar, muncipality, focusPercent);
+							success = DatabaseHandler.insertMunicipality(programAndar, municipality, focusPercent);
 							if (!success) {
 								return RequestHandler.getStatusFailed();
 							}
 						} else {
 							// Do nothing
+						}
+						
+						success = DatabaseHandler.insertAreaDirectory(geoArea, municipality);
+						if (!success) {
+							return RequestHandler.getStatusFailed();
 						}
 						
 						fieldNum++;

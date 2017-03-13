@@ -242,7 +242,7 @@ public class DatabaseHandler {
 		return success;
 	}
 	
-	public static boolean insertMuncipality(int programAndar, String municipality, int focusPercent) {
+	public static boolean insertMunicipality(int programAndar, String municipality, int focusPercent) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		String sql = "INSERT IGNORE INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?)";
@@ -359,6 +359,44 @@ public class DatabaseHandler {
 		return success;
 	}
 
+	public static boolean insertAreaDirectory(String geoArea, String municipality) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT IGNORE INTO AreaDirectory (geoArea, municipality) VALUES (?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, geoArea);
+			stmt.setString(2, municipality);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			System.out.println("Fail: insertAreaDirectory");
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+	
 	public static boolean insertAgency(int agencyAndar, String name) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -1256,4 +1294,5 @@ public class DatabaseHandler {
 
 		return conn;
 	}
+
 }
