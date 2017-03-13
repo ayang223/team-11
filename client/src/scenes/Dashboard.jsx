@@ -76,7 +76,7 @@ class Dashboard extends React.Component{
             <ChartDollarsCity />
             <ChartMoneyInvested data={this.state.data}/>
             <TableExample />
-            <D3Map />
+            <D3Map data={this.state.data}/>
             </div>
             <div className="medium-3 columns"  style={{width: 450, height: 450}} >
               </div>

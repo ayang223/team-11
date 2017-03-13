@@ -55,8 +55,8 @@ externals: {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_component)/
       },
-      { 
-        test: /\.css$/, 
+      {
+        test: /\.css$/,
         loader: "style-loader!css-loader",
         include: /fixed-data-table/,
         exclude: /foundation-sites/,

@@ -6,33 +6,54 @@ var topojson = require('topojson');
 
 var Map = require('react-d3-map').Map;
 var MarkerGroup = require('react-d3-map').MarkerGroup;
+import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
 
 // Example
   var width = 700;
   var height = 700;
-  var scale = 1200 * 5;
+  var scale = 100000 * 5;
   var scaleExtent = [1 << 12, 1 << 13]
-  var center = [122, 23.5];
-  var data = {
+  var center = [-123.1022025, 49.2823492];
+  var mapData = {
           "type": "Feature",
           "properties": {
             "text": "this is a Point!!!"
           },
           "geometry": {
               "type": "Point",
-              "coordinates": [122, 23.5]
+              "coordinates": [0, 0]
           }
       }
 var popupContent = function(d) { return 'hi, i am polygon'; }
 
-  var onPolygonClick= function(e, d, i) {
+var onPolygonClick= function(e, d, i) {
     e.showPopup();
   }
-  var onPolygonCloseClick= function(e, id) {
+var onPolygonCloseClick= function(e, id) {
     e.hidePopup();
   }
 var D3Map = React.createClass({
+  createPostalCodes: function(data){
+    var _this = mapData;
+    var locations = data.Location;
+    var postalCodes = [];
+    var apiCallResult;
+    var latLong = [];
+    for(var i = 0; i< locations.length; i++){
+      postalCodes.push(locations[i].postal)
+    }
+    //console.log(postalCodes);
+    geocodeByAddress("V6E 2X5", (err, result) => {
+      if(err){
+        console.log(err);
+      }
+      console.log(result);
+      _this.geometry.coordinates = [result.lng, result.lat];
+    });
+  },
   render() {
+    var dataFromDash = this.props.data;
+    var postalCodes = this.createPostalCodes(dataFromDash);
     return (
       <div className="row">
         <h2>Map Example</h2>
@@ -45,7 +66,7 @@ var D3Map = React.createClass({
       >
         <MarkerGroup
           key= {"polygon-test"}
-          data= {data}
+          data= {mapData}
           popupContent= {popupContent}
           onClick= {onPolygonClick}
           onCloseClick= {onPolygonCloseClick}
