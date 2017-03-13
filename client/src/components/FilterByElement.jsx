@@ -19,21 +19,36 @@ var FilterByElement = React.createClass({
       array.push(JSON.stringify(e.target.value));
     }
   },
+
+  createMetaData:function(data){
+    var metadata = {};
+    var elements = data.ProgramElement;
+    var subelements = data.ProgramSubElement;
+    var elementArr = [];
+    for(var i = 0; i< elements.length; i++ ){
+      if(elementArr.includes(elements[i].element)){
+        console.log("element true")
+      }else elementArr.push(elements[i].element)
+    }
+    for(var i = 0; i< subelements.length; i++){
+      if(elementArr.includes(subelements[i].element)){
+        console.log("sub element true")
+      } else elementArr.push(subelements[i].element)
+    }
+    return elementArr;
+  },
   render:function(){
+    var dataFromDash = this.props.data;
     var message = 'FilterByElement: ' + this.state.selectValue;
+    var elementArr = this.createMetaData(dataFromDash);
+    const listItems = elementArr.map((element) =>
+      <option key={element} value={element} style={{margin:"2px"}}>{element}</option>
+      );
     return(
       <div className="medium-3 columns">
         <label>Select element</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="Learning Support">Learning Support</option>
-          <option value="Social and Emotional Health">Social and Emotional Health </option>
-          <option value="Connections/Healthy Relationships">Connections/Healthy Relationships</option>
-          <option value="Physical Health and Recreational Activities">Physical Health and Recreational Activities</option>
-          <option value="Life Skills">Life Skills</option>
-          <option value="System Change ">System Change </option>
-          <option value="Address Program Barriers/Access">Address Program Barriers/Access</option>
-          <option value="Food Redistribution">Food Redistribution</option>
-          <option value="Information and Referral">Information and Referral</option>
+          {listItems}
         </select>
         <label>{message}</label>
       </div>
