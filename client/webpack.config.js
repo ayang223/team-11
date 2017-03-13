@@ -39,6 +39,7 @@ externals: {
       FilterByEngagement: 'src/components/FilterByEngagement.jsx',
       ChartMoneyInvested: 'src/components/ChartMoneyInvested.jsx',
       ChartSumClientsServed: 'src/components/ChartSumClientsServed.jsx',
+      ChartGeographicInvestedCityGrouping: 'src/components/ChartGeographicInvestedCityGrouping.jsx',
       TableExample: 'src/components/TableExample.jsx',
       TableAdmin: 'src/components/TableAdmin.jsx',
       TableProgramInfo: 'src/components/TableProgramInfo.jsx',
