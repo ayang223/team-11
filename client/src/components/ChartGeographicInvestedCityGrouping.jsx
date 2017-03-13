@@ -132,36 +132,37 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
         }
       }
     }
-    for (var i = 0; i < andarDataOutput.length; i++) {
-        var currentYearlyAllocation = andarDataOutput[i].yearly_allocation;
-        var currentProgramAndar = andarDataOutput[i].program_andar;
-        var currentProgramName = null;
 
-        for(var j = 0; j < program.length; j++) {
-            var currentProgramID = program[j].id;
-            if(currentProgramID == currentProgramAndar) {
-                currentProgramName = program[j].name;
-            }
-        }
-        if(currentProgramName != null) {
-            moneyInvestedData.push(currentYearlyAllocation);
-            metadata.labels.push(currentProgramName);
-        }
+    var totalInvested = {};
+    for (var i = 0; i < cityGroups.length; i++) {
+      totalInvested[cityGroups[i]] = 0;
     }
 
-    datasetInfo.label = "Money Invested";
+    for (var i = 0; i < andarDataOutput.length; i++) {
+      var currentProgramAndar = andarDataOutput[i].program_andar;
+      var currentYearlyAllocation = andarDataOutput[i].yearly_allocation;
+      if (currentProgramAndar in sortedMunicipality) {
+        var areas = Object.keys(sortedMunicipality[currentProgramAndar]);
+        for (var j = 0; j < areas.length; j++) {
+          var currentArea = areas[j];
+          if (currentArea in sortedMunicipality[currentProgramAndar]) {
+            var currentAreaProportion = sortedMunicipality[currentProgramAndar][currentArea] * 0.01;
+            totalInvested[currentArea] += currentYearlyAllocation * currentAreaProportion;
+          }
+        }
+      }
+    }
+
+    datasetInfo.label = "Geographic Distribution";
     datasetInfo.backgroundColor = "#FF6384";
-    datasetInfo.borderColor = "rgba(255,99,132,1)";
-    datasetInfo.borderWidth = 1;
     datasetInfo.hoverBackgroundColor = "rgba(255,99,132,0.4)";
-    datasetInfo.hoverBorderColor= "rgba(255,99,132,1)";
+    datasetInfo.hoverBorderWidth = 1;
 
     datasetInfo.data = [];
-    for(var i = 0; i < moneyInvestedData.length; i++) {
-        datasetInfo.data.push(moneyInvestedData[i]);
+    for (var i = 0; i < cityGroups.length; i++) {
+        datasetInfo.data.push(totalInvested[cityGroups[i]]);
     }
-
-    metadata.datasets.push(datasetInfo)
+    metadata.datasets.push(datasetInfo);
 
     return metadata;
   },
