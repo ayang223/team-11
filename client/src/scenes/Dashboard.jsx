@@ -59,16 +59,16 @@ class Dashboard extends React.Component{
           <br/>
           <div className="row">
             <FilterByYear />
-            <FilterByCity />
+            <FilterByCity data={this.state.data}/>
             <FilterByInvested />
             <FilterByAgency data={this.state.data}/>
           </div>
           <br/>
           <div className="row">
               <FilterByFocusArea />
-              <FilterByPopulation />
+              <FilterByPopulation data={this.state.data}/>
               <FilterByElement data={this.state.data}/>
-              <FilterByEngagement />
+              <FilterByEngagement data={this.state.data}/>
               <button className="button info" onClick={this.generateGraphs}>Generate</button>
           </div>
           <br/>

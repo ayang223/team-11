@@ -19,22 +19,31 @@ var FilterByPopulation = React.createClass({
       array.push(JSON.stringify(e.target.value));
     }
   },
+
+  createMetadata:function(data){
+    var metadata = {};
+    var pop = data.TargetPopulation;
+    var popArr = []; 
+    for (var i =0; i< pop.length; i++){
+      if(popArr.includes(pop[i].population)){
+        console.log("population true")
+      } else popArr.push(pop[i].population)
+    }
+    return popArr;
+  },
+
   render:function(){
+    var dataFromDash = this.props.data;
     var message = 'FilterByPopulation: ' + this.state.selectValue;
+    var popArr = this.createMetadata(dataFromDash);
+    const listItems = popArr.map((population) =>
+      <option key={population} value={population} style={{margin:"2px"}}>{population}</option>
+      );
     return(
       <div className="medium-3 columns">
         <label>Select population</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="Early Childhood">Early Childhood</option>
-          <option value="Middle Years">Middle Years</option>
-          <option value="Families">Families</option>
-          <option value="Seniors">Seniors</option>
-          <option value="Parents/Caregicers">Parents/Caregicers</option>
-          <option value="Youth">Youth</option>
-          <option value="Immigrants/Refugees">Immigrants/Refugees</option>
-          <option value="Woman">Woman</option>
-          <option value="Aboriginal/First Nations">Aboriginal/First Nations</option>
-          <option value="Other">Other</option>
+          {listItems}
         </select>
         <label>{message}</label>
       </div>
