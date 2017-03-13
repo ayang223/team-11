@@ -1103,10 +1103,10 @@ public class DatabaseHandler {
 				String username = rs.getString("username");
 				String first = rs.getString("first_name");
 				String last = rs.getString("last_name");
-				user.addProperty("ID", id);
-				user.addProperty("Username", username);
-				user.addProperty("First Name", first);
-				user.addProperty("Last Name", last);
+				user.addProperty("id", id);
+				user.addProperty("user", username);
+				user.addProperty("first_name", first);
+				user.addProperty("last_name", last);
 
 				userInfo.add(user);
 			}
