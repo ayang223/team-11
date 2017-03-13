@@ -65,7 +65,7 @@ class Dashboard extends React.Component{
           </div>
           <br/>
           <div className="row">
-              <FilterByFocusArea />
+              <FilterByFocusArea data={this.state.data}/>
               <FilterByPopulation data={this.state.data}/>
               <FilterByElement data={this.state.data}/>
               <FilterByEngagement data={this.state.data}/>
