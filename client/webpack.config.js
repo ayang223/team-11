@@ -39,6 +39,7 @@ externals: {
       FilterByEngagement: 'src/components/FilterByEngagement.jsx',
       ChartDollarsCity: 'src/components/ChartDollarsCity.jsx',
       ChartMoneyInvested: 'src/components/ChartMoneyInvested.jsx',
+      ChartGeographicInvestedCityGrouping: 'src/components/ChartGeographicInvestedCityGrouping.jsx',
       TableExample: 'src/components/TableExample.jsx',
       d3map: 'src/components/d3map.jsx',
       'chartjs': require.resolve('chart.js')
