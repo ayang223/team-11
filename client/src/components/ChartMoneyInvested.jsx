@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
+import {HorizontalBar} from 'react-chartjs-2';
 
 var ChartMoneyInvested=React.createClass({
   displayName: 'DoughnutExample',
@@ -8,16 +8,29 @@ var ChartMoneyInvested=React.createClass({
     var labels = [];
     var datasets = [];
     var datasetInfo = {};
+    var moneyInvestedData = [];
 
     metadata.labels = labels;
     metadata.datasets = datasets;
 
-    // Replace with for loop parse of data values  (Program Name)
-    metadata.labels.push("Vancouver");
-    metadata.labels.push("Surrey");
-    metadata.labels.push("Richmond");
-    metadata.labels.push("Tri-Cities");
-    metadata.labels.push("Langley");
+    var andarDataOutput =  data.AndarDataOutput;
+    var program = data.Program;
+    for(var i = 0; i < andarDataOutput.length; i++) {
+        var currentYearlyAllocation = andarDataOutput[i].yearly_allocation;
+        var currentProgramAndar = andarDataOutput[i].program_andar;
+        var currentProgramName = null;
+
+        for(var j = 0; j < program.length; j++) {        
+            var currentProgramID = program[j].id;
+            if(currentProgramID == currentProgramAndar) {
+                currentProgramName = program[j].name;
+            }
+        }
+        if(currentProgramName != null) {
+            moneyInvestedData.push(currentYearlyAllocation);
+            metadata.labels.push(currentProgramName);
+        }
+    }
 
     datasetInfo.label = "Money Invested";
     datasetInfo.backgroundColor = "#FF6384";
@@ -26,8 +39,10 @@ var ChartMoneyInvested=React.createClass({
     datasetInfo.hoverBackgroundColor = "rgba(255,99,132,0.4)";
     datasetInfo.hoverBorderColor= "rgba(255,99,132,1)";
 
-    // Replace with for loop parse of data values (Yearly Allocation?)
-    datasetInfo.data = [300, 50, 100, 200, 150];
+    datasetInfo.data = [];
+    for(var i = 0; i < moneyInvestedData.length; i++) {
+        datasetInfo.data.push(moneyInvestedData[i]);
+    }
 
     metadata.datasets.push(datasetInfo)
 
@@ -35,15 +50,15 @@ var ChartMoneyInvested=React.createClass({
   },
   render() {
     var dataFromDash = this.props.data;
-    var testText = "Bar Chart metadata:"
+    var title = "Money Invested Bar Chart:"
 
     var metadata = this.createMetadata(dataFromDash)
 
 
     return (
       <div className="row">
-        <h2 style={{textAlign:"left"}}>{testText} {JSON.stringify(metadata)}</h2>
-        <Bar data={metadata} />
+        <h2 style={{textAlign:"left"}}>{title}</h2>
+        <HorizontalBar data={metadata}/>
         </div>
     );
   }

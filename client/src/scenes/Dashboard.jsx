@@ -38,6 +38,7 @@ class Dashboard extends React.Component{
             document.getElementById('errorOut').innerHTML = "Couldn't finish request, database returned: " + JSON.stringify(result.status);
             alert("Error Message: Something happened during the request to get data from server");
           }else{
+            console.log(result);
            _this.setState({
                data: result
              })
@@ -53,13 +54,13 @@ class Dashboard extends React.Component{
     if(this.state.data){
       return(
         <div>
-          <h2 style={{textAlign:"left"}}>Dashboard Page</h2>
+          <h2 style={{margin:"20px", textAlign: "center"}}>Dashboard Page</h2>
           <br/>
           <div className="row">
             <FilterByYear />
             <FilterByCity />
             <FilterByInvested />
-            <FilterByAgency />
+            <FilterByAgency data={this.state.data}/>
           </div>
           <br/>
           <div className="row">
@@ -71,13 +72,13 @@ class Dashboard extends React.Component{
           </div>
           <br/>
           <div className="row">
-          <div className="medium-3 columns"  style={{width: 450, height: 450}} >
+          <div className="medium-3 columns"  style={{width: 1000, height: 1000}} >
             <ChartDollarsCity />
             <ChartMoneyInvested data={this.state.data}/>
             <TableExample />
+            <D3Map />
             </div>
             <div className="medium-3 columns"  style={{width: 450, height: 450}} >
-                <D3Map />
               </div>
         </div>
       </div>

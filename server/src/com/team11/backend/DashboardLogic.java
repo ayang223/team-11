@@ -24,14 +24,14 @@ public class DashboardLogic {
 		dashboardJson.add("Program", DatabaseHandler.getProgram());
 		dashboardJson.add("Location", DatabaseHandler.getLocation());
 		dashboardJson.add("Agency", DatabaseHandler.getAgency());
-		dashboardJson.add("InventoryOutput", DatabaseHandler.getInventoryOutput());
-		dashboardJson.add("Target Population", DatabaseHandler.getTargetPopulation());
-		dashboardJson.add("Program Element", DatabaseHandler.getProgramElement());
-		dashboardJson.add("Program SubElement", DatabaseHandler.getProgramSubElement());
-		dashboardJson.add("Geo Area", DatabaseHandler.getGeoArea());
+		dashboardJson.add("AndarDataOutput", DatabaseHandler.getInventoryOutput());
+		dashboardJson.add("TargetPopulation", DatabaseHandler.getTargetPopulation());
+		dashboardJson.add("ProgramElement", DatabaseHandler.getProgramElement());
+		dashboardJson.add("ProgramSubElement", DatabaseHandler.getProgramSubElement());
+		dashboardJson.add("GeoArea", DatabaseHandler.getGeoArea());
 		dashboardJson.add("Municipality", DatabaseHandler.getMunicipality());
-		dashboardJson.add("Area Directory", DatabaseHandler.getAreaDirectory());
-		dashboardJson.add("Donor Engagement", DatabaseHandler.getDonorEngagement());
+		dashboardJson.add("AreaDirectory", DatabaseHandler.getAreaDirectory());
+		dashboardJson.add("DonorEngagement", DatabaseHandler.getDonorEngagement());
 		dashboardJson.add("Outputs", DatabaseHandler.getOutputs());
 		return dashboardJson;
 	}

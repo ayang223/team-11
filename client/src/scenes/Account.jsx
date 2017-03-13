@@ -108,7 +108,7 @@ var Account = React.createClass({
 
     return(
       <div>
-     <h2>Account Page</h2>
+     <h2 style={{margin:"20px", textAlign: "center"}}>Account Page</h2>
      <AccountForm onNewAccount={this.handleNewAccount}/>
      </div>
     );

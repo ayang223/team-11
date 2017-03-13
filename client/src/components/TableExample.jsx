@@ -1,16 +1,16 @@
 import React from 'react';
 import 'fixed-data-table/dist/fixed-data-table.css';
 import {Table, Column, Cell} from 'fixed-data-table';
- 
-// Table data as a list of array. 
+
+// Table data as a list of array.
 const rows = [
   ['a1', 'b1', 'c1'],
   ['a2', 'b2', 'c2'],
   ['a3', 'b3', 'c3'],
-  // .... and more 
+  // .... and more
 ];
- 
-// Render your table 
+
+// Render your table
 var TableExample=React.createClass({
 
 render() {
