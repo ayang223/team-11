@@ -91,16 +91,48 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
       "Sechelt Indian Government District (Part-Sunshine Coast)"
     ]
   },
+  getGrouping: function(city) {
+    var cityGroups = Object.keys(this.cityGroupings);
+    for (var i = 0; i < cityGroups.length; i++) {
+      var cities = this.cityGroupings[cityGroups[i]];
+      for (var j = 0; j < cities.length; j++) {
+        if (city === cities[j]) {
+          return cityGroups[i];
+        }
+      }
+    }
+    return null;
+  },
   createMetadata: function(data) {
+    var cityGroups = Object.keys(this.cityGroupings);
     var metadata = {};
-    metadata.labels = Object.keys(this.cityGroupings);
+    metadata.labels = cityGroups;
     metadata.datasets = [];
     var datasetInfo = {};
     var moneyInvestedData = [];
 
     var andarDataOutput =  data.AndarDataOutput;
-    var program = data.Program;
-    for(var i = 0; i < andarDataOutput.length; i++) {
+    var municipality = data.Municipality;
+
+    var sortedMunicipality = {};
+    // preprocess municipality to reduce time complexity
+    for (var i = 0; i < municipality.length; i++) {
+      var currentAndar = municipality[i].andar_id;
+      var group = this.getGrouping(municipality[i].municipality);
+      if (group) {
+        if (currentAndar in sortedMunicipality) {
+          if (group in sortedMunicipality[currentAndar]) {
+            sortedMunicipality[currentAndar][group] += municipality[i].focus_percentage;
+          } else {
+            sortedMunicipality[currentAndar][group] = municipality[i].focus_percentage;
+          }
+        } else {
+          sortedMunicipality[currentAndar] = {};
+          sortedMunicipality[currentAndar][group] = municipality[i].focus_percentage;
+        }
+      }
+    }
+    for (var i = 0; i < andarDataOutput.length; i++) {
         var currentYearlyAllocation = andarDataOutput[i].yearly_allocation;
         var currentProgramAndar = andarDataOutput[i].program_andar;
         var currentProgramName = null;
@@ -139,12 +171,11 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
 
     var metadata = this.createMetadata(dataFromDash)
 
-
     return (
       <div className="row">
         <h2 style={{textAlign:"left"}}>{title}</h2>
         <Pie data={metadata}/>
-        </div>
+      </div>
     );
   }
 });
