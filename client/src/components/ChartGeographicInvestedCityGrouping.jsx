@@ -3,15 +3,100 @@ import {Pie} from 'react-chartjs-2';
 
 var ChartGeographicInvestedCityGrouping=React.createClass({
   displayName: 'Geographic Distribution based on Money Invested with City Groupings',
+  cityGroupings: {
+    "Langley": [
+      "Langley, City of",
+      "Langley, District Municipality"
+    ],
+    "Tri-cities": [
+      "Anmore",
+      "Belcarra",
+      "Coquitlam",
+      "Port Coquitlam",
+      "Port Moody"
+    ],
+    "Northshore": [
+        "North Vancouver",
+        "City of	North Vancouver, District Municipality",
+        "West Vancouver",
+        "Bowen Island"
+    ],
+    "Sea to Sky": [
+      "Lions Bay",
+      "Lillooet",
+      "Pemberton",
+      "Squamish",
+      "Whistler"
+    ],
+    "Sunshine Coast": [
+      "Elphinstone",
+      "Gibsons",
+      "Halfmoon Bay",
+      "Pender Harbour / Egmont / Madeira Park",
+      "Roberts Creek",
+      "Sechelt District Municipality",
+      "Sechelt Indian Government District (Part-Sunshine Coast)",
+      "West Howe Sound (Langdale, Port Mellon, Williamson’s Landing, Granthams Landing, Soames, Hopkins Landing, and Gambier and Keats Islands)"
+    ],
+    "Fraser Cascade": [
+      "Mission",
+      "Hope",
+      "Kent",
+      "Harrison Hot Springs",
+      "Boston Bar / North Bend",
+      "Dogwood Valley / Emory Creek / Choate / Sunshine Valley / Laidlaw / Spuzzum",
+      "Lake Errock / Harrison Mills / Hemlock Valley",
+      "Popkum / Bridal Falls",
+      "Slesse Park / Baker Trails / Bell Acres",
+      "Miracle Valley / Hatzic Prairie"
+    ],
+    "Burnaby": [
+      "Burnaby"
+    ],
+    "Delta": [
+      "Delta"
+    ],
+    "Maple Ridge/Pitt Meadows": [
+      "Maple Ridge",
+      "Pitt Meadows"
+    ],
+    "New Westminster": [
+      "New Westminster"
+    ],
+    "Richmond": [
+      "Richmond"
+    ],
+    "Surrey/White Rock": [
+      "Surrey",
+      "White Rock"
+    ],
+    "Vancouver": [
+      "Vancouver"
+    ],
+    "Abbotsford": [
+      "Abbotsford"
+    ],
+    "Chilliwack": [
+      "Chilliwack"
+    ],
+    "Mission": [
+      "Mission"
+    ],
+    "Other Areas in BC": [
+      "Other Areas"
+    ],
+    "First Nation Territories": [
+      "First Nation Territories",
+      "Tsawwassen First Nation",
+      "Sechelt Indian Government District (Part-Sunshine Coast)"
+    ]
+  },
   createMetadata: function(data) {
     var metadata = {};
-    var labels = [];
-    var datasets = [];
+    metadata.labels = Object.keys(this.cityGroupings);
+    metadata.datasets = [];
     var datasetInfo = {};
     var moneyInvestedData = [];
-
-    metadata.labels = labels;
-    metadata.datasets = datasets;
 
     var andarDataOutput =  data.AndarDataOutput;
     var program = data.Program;
