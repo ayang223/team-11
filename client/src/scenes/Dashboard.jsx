@@ -67,7 +67,7 @@ class Dashboard extends React.Component{
           <div className="row">
               <FilterByFocusArea />
               <FilterByPopulation />
-              <FilterByElement />
+              <FilterByElement data={this.state.data}/>
               <FilterByEngagement />
               <button className="button info" onClick={this.generateGraphs}>Generate</button>
           </div>
