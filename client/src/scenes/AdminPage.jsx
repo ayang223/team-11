@@ -1,5 +1,10 @@
 import sha256 from 'js-sha256';
+import 'fixed-data-table/dist/fixed-data-table.css';
+import {Table, Column, Cell} from 'fixed-data-table'
 var React = require('react');
+var TableExample = require('TableExample');
+var TableAdmin = require('TableAdmin');
+
 
 var AccountForm = React.createClass({
   createNewAccount:function(e){
@@ -197,12 +202,15 @@ componentWillMount:function() {
     })
   },
 
+
+
   render:function(){
     return(
      <div>
        <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
        <h2>List of users: </h2>
        <p>{this.getUsers}</p>
+       <TableAdmin data={this.getUsers} />
        <div id="out">
        </div>
        <div>
