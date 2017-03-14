@@ -7,10 +7,13 @@ var FilterByInvested = require('FilterByInvested');
 var FilterByPopulation = require('FilterByPopulation');
 var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
-var ChartDollarsCity = require('ChartDollarsCity');
 var ChartMoneyInvested = require('ChartMoneyInvested');
+var ChartSumClientsServed = require('ChartSumClientsServed');
+var ChartGeographicInvestedCityGrouping = require('ChartGeographicInvestedCityGrouping');
 var TableExample = require('TableExample');
+var TableProgramInfo = require('TableProgramInfo');
 var D3Map = require('d3map');
+var url = require('url');
 
 
 class Dashboard extends React.Component{
@@ -28,7 +31,7 @@ class Dashboard extends React.Component{
   componentWillMount(){
     var _this = this;
     var getData = $.ajax({
-        url:"http://localhost:8080/BackendServer/DatabaseServlet",
+        url: url,
         dataType:"json",
         type: "POST",data: JSON.stringify({
          "action" : "Get Dashboard"
@@ -73,13 +76,14 @@ class Dashboard extends React.Component{
           <br/>
           <div className="row">
           <div className="medium-3 columns"  style={{width: 1000, height: 1000}} >
-            <ChartDollarsCity />
             <ChartMoneyInvested data={this.state.data}/>
-            <TableExample />
-            <D3Map />
-            </div>
-            <div className="medium-3 columns"  style={{width: 450, height: 450}} >
-              </div>
+            <ChartSumClientsServed data={this.state.data}/>
+            <TableProgramInfo data={this.state.data}/>
+            <D3Map data={this.state.data}/>
+            <ChartGeographicInvestedCityGrouping data={this.state.data}/>
+          </div>
+          <div className="medium-3 columns"  style={{width: 450, height: 450}} >
+          </div>
         </div>
       </div>
       );

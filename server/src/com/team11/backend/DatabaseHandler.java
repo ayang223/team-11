@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 public class DatabaseHandler {
 	// JDBC driver and database name
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/united_way_andar_db";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/United_Way_Andar_DB";
 	// Database credentials
 	static final String USER = "root";
 	static final String PASS = "root";
@@ -1142,10 +1142,10 @@ public class DatabaseHandler {
 				String username = rs.getString("username");
 				String first = rs.getString("first_name");
 				String last = rs.getString("last_name");
-				user.addProperty("ID", id);
-				user.addProperty("Username", username);
-				user.addProperty("First Name", first);
-				user.addProperty("Last Name", last);
+				user.addProperty("id", id);
+				user.addProperty("user", username);
+				user.addProperty("first_name", first);
+				user.addProperty("last_name", last);
 
 				userInfo.add(user);
 			}
