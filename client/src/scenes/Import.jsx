@@ -22,13 +22,13 @@ var Import = React.createClass({
            var parsed = Baby.parse(result);
            // Currently the result is in this scope, so if we want to pass this data to
            // the backend server, the call will have to be in here
-           //document.getElementById('json').innerHTML = JSON.stringify(parsed);
+           document.getElementById('json').innerHTML = JSON.stringify(parsed);
            $.ajax({
                 url:url,
                 type: "POST",
                 data: JSON.stringify({
                   "action" : "Import Programs",
-                   "data": parsed.data
+                  "data": parsed.data
                 }),
                 dataType:"json",
                 success:function(data){
@@ -104,7 +104,7 @@ var Import = React.createClass({
                <h3 style={{margin: "20px"}}>Status of Upload</h3>
                <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here</div>
                <br/><br/>
-
+              <div id="json">Json: </div>
                  <br/><br/>
             </div>
         );
