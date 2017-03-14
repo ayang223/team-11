@@ -4,6 +4,7 @@ import {Table, Column, Cell} from 'fixed-data-table'
 var React = require('react');
 var TableExample = require('TableExample');
 var TableAdmin = require('TableAdmin');
+var url = require('url');
 
 
 var AccountForm = React.createClass({
@@ -34,7 +35,7 @@ var AccountForm = React.createClass({
   var encryptedPassword = sha256(password);
 
     $.ajax({
-      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      url: url,
       type:"POST",
       data: JSON.stringify({
         "action" : "Create User",
@@ -115,7 +116,7 @@ var DeleteUserForm = React.createClass({
     }
 
     $.ajax({
-      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      url:url,
       type: "POST",
       data: JSON.stringify({
         "action": "Delete User",
@@ -168,7 +169,7 @@ var AdminPage = React.createClass({
     var _this = this;
     console.log("compnenet will mount")
     var getUsers = $.ajax({
-      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      url:url,
       type: "POST",
       data: JSON.stringify({
         "action" : "List User"
@@ -208,7 +209,7 @@ var AdminPage = React.createClass({
 
   refreshList: function() {
     var getUsers = $.ajax({
-      url:"http://localhost:8080/BackendServer/DatabaseServlet",
+      url:url,
       type: "POST",
       data: JSON.stringify({
         "action" : "List User"

@@ -1,5 +1,6 @@
 var React = require('react');
 var Baby = require('babyparse');
+var url = require('url');
 
 var buttonStyle={
   margin : "20px",
@@ -23,7 +24,7 @@ var Import = React.createClass({
            // the backend server, the call will have to be in here
            //document.getElementById('json').innerHTML = JSON.stringify(parsed);
            $.ajax({
-                url:"http://localhost:8080/BackendServer/DatabaseServlet",
+                url:url,
                 type: "POST",
                 data: JSON.stringify({
                   "action" : "Import Programs",
@@ -63,7 +64,7 @@ var Import = React.createClass({
              // Currently the result is in this scope, so if we want to pass this data to
              // the backend server, the call will have to be in here
              $.ajax({
-                  url:"http://localhost:8080/BackendServer/DatabaseServlet",
+                  url:url,
                   type: "POST",
                   data: JSON.stringify({
                     "action" : "Import Output",

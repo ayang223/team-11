@@ -13,6 +13,7 @@ var ChartGeographicInvestedCityGrouping = require('ChartGeographicInvestedCityGr
 var TableExample = require('TableExample');
 var TableProgramInfo = require('TableProgramInfo');
 var D3Map = require('d3map');
+var url = require('url');
 
 
 class Dashboard extends React.Component{
@@ -30,7 +31,7 @@ class Dashboard extends React.Component{
   componentWillMount(){
     var _this = this;
     var getData = $.ajax({
-        url:"http://localhost:8080/BackendServer/DatabaseServlet",
+        url: url,
         dataType:"json",
         type: "POST",data: JSON.stringify({
          "action" : "Get Dashboard"

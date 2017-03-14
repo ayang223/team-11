@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 public class DatabaseHandler {
 	// JDBC driver and database name
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/united_way_andar_db";
+	static final String DB_URL = "jdbc:mysql://localhost:3306/United_Way_Andar_DB";
 	// Database credentials
 	static final String USER = "root";
 	static final String PASS = "root";
