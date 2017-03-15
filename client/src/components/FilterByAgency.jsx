@@ -3,7 +3,7 @@ var array = [];
 
 var FilterByAgency = React.createClass({
   getInitialState:function(){
-    return {selectValue: '(nothing selected)'};
+    return {selectValue: [] };
   },
   handleChange: function(e){
     this.setState({selectValue: array});
@@ -17,6 +17,9 @@ var FilterByAgency = React.createClass({
     }
     if(!isPresent){
       array.push(JSON.stringify(e.target.value));
+    }else{
+      var index = array.indexOf(JSON.stringify(e.target.value));
+      array.splice(index, 1);
     }
   },
   createMetadata : function(data){
@@ -38,7 +41,7 @@ var FilterByAgency = React.createClass({
     return(
       <div className="medium-3 columns">
         <label>Select Agency</label>
-      <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
+      <select multiple={true} size="3" value={this.state.selectValue} onChange={this.handleChange}>
           {listItems}
         </select>
         <label>{message}</label>

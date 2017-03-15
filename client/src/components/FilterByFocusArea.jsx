@@ -3,7 +3,7 @@ var array = [];
 
 var FilterByFocusArea = React.createClass({
   getInitialState:function(){
-    return {selectValue: '(nothing selected)'};
+    return {selectValue: []};
   },
   handleChange: function(e){
     this.setState({selectValue: array});
@@ -17,17 +17,36 @@ var FilterByFocusArea = React.createClass({
     }
     if(!isPresent){
       array.push(JSON.stringify(e.target.value));
+    }else{
+      var index = array.indexOf(JSON.stringify(e.target.value));
+      array.splice(index, 1);
     }
   },
+
+createMetadata:function(data){
+    var metadata = {};
+    var focusarea = data.AndarDataOutput;
+    var focusArr = [];
+    for (var i =0; i< focusarea.length; i++){
+      if(focusArr.includes(focusarea[i].focus)){
+        console.log("focus true")
+      } else focusArr.push(focusarea[i].focus)
+    }
+    return focusArr;
+  },
+
   render:function(){
+    var dataFromDash = this.props.data;
     var message = 'FilterByFocusArea: ' + this.state.selectValue;
+    var focusArr = this.createMetadata(dataFromDash);
+    const listItems = focusArr.map((focus) =>
+      <option key={focus} value={focus} style={{margin:"2px"}}>{focus}</option>
+      );
     return(
       <div className="medium-3 columns">
         <label>Select focus area</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="All that Kids can Be">All that Kids can Be</option>
-          <option value="Building Stronger Communities">Building Stronger Communities</option>
-          <option value="Other">Other</option>
+          {listItems}
         </select>
         <label>{message}</label>
       </div>
