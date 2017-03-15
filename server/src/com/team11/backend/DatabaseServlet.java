@@ -59,12 +59,13 @@ public class DatabaseServlet extends HttpServlet {
 		}
 		String data = buffer.toString();
 		
+		//Write Response body
+		response.setContentType("text/json");
+	    response.addHeader("Access-Control-Allow-Origin", "*");
 		JsonObject requestJson = gson.fromJson(data, JsonObject.class);
 		JsonObject responseJson = RequestHandler.handleRequest(requestJson);
 		
-		//Write Response body
-		response.setContentType("text/json");
-		response.addHeader("Access-Control-Allow-Origin", "*");
+	
 
 		PrintWriter out = response.getWriter();
 		

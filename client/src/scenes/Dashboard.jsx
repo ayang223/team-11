@@ -71,7 +71,7 @@ class Dashboard extends React.Component{
               <FilterByPopulation />
               <FilterByElement />
               <FilterByEngagement />
-              <button className="button info" onClick={this.generateGraphs}>Generate</button>
+              <button className="button info" onClick={this.generateGraphs} style={{margin:"20px"}}>Generate!</button>
           </div>
           <br/>
           <div className="row">
