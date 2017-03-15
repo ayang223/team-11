@@ -43,6 +43,7 @@ externals: {
       TableExample: 'src/components/TableExample.jsx',
       TableAdmin: 'src/components/TableAdmin.jsx',
       TableProgramInfo: 'src/components/TableProgramInfo.jsx',
+      googleMap: 'src/components/googleMap.jsx',
       d3map: 'src/components/d3map.jsx',
       url: 'src/components/url.js',
       'chartjs': require.resolve('chart.js')

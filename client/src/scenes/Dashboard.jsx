@@ -14,6 +14,7 @@ var TableExample = require('TableExample');
 var TableProgramInfo = require('TableProgramInfo');
 var D3Map = require('d3map');
 var url = require('url');
+var googleMap = require('googleMap');
 
 
 class Dashboard extends React.Component{
@@ -79,7 +80,8 @@ class Dashboard extends React.Component{
             <ChartMoneyInvested data={this.state.data}/>
             <ChartSumClientsServed data={this.state.data}/>
             <TableProgramInfo data={this.state.data}/>
-            <D3Map data={this.state.data}/>
+            <googleMap />
+
             <ChartGeographicInvestedCityGrouping data={this.state.data}/>
           </div>
           <div className="medium-3 columns"  style={{width: 450, height: 450}} >
