@@ -5,6 +5,7 @@
  var {Link} = require('react-router');
  import cookie from 'react-cookie';
 var logo = 'src/css/unitedWay.png';
+var {hashHistory} = require('react-router');
 
 
 var navStyle ={
@@ -39,8 +40,23 @@ var isAdmin = true;
 
 
  var Nav = React.createClass({
+
+   pop(){
+     var sure = window.confirm("Are you sure?")
+     if(sure){
+       cookie.remove('userID', []);
+       cookie.remove('admin', []);
+       hashHistory.push('/login');}
+   //  }
+ },
+
+  //  pop() {
+  //    alert("Close the modal");
+  //  },
+
    render: function () {
      checkLogin();
+
      return (
          <div className="top-bar" style={navStyle}>
            <div className="top-bar-left">
@@ -69,7 +85,7 @@ var isAdmin = true;
                     </li>
                    }
                       <li>
-                      <Link style={eachItem} to="/logout" activeClassName="active" activeStyle={activeItem}>Logout</Link>
+                      <button style={eachItem} activeClassName="active" activeStyle={activeItem} onClick={this.pop}>Logout</button>
                       </li>
                     </ul>
                   </div>
