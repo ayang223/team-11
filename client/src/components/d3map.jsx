@@ -7,6 +7,7 @@ var topojson = require('topojson');
 var Map = require('react-d3-map').Map;
 var MarkerGroup = require('react-d3-map').MarkerGroup;
 import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
+var ZoomControl = require('react-d3-map-core').ZoomControl;
 
 // Example
   var width = 700;
@@ -14,7 +15,34 @@ import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
   var scale = 100000 * 5;
   var scaleExtent = [1 << 12, 1 << 30]
   var center = [-123.1022025, 49.2823492];
-  var mapData = {
+  var t = {
+    "type" : "Topology",
+    "objects" : {
+      "places" : {
+        "type" : "GeometryCollection",
+        "geometries": [
+          {
+            "type" : "Point",
+
+            "coordinates" : [-122.94726830000002, 49.2310876],
+            "properties" : {
+              "name": "Aberdeen"
+            }
+          },
+          {
+            "type" : "Point",
+            "coordinates" : [-123.1302129, 49.2844627],
+            "properties" : {
+              "name" : "Ayr"
+            }
+          }
+        ]
+      }
+    }
+  }
+  var mapData = topojson.feature(t, t.objects.places);
+
+  var x = {
           "type": "Feature",
           "properties": {
             "text": "this is a Point!!!"
@@ -24,18 +52,8 @@ import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
               "coordinates": [[-123.1009434, 49.2826161], [-122.98590580000001, 49.2300456]]
           }
       }
- var data = {
-   'geometry':
-   {
-     coordinates: [[[-74.0479, 40.8820], [-73.9067, 40.8820], [-73.9067, 40.6829], [-74.0479, 40.6829], [-74.0479, 40.8820]]],
-     type: "Point"
-    },
-    id: 999999, properties:
-    {
-      "text": "hi, this is a polygon!"
-    }, type: "Feature"};
+var popupContent = function(d) { return d.properties.name }
 
-var popupContent = function(d) { return 'hi, i am polygon'; }
 
 var onPolygonClick= function(e, d, i) {
     e.showPopup();
@@ -53,20 +71,34 @@ var D3Map = React.createClass({
           if(err){
             console.log(err);
           }else{
-            //console.log("lng: " +result.lng);
-            //console.log("lat: " +result.lat);
+            console.log("lng: " +result.lng);
+            console.log("lat: " +result.lat);
             latLong.push([result.lng, result.lat]);
-            _this.geometry.coordinates.push(latLong[n]);
+            //_this.geometry.coordinates.push(latLong[n]);
             console.log( _this.geometry.coordinates)
-            //return result;
-            //console.log(result);
-            //console.log(latLong);
+            return result;
           }
         });
       }, 1000 * n);
   },
+  getInitialState: function() {
+      return {
+        scale: scale
+      }
+    },
+    zoomOut: function() {
+      this.setState({
+        scale: this.state.scale / 2
+      })
+    },
+    zoomIn: function() {
+      this.setState({
+        scale: this.state.scale * 2
+      })
+    },
   createPostalCodes: function(data){
     var _this = mapData;
+    console.log(_this);
     var locations = data.Location;
     var postalCodes = [];
     var apiCallResult;
@@ -76,20 +108,32 @@ var D3Map = React.createClass({
     }
     console.log(postalCodes);
     for(var i = 0; i < postalCodes.length; i++){
-      //this.doTimeout(postalCodes[i], i);
+      this.doTimeout(postalCodes[i], i);
       }
       //_this.geometry.coordinates = [result.lng, result.lat];
   },
   render() {
     var dataFromDash = this.props.data;
     var postalCodes = this.createPostalCodes(dataFromDash);
+
+    var zoomIn = this.zoomIn;
+    var zoomOut = this.zoomOut;
+    var styleContainer = {
+       position: 'relative',
+       backgroundColor: '#EEE',
+       width: this.width,
+       height: this.height
+     }
+
     return (
-      <div className="row">
+
+      <div className="row" stlye={styleContainer}>
         <h2>Map Example</h2>
       <Map
         width= {width}
         height= {height}
         scale= {scale}
+        zoomScale = {this.state.scale}
         scaleExtent= {scaleExtent}
         center= {center}
       >
@@ -101,7 +145,12 @@ var D3Map = React.createClass({
           onCloseClick= {onPolygonCloseClick}
           markerClass= {"your-marker-css-class"}
         />
+        <ZoomControl
+              zoomInClick= {zoomIn}
+              zoomOutClick= {zoomOut}
+            />
       </Map>
+
     </div>
   );
   }
