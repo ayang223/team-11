@@ -8,8 +8,8 @@ var MarkerGroup = require('react-d3-map').MarkerGroup;
 import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
 var ZoomControl = require('react-d3-map-core').ZoomControl;
 
-var width = 1000;
-var height = 1000;
+var width = 500;
+var height = 500;
 var scaleExtent = [1 << 12, 1 << 30]
 var scale = 100000 * 5;
 var center = [-123.1022025, 49.2823492];
@@ -55,7 +55,7 @@ var D3Map = React.createClass({
     var _this = this;
     var dashData = this.props.data;
     var topoData;
-    for(var i =0; i< dashData.Location.length; i++){
+    for(var i =0; i< 5; i++){
       this.psToCoor(dashData.Location[i].postal, i, dashData.Location[i].name);
     }
     setTimeout(function(){
@@ -64,7 +64,7 @@ var D3Map = React.createClass({
         mapData : topoData,
         loading: false
       })
-    }, 1000 * dashData.Location.length +1);
+    }, 1000 * 5);
   },
   zoomOut: function() {
     this.setState({
@@ -87,12 +87,12 @@ var D3Map = React.createClass({
      }
      if(this.state.loading){
        return (
-         <div className="row" style={styleContainer}>
+         <div>
            <h3>Programs Map is currently loading....</h3>
            </div>)
      }
     return(
-      <div className="row" style={styleContainer}>
+      <div className="large-6 column" style={styleContainer}>
         <h2>Programs Map</h2>
         <Map
           width= {width}
