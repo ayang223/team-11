@@ -124,9 +124,11 @@ var DeleteUserForm = React.createClass({
       }),
       success:function(data){
         console.log(data)
+        alert("user deleted");
       }.bind(this),
       error:function(error){
         console.log(error);
+        alert("user delete failed");
       }
     })
   },

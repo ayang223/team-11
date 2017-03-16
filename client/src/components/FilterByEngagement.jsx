@@ -3,7 +3,7 @@ var array = [];
 
 var FilterByEngagement = React.createClass({
   getInitialState:function(){
-    return {selectValue: '(nothing selected)'};
+    return {selectValue:[]};
   },
   handleChange: function(e){
     this.setState({selectValue: array});
@@ -17,19 +17,36 @@ var FilterByEngagement = React.createClass({
     }
     if(!isPresent){
       array.push(JSON.stringify(e.target.value));
+    }else{
+      var index = array.indexOf(JSON.stringify(e.target.value));
+      array.splice(index, 1);
     }
   },
+
+  createMetadata:function(data){
+    var metadata = {};
+    var donorEngagement = data.DonorEngagement;
+    var engagementArr = [];
+    for (var i =0; i< donorEngagement.length; i++){
+      if(engagementArr.includes(donorEngagement[i].engagement)){
+        console.log("engagement true")
+      } else engagementArr.push(donorEngagement[i].engagement)
+    }
+    return engagementArr;
+  },
+
   render:function(){
+    var dataFromDash = this.props.data;
     var message = 'FilterByEngagement: ' + this.state.selectValue;
+    var engagementArr = this.createMetadata(dataFromDash);
+    const listItems = engagementArr.map((engagement) =>
+      <option key={engagement} value={engagement} style={{margin:"2px"}}>{engagement}</option>
+      );
     return(
       <div className="medium-3 columns">
         <label>Select engagement</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="UW Speaker">UW Speaker</option>
-          <option value="Day of Caring">Day of Caring</option>
-          <option value="Volunteer Opportunities">Volunteer Opportunities</option>
-          <option value="Agency Tour">Agency Tour</option>
-          <option value="Agency Fair">Agency Fair</option>
+          {listItems}
         </select>
         <label>{message}</label>
       </div>
