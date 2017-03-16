@@ -23,7 +23,6 @@ var ZoomControl = require('react-d3-map-core').ZoomControl;
         "geometries": [
           {
             "type" : "Point",
-
             "coordinates" : [-122.94726830000002, 49.2310876],
             "properties" : {
               "name": "Aberdeen"
@@ -40,20 +39,33 @@ var ZoomControl = require('react-d3-map-core').ZoomControl;
       }
     }
   }
-  var mapData = topojson.feature(t, t.objects.places);
 
-  var x = {
-          "type": "Feature",
-          "properties": {
-            "text": "this is a Point!!!"
+var programMaps = {
+    "type" : "Topology",
+    "objects" : {
+      "places" : {
+        "type" : "GeometryCollection",
+        "geometries": [
+          {
+            "type" : "Point",
+            "coordinates" : [-122.94726830000002, 49.2310876],
+            "properties" : {
+              "name": "Aberdeen"
+            }
           },
-          "geometry": {
-              "type": "Point",
-              "coordinates": [[-123.1009434, 49.2826161], [-122.98590580000001, 49.2300456]]
+          {
+            "type" : "Point",
+            "coordinates" : [-123.1302129, 49.2844627],
+            "properties" : {
+              "name" : "Ayr"
+            }
           }
+        ]
       }
-var popupContent = function(d) { return d.properties.name }
+    }
+  }
 
+var popupContent = function(d) { return d.properties.name }
 
 var onPolygonClick= function(e, d, i) {
     e.showPopup();
@@ -61,11 +73,10 @@ var onPolygonClick= function(e, d, i) {
 var onPolygonCloseClick= function(e, id) {
     e.hidePopup();
   }
-var counter = 0;
-var latLong = [];
+//var latLong = [];
 var D3Map = React.createClass({
-  doTimeout : function(ps, n){
-    var _this = mapData;
+  doTimeout : function(ps, i, name){
+    var _this = this;
     setTimeout(function(){
         geocodeByAddress(ps, (err, result) => {
           if(err){
@@ -73,18 +84,32 @@ var D3Map = React.createClass({
           }else{
             console.log("lng: " +result.lng);
             console.log("lat: " +result.lat);
-            latLong.push([result.lng, result.lat]);
+            //latLong.push([result.lng, result.lat]);
             //_this.geometry.coordinates.push(latLong[n]);
-            console.log( _this.geometry.coordinates)
-            return result;
+            //console.log( _this.geometry.coordinates)
+            programMaps.objects.places.geometries.push({"type": "Point", "coordinates" : [result.lng, result.lat], "properties" : { "name" : name}});
+            console.log(programMaps);
+            //mapData = topojson.feature(programMaps, programMaps.objects.places);
           }
         });
-      }, 1000 * n);
+      }, 1000 * i);
   },
   getInitialState: function() {
       return {
-        scale: scale
+        scale: scale,
+        mapData : {}
       }
+    },
+    componentDidMount: function(){
+      var locations = this.props.data;
+      console.log(locations);
+      for(var i = 0; i< locations.length; i++){
+        var result = this.doTimeout(locations[i].postal, i, locations[i].name);
+      }
+      var topoData = topojson.feature(programMaps, programMaps.objects.places);
+      this.setState({
+        mapData : topoData
+      })
     },
     zoomOut: function() {
       this.setState({
@@ -97,25 +122,24 @@ var D3Map = React.createClass({
       })
     },
   createPostalCodes: function(data){
-    var _this = mapData;
-    console.log(_this);
     var locations = data.Location;
-    var postalCodes = [];
-    var apiCallResult;
-    var latLong = [];
+    console.log(locations);
     for(var i = 0; i< locations.length; i++){
-      postalCodes.push(locations[i].postal)
+      var result = this.doTimeout(locations[i].postal, i, locations[i].name);
     }
-    console.log(postalCodes);
-    for(var i = 0; i < postalCodes.length; i++){
-      this.doTimeout(postalCodes[i], i);
-      }
+    // var topoMap = topojson.feature(this.state.programMaps, this.state.programMaps.objects.places);
+    // this.setState({
+    //   programMaps : topoMap
+    // })
+    //console.log(postalCodes);
+    // for(var i = 0; i < postalCodes.length; i++){
+    //   this.doTimeout(postalCodes[i], i);
+    //   }
       //_this.geometry.coordinates = [result.lng, result.lat];
   },
   render() {
     var dataFromDash = this.props.data;
     var postalCodes = this.createPostalCodes(dataFromDash);
-
     var zoomIn = this.zoomIn;
     var zoomOut = this.zoomOut;
     var styleContainer = {
@@ -126,7 +150,6 @@ var D3Map = React.createClass({
      }
 
     return (
-
       <div className="row" stlye={styleContainer}>
         <h2>Map Example</h2>
       <Map
@@ -139,7 +162,7 @@ var D3Map = React.createClass({
       >
         <MarkerGroup
           key= {"polygon-test"}
-          data= {data}
+          data= {this.state.mapData}
           popupContent= {popupContent}
           onClick= {onPolygonClick}
           onCloseClick= {onPolygonCloseClick}
