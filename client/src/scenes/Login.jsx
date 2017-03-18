@@ -58,20 +58,15 @@ var Login = React.createClass({
            }),
             dataType:"json",
             success:function(data){
-               console.log(data)
-               document.getElementById('out').innerHTML = JSON.stringify(data);
                if(data.status === "success"){
-                 console.log("success");
                  //set SessionToken to hold JWT
                  this.saveCookie(loginUsername, data);
                  window.alert("Successfully logged in");
                  hashHistory.push('/dashboard');
+               }else{
+                 window.alert("Failed to login, please check your username or passsword");
                }
             }.bind(this),
-            error:function(error){
-               document.getElementById('out').innerHTML = error;
-                console.log(error);
-            }
         });
   },
 
@@ -90,7 +85,6 @@ var Login = React.createClass({
       <h2 style={h1style}>Welcome! Please login to continue </h2>
       <h3 style={h1style}>United Way Andar Data Analytics</h3>
         <LoginForm onNewName={this.handleNewName}/>
-        <div id="out"></div>
       </div>
     </div>
     );

@@ -46,6 +46,11 @@ var AccountForm = React.createClass({
         "admin_privileges" : false  // admin privilege default to false
       }),
       success:function(data){
+        if(data.status === "failed"){
+          alert("Failed to create new User");
+        }else{
+          alert("Success! New User has been created");
+        }
         console.log(data)
       }.bind(this),
       error:function(error){
@@ -124,7 +129,11 @@ var DeleteUserForm = React.createClass({
       }),
       success:function(data){
         console.log(data)
-        alert("user deleted");
+        if(data.status === "failed"){
+          alert("User not found");
+        }else{
+          alert("user deleted");
+        }
       }.bind(this),
       error:function(error){
         console.log(error);
