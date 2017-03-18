@@ -3,7 +3,7 @@ var array = [];
 
 var FilterByElement = React.createClass({
   getInitialState:function(){
-    return {selectValue: '(nothing selected)'};
+    return {selectValue: []};
   },
   handleChange: function(e){
     this.setState({selectValue: array});
@@ -17,23 +17,54 @@ var FilterByElement = React.createClass({
     }
     if(!isPresent){
       array.push(JSON.stringify(e.target.value));
+    }else{
+      var index = array.indexOf(JSON.stringify(e.target.value));
+      array.splice(index, 1);
     }
   },
+
+  createMetadata:function(data){
+    var metadata = {};
+    var elements = data.ProgramElement;
+    var elements2 = data.ProgramSubElement; // element in programsubelements
+    var elementArr = [];
+    for(var i = 0; i< elements.length; i++ ){
+      if(elementArr.includes(elements[i].element)){
+        console.log("element true")
+      }else elementArr.push(elements[i].element)
+    }
+    for(var i = 0; i< elements2.length; i++){
+      if(elementArr.includes(elements2[i].element)){
+        console.log("element2 true")
+      } else elementArr.push(elements2[i].element)
+    }
+    return elementArr;
+  },
+
+  createMetadata2:function(data){
+    var metadata = {};
+    var subelements = data.ProgramSubElement; //subelements in programsubelements
+    var subEleArr = [];
+    for (var i = 0; i < subelements.length; i++){
+      if(subEleArr.includes(subelements[i].subElement)){
+        console.log("sub element true")
+      } else subEleArr.push(subelements[i].subElement)
+    }
+    return subEleArr;
+  },
+
   render:function(){
+    var dataFromDash = this.props.data;
     var message = 'FilterByElement: ' + this.state.selectValue;
+    var elementArr = this.createMetadata(dataFromDash);
+    const listItems = elementArr.map((element) =>
+      <option key={element} value={element} style={{margin:"2px"}}>{element}</option>
+      );
     return(
       <div className="medium-3 columns">
         <label>Select element</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="Learning Support">Learning Support</option>
-          <option value="Social and Emotional Health">Social and Emotional Health </option>
-          <option value="Connections/Healthy Relationships">Connections/Healthy Relationships</option>
-          <option value="Physical Health and Recreational Activities">Physical Health and Recreational Activities</option>
-          <option value="Life Skills">Life Skills</option>
-          <option value="System Change ">System Change </option>
-          <option value="Address Program Barriers/Access">Address Program Barriers/Access</option>
-          <option value="Food Redistribution">Food Redistribution</option>
-          <option value="Information and Referral">Information and Referral</option>
+          {listItems}
         </select>
         <label>{message}</label>
       </div>

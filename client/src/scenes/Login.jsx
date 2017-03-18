@@ -6,6 +6,7 @@ import LoginForm from '../components/LoginForm.jsx';
 import cookie from 'react-cookie';
 import sha256 from 'js-sha256';
 var {hashHistory} = require('react-router');
+var url = require('url');
 
 var divStyle={
   padding: "10%"
@@ -48,7 +49,7 @@ var Login = React.createClass({
     var loginPass = sha256(p);
     //ajax call
         $.ajax({
-            url:"http://localhost:8080/BackendServer/DatabaseServlet",
+            url:url,
            type: "POST",
            data: JSON.stringify({
              "action" : "Login User",
@@ -87,6 +88,7 @@ var Login = React.createClass({
       <div>
       <div className="centered" style={divStyle}>
       <h2 style={h1style}>Welcome! Please login to continue </h2>
+      <h3 style={h1style}>United Way Andar Data Analytics</h3>
         <LoginForm onNewName={this.handleNewName}/>
         <div id="out"></div>
       </div>

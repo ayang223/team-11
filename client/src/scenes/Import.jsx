@@ -1,14 +1,18 @@
 var React = require('react');
 var Baby = require('babyparse');
-
+var url = require('url');
+var {hashHistory} = require('react-router');
 var buttonStyle={
   margin : "20px",
   align: "center"
 }
 
+
+
 var Import = React.createClass({
 
     importProgram : function(e){
+      document.getElementById('errorOut').innerHTML = "Currently uploading your data.... Please wait";
       var file = document.getElementById('CSVUpload').files[0];
       if(file == null){
         alert("No file selected!");
@@ -23,11 +27,11 @@ var Import = React.createClass({
            // the backend server, the call will have to be in here
            //document.getElementById('json').innerHTML = JSON.stringify(parsed);
            $.ajax({
-                url:"http://localhost:8080/BackendServer/DatabaseServlet",
+                url:url,
                 type: "POST",
                 data: JSON.stringify({
                   "action" : "Import Programs",
-                   "data": parsed.data
+                  "data": parsed.data
                 }),
                 dataType:"json",
                 success:function(data){
@@ -35,7 +39,7 @@ var Import = React.createClass({
                     alert("Error Message: Something happened during the request to send data from server, please contact your Administrator");
                     document.getElementById('errorOut').innerHTML = "Upload Failed, may be bad connection to Database, or the data already exists";
                   }else{
-                    document.getElementById('errorOut').innerHTML = "Upload Success!";
+                    document.getElementById('errorOut').innerHTML = "Upload Success! You can navigate to Dashboard for analytics now.";
                   }
                    console.log(data)
                  }.bind(this),
@@ -50,6 +54,7 @@ var Import = React.createClass({
       },
 
       importOutput : function(e){
+        document.getElementById('errorOut').innerHTML = "Currently uploading your data.... Please wait";
         var file = document.getElementById('CSVUpload').files[0];
         if(file == null){
           alert("No file selected!");
@@ -63,7 +68,7 @@ var Import = React.createClass({
              // Currently the result is in this scope, so if we want to pass this data to
              // the backend server, the call will have to be in here
              $.ajax({
-                  url:"http://localhost:8080/BackendServer/DatabaseServlet",
+                  url:url,
                   type: "POST",
                   data: JSON.stringify({
                     "action" : "Import Output",
@@ -96,6 +101,7 @@ var Import = React.createClass({
               <p className="help-text" style={{margin:"20px", textAlign: "center"}}>You can import new Andar Data below. Please click the appropriate upload button depending on the data you are uploading</p>
                <form ref="uploadForm" className="uploader" encType="multipart/form-data" >
                    <input className="button success button" style={buttonStyle}  ref="file" id="CSVUpload" type="file" name="file" className="upload-file"/>
+                   <p className="help-text" style={{marginLeft:"20px", textAlign: "left"}}> If this is the first time in the year that Andar data is uploaded, please upload the Output .csv file first before the Program. </p>
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Program File" onClick={this.importProgram} />
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Output File" onClick={this.importOutput} />
                    <br/><br/>
@@ -103,7 +109,6 @@ var Import = React.createClass({
                <h3 style={{margin: "20px"}}>Status of Upload</h3>
                <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here</div>
                <br/><br/>
-
                  <br/><br/>
             </div>
         );

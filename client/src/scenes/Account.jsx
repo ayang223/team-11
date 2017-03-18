@@ -2,6 +2,7 @@ import sha256 from 'js-sha256';
 import Login from '../scenes/Login.jsx';
 import cookie from 'react-cookie';
 var React = require('react');
+var url = require('url');
 
 var AccountForm = React.createClass({
    onFormSubmit: function(e){
@@ -28,7 +29,7 @@ var AccountForm = React.createClass({
      var encryptedOldPassword = sha256(oldpassword);
      var encryptedNewPassword = sha256(newpassword);
      $.ajax({
-      url: "http://localhost:8080/BackendServer/DatabaseServlet",
+      url: url,
       type:"POST",
       data: JSON.stringify({
         "action":"Change Password",

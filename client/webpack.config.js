@@ -37,12 +37,14 @@ externals: {
       FilterByPopulation: 'src/components/FilterByPopulation.jsx',
       FilterByElement: 'src/components/FilterByElement.jsx',
       FilterByEngagement: 'src/components/FilterByEngagement.jsx',
-      ChartDollarsCity: 'src/components/ChartDollarsCity.jsx',
       ChartMoneyInvested: 'src/components/ChartMoneyInvested.jsx',
+      ChartSumClientsServed: 'src/components/ChartSumClientsServed.jsx',
+      ChartGeographicInvestedCityGrouping: 'src/components/ChartGeographicInvestedCityGrouping.jsx',
       TableExample: 'src/components/TableExample.jsx',
       TableAdmin: 'src/components/TableAdmin.jsx',
       TableProgramInfo: 'src/components/TableProgramInfo.jsx',
       d3map: 'src/components/d3map.jsx',
+      url: 'src/components/url.js',
       'chartjs': require.resolve('chart.js')
     },
     extensions: ['', '.js', '.jsx',]

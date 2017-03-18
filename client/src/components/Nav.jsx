@@ -61,7 +61,7 @@ var isAdmin = true;
          <div className="top-bar" style={navStyle}>
            <div className="top-bar-left">
              <ul className="menu" style={eachItem}>
-             <li className="menu-text">United Way</li>
+             <li className="menu-text">Andar Data Analytics</li>
               <li>
                   <Link  style={eachItem} to="/import" activeClassName="active" activeStyle={activeItem}>Import</Link>
               </li>

@@ -49,10 +49,9 @@ var ChartMoneyInvested=React.createClass({
   },
   render() {
     var dataFromDash = this.props.data;
-    var title = "Money Invested Bar Chart:"
+    var title = "Money Invested Bar Chart:";
 
-    var metadata = this.createMetadata(dataFromDash)
-
+    var metadata = this.createMetadata(dataFromDash);
 
     return (
       <div className="row">

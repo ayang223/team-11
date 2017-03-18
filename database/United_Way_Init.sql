@@ -115,7 +115,7 @@ CREATE TABLE Program (
 	agency_andar integer NOT NULL,
 	name varchar(128) NOT NULL,
 	website varchar(128),
-	description varchar(512),
+	description varchar(4096),
 	num_locations integer,
 
 	PRIMARY KEY (id),
