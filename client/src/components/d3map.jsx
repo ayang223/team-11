@@ -8,7 +8,7 @@ var MarkerGroup = require('react-d3-map').MarkerGroup;
 import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
 var ZoomControl = require('react-d3-map-core').ZoomControl;
 
-var width = 500;
+var width = 1000;
 var height = 500;
 var scaleExtent = [1 << 12, 1 << 30]
 var scale = 100000 * 5;
