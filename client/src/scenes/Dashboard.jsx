@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
                     <div className="row">
                         <FilterByYear/>
                         <FilterByCity data={this.state.data}/>
-                        <FilterByInvested/>
+                        <FilterByInvested data={this.state.data}/>
                         <FilterByAgency data={this.state.data}/>
                     </div>
                     <br/>
