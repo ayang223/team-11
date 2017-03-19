@@ -55,8 +55,14 @@ class Dashboard extends React.Component{
   }
   render(){
     if(this.state.data){
+      var outerStyle ={
+        paddingLeft:30,
+        paddingRight:30,
+        width:1000,
+        height:500,
+      }
       return(
-        <div>
+        <div style={outerStyle}>
           <h2 style={{margin:"20px", textAlign: "center"}}>Dashboard Page</h2>
           <br/>
           <div className="row">
@@ -71,15 +77,15 @@ class Dashboard extends React.Component{
               <FilterByPopulation data={this.state.data}/>
               <FilterByElement data={this.state.data}/>
               <FilterByEngagement data={this.state.data}/>
-              <button className="button info" onClick={this.generateGraphs} style={{margin:"20px"}}>Generate</button>
+              <button className="button info" onClick={this.generateGraphs} style={{float: "right",margin:"20px"}}>Generate</button>
           </div>
           <br/>
           <div className="row">
           <div className="medium-3 columns"  style={{width: 1000, height: 1000}} >
-            <ChartMoneyInvested data={this.state.data}/>
-            <ChartSumClientsServed data={this.state.data}/>
-            <TableProgramInfo data={this.state.data}/>
-            <D3Map data={this.state.data}/>
+            <ChartMoneyInvested data={this.state.data}/><br/><br/>
+            <ChartSumClientsServed data={this.state.data}/><br/><br/>
+            <TableProgramInfo data={this.state.data}/><br/><br/>
+            <D3Map data={this.state.data}/><br/><br/><br/>
             <ChartGeographicInvestedCityGrouping data={this.state.data}/>
           </div>
           <div className="medium-3 columns"  style={{width: 450, height: 450}} >

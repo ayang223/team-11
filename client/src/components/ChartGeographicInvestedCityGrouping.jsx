@@ -167,12 +167,14 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
   },
   render() {
     var dataFromDash = this.props.data;
-    var title = "Geographic Distribution based on Money Invested with City Groupings:";
-
+    var title = "Geographic Distribution based on Money Invested with City Groupings";
     var metadata = this.createMetadata(dataFromDash);
-
+    var outerStyle ={
+      width:960,
+      height:500,
+    }
     return (
-      <div className="row">
+      <div style={outerStyle}>
         <h2 style={{textAlign:"left"}}>{title}</h2>
         <Pie data={metadata}/>
       </div>

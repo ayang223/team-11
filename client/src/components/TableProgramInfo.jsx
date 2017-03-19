@@ -94,9 +94,9 @@ render() {
 
     return (
       <Table
-        rowHeight={50}
+        rowHeight={80}
         rowsCount={metadata.length}
-        width={1400}
+        width={910}
         height={heightTotal}
         headerHeight={50}>
         <Column
@@ -106,7 +106,7 @@ render() {
               {metadata[rowIndex][0]}
             </Cell>
           )}
-          width={400}
+          width={180}
         />
          <Column
           header={<Cell># Meals/Snacks</Cell>}
@@ -115,7 +115,7 @@ render() {
               {metadata[rowIndex][1]}
             </Cell>
           )}
-          width={200}
+          width={150}
         />
        <Column
           header={<Cell># Counselling Sessions</Cell>}
@@ -124,7 +124,7 @@ render() {
               {metadata[rowIndex][2]}
             </Cell>
           )}
-          width={200}
+          width={150}
         />
         <Column
           header={<Cell># Mentors/Tutors</Cell>}
@@ -133,7 +133,7 @@ render() {
               {metadata[rowIndex][3]}
             </Cell>
           )}
-          width={200}
+          width={150}
         />
         <Column
           header={<Cell># Workshops</Cell>}
@@ -142,7 +142,7 @@ render() {
               {metadata[rowIndex][4]}
             </Cell>
           )}
-          width={200}
+          width={130}
         />
         <Column
           header={<Cell># Volunteers</Cell>}
@@ -151,7 +151,7 @@ render() {
               {metadata[rowIndex][5]}
             </Cell>
           )}
-          width={200}
+          width={130}
         />
       </Table>
     );

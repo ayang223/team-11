@@ -60,7 +60,7 @@ var AccountForm = React.createClass({
          textAlign: "left",
        };
        var outerStyle ={
-         paddingLeft:180,
+         paddingLeft:100,
          paddingRight:100,
          paddingTop:50,
        };

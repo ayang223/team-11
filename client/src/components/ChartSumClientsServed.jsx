@@ -74,15 +74,20 @@ var ChartSumClientsServed=React.createClass({
   },
   render() {
     var dataFromDash = this.props.data;
-    var title = "Clients Served Chart:";
+    var title = "Clients Served Chart";
 
     var metadata = this.createMetadata(dataFromDash);
-
+    var outerStyle ={
+      paddingLeft:15,
+      paddingRight:30,
+      width:983,
+      height:500,
+    }
     return (
-      <div className="row">
+      <div style={outerStyle}>
         <h2 style={{textAlign:"left"}}>{title}</h2>
-        <Bar 
-            data={metadata} 
+        <Bar
+            data={metadata}
             width={1400}
             height={600}
         />

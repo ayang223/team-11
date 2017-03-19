@@ -9,8 +9,8 @@ var MarkerGroup = require('react-d3-map').MarkerGroup;
 import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
 
 // Example
-  var width = 700;
-  var height = 700;
+  var width = 890;
+  var height = 500;
   var scale = 100000 * 5;
   var scaleExtent = [1 << 12, 1 << 13]
   var center = [-123.1022025, 49.2823492];
