@@ -174,7 +174,11 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
       height:500,
     }
     return (
+<<<<<<< HEAD
       <div style={outerStyle}>
+=======
+      <div className="large-6 columns">
+>>>>>>> 6711e63b7ca81b70ecb5845a5def440230a0e0fc
         <h2 style={{textAlign:"left"}}>{title}</h2>
         <Pie data={metadata}/>
       </div>
