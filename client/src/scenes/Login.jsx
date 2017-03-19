@@ -83,7 +83,7 @@ var Login = React.createClass({
       <div>
       <div className="centered" style={divStyle}>
       <h2 style={h1style}>Welcome! Please login to continue </h2>
-      <h3 style={h1style}>United Way Andar Data Analytics</h3>
+    
         <LoginForm onNewName={this.handleNewName}/>
       </div>
     </div>
