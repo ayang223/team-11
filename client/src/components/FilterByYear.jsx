@@ -67,10 +67,23 @@ var FilterByYear = React.createClass({
     var dataFromDash = this.props.data;
     var message = 'FilterByYear: ' + this.state.selectValue;
     var yearArr = this.createMetadata(dataFromDash);
+<<<<<<< HEAD
     return(
       <div>
           <label>Funding Year Filter</label>
           <Select placeholder="Select Funding Year" multi disabled={this.state.disabled} value={this.state.value} options={yearArr} onChange={this.handleChange}/>
+=======
+    const listItems = yearArr.map((grant_date) =>
+      <option key={grant_date} value={grant_date} style={{margin:"2px"}}>{grant_date}</option>
+      );
+    return(
+      <div className="medium-3 columns">
+        <label>Select year</label>
+        <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
+          {listItems}
+        </select>
+        <label>{message}</label>
+>>>>>>>  filters by years done
       </div>
     )
   },
