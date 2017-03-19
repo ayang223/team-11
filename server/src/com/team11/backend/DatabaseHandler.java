@@ -9,10 +9,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.team11.backend.RequestHandler;
 
 import java.sql.PreparedStatement;
@@ -481,7 +483,7 @@ public class DatabaseHandler {
 	
 	public static boolean insertLocation(int programAndar, String name, String postal) {
 		
-		double lat, lon;
+		Double lat = null, lon = null;
 		
 		boolean success = true;
 		
@@ -504,16 +506,17 @@ public class DatabaseHandler {
 		     System.out.println(jsonText);
 		     
 		     JsonObject json = new JsonObject();
+		     json = new JsonParser().parse(jsonText).getAsJsonObject();
 		     
-		     //TODO: needs to do 
+		     if(json != null && json.get("status").getAsString().equals("OK")) {
+			     JsonArray results = json.get("results").getAsJsonArray();
+			     JsonObject temp = results.get(0).getAsJsonObject();
+			     temp = temp.get("geometry").getAsJsonObject().get("location").getAsJsonObject();
+			     
+			     lat = temp.get("lat").getAsDouble();
+			     lon = temp.get("lng").getAsDouble(); 
+		     }
 		     
-		     json.addProperty("info", jsonText);
-		     JsonObject temp = json.get("info").getAsJsonObject();
-		     temp = temp.get("results").getAsJsonArray().get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("location").getAsJsonObject();
-		     
-		     lat = temp.get("lat").getAsDouble();
-		     lon = temp.get("lon").getAsDouble(); 
-		
 			Connection conn = null;
 			PreparedStatement stmt = null;
 			String sql = "INSERT INTO Location (andar_id, name, postal, lat, lon) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
@@ -525,8 +528,13 @@ public class DatabaseHandler {
 				stmt.setInt(1, programAndar);
 				stmt.setString(2, name);
 				stmt.setString(3, postal);
-				stmt.setDouble(4, lat);
-				stmt.setDouble(5, lon);
+				if (lat == null || lon == null) {
+					stmt.setNull(4, Types.DOUBLE);
+					stmt.setNull(5, Types.DOUBLE);
+				} else {
+					stmt.setDouble(4, lat);
+					stmt.setDouble(5, lon);
+				}
 				int count = stmt.executeUpdate();
 				success = count > 0;
 			} catch (SQLException e) {
@@ -627,10 +635,14 @@ public class DatabaseHandler {
 				int andar_id = rs.getInt("andar_id");
 				String name = rs.getString("name");
 				String postal = rs.getString("postal");
+				double lat = rs.getDouble("lat");
+				double lon = rs.getDouble("lon");
 				row.addProperty("id", id);
 				row.addProperty("andar_id", andar_id);
 				row.addProperty("name", name);
 				row.addProperty("postal", postal);
+				row.addProperty("lat", lat);
+				row.addProperty("lon", lon);
 				
 				location.add(row);
 			}
