@@ -15,24 +15,45 @@ var LoginForm = React.createClass({
         }
     },
     render: function() {
+      var innerStyle = {
+        width:"650px",
+        height:"500px",
+        padding: 100,
+        margin: 7,
+        backgroundColor: "#D9DAE3",
+        color: "#474747",
+        display: "inline-block",
+        fontFamily: "sans-serif",
+        fontSize: "20",
+        textAlign: "left",
+        msTransition: 'all'
+      };
+      var outerStyle ={
+        paddingLeft:180,
+        paddingRight:100,
+      }
         return (
-            <div className="row">
+          <div style={outerStyle}>
+            <div style={innerStyle}>
                 <form onSubmit={this.onFormSubmit}>
                     <p style={{margin:"10px"}}>
-                        Username :
+                        Username
                     </p>
-                    <div className="medium-6 columns center">
+                    <div >
                         <input type="text" ref="username" placeholder="Enter username here"/>
-                    </div><br/><br/><br/>
-                    <div className="medium-6 columns center">
-                        <p>
-                            Password:
+                    </div>
+                    <div >
+                        <p style={{margin:"15px"}}>Password
                         </p>
                         <input type="password" ref="password" placeholder="Enter password here"/>
                         <p className="help-text" id="passwordHelpText">If you don't have an account, speak to an Administrator to set up one</p>
                     </div>
-                    <button className="button small-centered text-center columns">Login</button>
+                    <div style={{fontSize:"15"}}>
+                    <input type="checkbox"> Remember me </input>
+                    <button className="button medium-centered " style={{float: "right"}}>Login</button>
+                    </div>
                 </form>
+            </div>
             </div>
         );
     }

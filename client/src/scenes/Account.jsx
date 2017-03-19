@@ -47,31 +47,45 @@ var AccountForm = React.createClass({
    },
 
      render: function(){
+       var innerStyle = {
+         width:"900px",
+         height:"500px",
+         padding: 100,
+         margin: 7,
+         backgroundColor: "#D9DAE3",
+         color: "#474747",
+         display: "inline-block",
+         fontFamily: "sans-serif",
+         fontSize: "18",
+         textAlign: "left",
+       };
+       var outerStyle ={
+         paddingLeft:180,
+         paddingRight:100,
+         paddingTop:50,
+       };
      return (
-       <div className="row">
+       <div style={outerStyle} >
+       <div style={innerStyle}>
        <form onFormAccount={this.onFormAccount}>
          <div className="row">
-         <div className="medium-6 columns">
-         <p> Old password: </p>
+         <p> Old password </p>
          <input type="password" ref="oldpassword" placeholder="Please enter your old password. "/>
          </div>
-         </div>
          <div className="row">
-         <div className="medium-6 columns">
-         <p> New password: </p>
+         <p> New password </p>
          <input type="password" ref="newpassword" placeholder="Please enter your new password"/>
          </div>
-         </div>
          <div className="row">
-         <div className="medium-6 columns">
-         <p> Verify new password: </p>
+         <p> Verify new password </p>
          <input type="password" ref="verifynewpassword" placeholder="Please re-enter your new password"/>
          </div>
-         </div>
+         <br/>
          <div className="row">
-         <button className="button small-centered text-center columns" type="submit" style={{width:150, height:40}} onClick={this.onFormSubmit}>Change password</button>
+         <button className="button medium-centered " style={{float: "right"}} onClick={this.onFormSubmit}>Change password</button>
          </div>
      </form>
+     </div>
      </div>
      )
    }

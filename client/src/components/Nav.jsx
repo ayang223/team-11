@@ -4,8 +4,9 @@
  var React = require('react');
  var {Link} = require('react-router');
  import cookie from 'react-cookie';
-var logo = 'src/css/unitedWay.png';
-var {hashHistory} = require('react-router');
+ var logo = 'src/css/unitedWay.png';
+ var {hashHistory} = require('react-router');
+
 
 
 var navStyle ={
@@ -38,22 +39,15 @@ var isAdmin = true;
    }
  }
 
-
  var Nav = React.createClass({
-
-   pop(){
-     var sure = window.confirm("Are you sure?")
+   logoutSess(){
+     var sure = window.confirm("Are you sure?");
      if(sure){
        cookie.remove('userID', []);
        cookie.remove('admin', []);
-       hashHistory.push('/login');}
-   //  }
- },
-
-  //  pop() {
-  //    alert("Close the modal");
-  //  },
-
+       hashHistory.push('/login');
+     }
+   },
    render: function () {
      checkLogin();
 
@@ -85,7 +79,7 @@ var isAdmin = true;
                     </li>
                    }
                       <li>
-                      <button style={eachItem} activeClassName="active" activeStyle={activeItem} onClick={this.pop}>Logout</button>
+                      <button style={eachItem} activeClassName="active" activeStyle={activeItem} onClick={this.logoutSess}>Logout</button>
                       </li>
                     </ul>
                   </div>
