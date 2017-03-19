@@ -25,39 +25,29 @@ var FilterByElement = React.createClass({
 
   createMetadata:function(data){
     var metadata = {};
-    var elements = data.ProgramElement;
-    var elements2 = data.ProgramSubElement; // element in programsubelements
-    var elementArr = [];
-    for(var i = 0; i< elements.length; i++ ){
-      if(elementArr.includes(elements[i].element)){
+    var elementsMain = data.ProgramElement;
+    var elementSub = data.ProgramSubElement; // element in programsubelements
+    var elementMainArr = [];
+    var elementSubArr = [];
+    for(var i = 0; i< elementsMain.length; i++ ){ // gets main element from program elements put into array elementMainArr
+      if(elementMainArr.includes(elementsMain[i].element)){
         console.log("element true")
-      }else elementArr.push(elements[i].element)
+      }else elementMainArr.push(elementsMain[i].element)
     }
-    for(var i = 0; i< elements2.length; i++){
-      if(elementArr.includes(elements2[i].element)){
-        console.log("element2 true")
-      } else elementArr.push(elements2[i].element)
-    }
-    return elementArr;
-  },
 
-  createMetadata2:function(data){
-    var metadata = {};
-    var subelements = data.ProgramSubElement; //subelements in programsubelements
-    var subEleArr = [];
-    for (var i = 0; i < subelements.length; i++){
-      if(subEleArr.includes(subelements[i].subElement)){
-        console.log("sub element true")
-      } else subEleArr.push(subelements[i].subElement)
+    for(var i = 0; i < elementSub.length; i++){ // gets main and sub elelemtn from programsubelement
+      elementSubArr.push("Main element: " + elementSub[i].element + " Sub element: " + elementSub[i].subElement)
     }
-    return subEleArr;
+    
+    console.log(elementSubArr);
+    return elementMainArr;
   },
 
   render:function(){
     var dataFromDash = this.props.data;
     var message = 'FilterByElement: ' + this.state.selectValue;
-    var elementArr = this.createMetadata(dataFromDash);
-    const listItems = elementArr.map((element) =>
+    var elementMainArr = this.createMetadata(dataFromDash);
+    const listItems = elementMainArr.map((element) =>
       <option key={element} value={element} style={{margin:"2px"}}>{element}</option>
       );
     return(
