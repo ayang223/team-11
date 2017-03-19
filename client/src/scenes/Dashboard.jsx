@@ -112,7 +112,6 @@ class Dashboard extends React.Component {
 														<TableProgramInfo data={this.state.filterData}/>
 												</TabPanel>
 												<TabPanel>
-														<h3>TODO: Listing section</h3>
                             <Listing data={this.state.filterData}/>
 												</TabPanel>
 										</Tabs>
