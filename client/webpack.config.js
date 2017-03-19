@@ -44,6 +44,7 @@ externals: {
       TableAdmin: 'src/components/TableAdmin.jsx',
       TableProgramInfo: 'src/components/TableProgramInfo.jsx',
       d3map: 'src/components/d3map.jsx',
+      Listing: 'src/components/Listing.jsx',
       url: 'src/components/url.js',
       'chartjs': require.resolve('chart.js')
     },

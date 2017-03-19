@@ -13,6 +13,7 @@ var ChartGeographicInvestedCityGrouping = require('ChartGeographicInvestedCityGr
 var TableExample = require('TableExample');
 var TableProgramInfo = require('TableProgramInfo');
 var D3Map = require('d3map');
+var Listing = require('Listing');
 var url = require('url');
 var ReactTabs = require('react-tabs'),
     Tab = ReactTabs.Tab,
@@ -112,6 +113,7 @@ class Dashboard extends React.Component {
 												</TabPanel>
 												<TabPanel>
 														<h3>TODO: Listing section</h3>
+                            <Listing data={this.state.filterData}/>
 												</TabPanel>
 										</Tabs>
                 </div>
