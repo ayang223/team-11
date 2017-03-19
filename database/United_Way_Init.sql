@@ -129,6 +129,8 @@ CREATE TABLE Location (
 	andar_id integer NOT NULL,
 	name varchar(128),
 	postal varchar(8), 
+	lat double,
+	lon double,
 
 	PRIMARY KEY (id),
 
