@@ -4,6 +4,7 @@ var Select = require('react-select');
 
 var FilterByInvested = React.createClass({
 <<<<<<< HEAD
+<<<<<<< HEAD
     getInitialState: function() {
         return {value: [], disabled: false, selectValue: []};
     },
