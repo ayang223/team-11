@@ -29,27 +29,27 @@ var LoginForm = React.createClass({
         msTransition: 'all'
       };
       var outerStyle ={
-        paddingLeft:180,
-        paddingRight:100,
+        textAlign: "center"
       }
         return (
           <div style={outerStyle}>
             <div style={innerStyle}>
+                <h4 style={{marginBottom : "10px"}}>United Way Andar Data Analytics</h4>
                 <form onSubmit={this.onFormSubmit}>
-                    <p style={{margin:"10px"}}>
+                    <p style={{marginBottom:"10px"}}>
                         Username
                     </p>
                     <div >
                         <input type="text" ref="username" placeholder="Enter username here"/>
                     </div>
                     <div >
-                        <p style={{margin:"15px"}}>Password
+                        <p style={{marginBottom:"15px"}}>Password
                         </p>
                         <input type="password" ref="password" placeholder="Enter password here"/>
                         <p className="help-text" id="passwordHelpText">If you don't have an account, speak to an Administrator to set up one</p>
                     </div>
                     <div style={{fontSize:"15"}}>
-                    <input type="checkbox"> Remember me </input>
+
                     <button className="button medium-centered " style={{float: "right"}}>Login</button>
                     </div>
                 </form>
