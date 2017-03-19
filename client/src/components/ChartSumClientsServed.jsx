@@ -79,10 +79,10 @@ var ChartSumClientsServed=React.createClass({
     var metadata = this.createMetadata(dataFromDash);
 
     return (
-      <div className="row">
+      <div className="large-6 columns">
         <h2 style={{textAlign:"left"}}>{title}</h2>
-        <Bar 
-            data={metadata} 
+        <Bar
+            data={metadata}
             width={1400}
             height={600}
         />

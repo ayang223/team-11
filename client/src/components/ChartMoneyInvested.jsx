@@ -19,7 +19,7 @@ var ChartMoneyInvested=React.createClass({
         var currentProgramAndar = andarDataOutput[i].program_andar;
         var currentProgramName = null;
 
-        for(var j = 0; j < program.length; j++) {        
+        for(var j = 0; j < program.length; j++) {
             var currentProgramID = program[j].id;
             if(currentProgramID == currentProgramAndar) {
                 currentProgramName = program[j].name;
@@ -54,7 +54,7 @@ var ChartMoneyInvested=React.createClass({
     var metadata = this.createMetadata(dataFromDash);
 
     return (
-      <div className="row">
+      <div className="large-6 columns">
         <h2 style={{textAlign:"left"}}>{title}</h2>
         <HorizontalBar data={metadata}/>
         </div>
