@@ -172,7 +172,7 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
     var metadata = this.createMetadata(dataFromDash);
 
     return (
-      <div className="row">
+      <div className="large-6 columns">
         <h2 style={{textAlign:"left"}}>{title}</h2>
         <Pie data={metadata}/>
       </div>

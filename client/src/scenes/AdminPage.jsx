@@ -124,9 +124,11 @@ var DeleteUserForm = React.createClass({
       }),
       success:function(data){
         console.log(data)
+        alert("user deleted");
       }.bind(this),
       error:function(error){
         console.log(error);
+        alert("user delete failed");
       }
     })
   },
@@ -228,7 +230,7 @@ var AdminPage = React.createClass({
 
   render:function(){
     return(
-     <div>
+     <div className="row">
        <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
        <h2>List of users: </h2>
        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
