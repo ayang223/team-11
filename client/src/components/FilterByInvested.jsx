@@ -56,6 +56,10 @@ var FilterByInvested = React.createClass({
         if(investedFilterArr.includes("$500000-$1000000")){
           console.log("$500000-$1000000 exists")
         } else investedFilterArr.push("$500000-$1000000");
+      } else if (investedArr[i]>=1000000){
+        if(investedFilterArr.includes("more than $1000000")){
+          console.log("more than $1000000 exists")
+        } else investedFilterArr.push("more than $1000000");
       }
     }
 
