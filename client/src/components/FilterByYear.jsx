@@ -4,7 +4,7 @@ var array = [];
 var FilterByYear = React.createClass({
   getInitialState:function(){
     return {
-      selectValue:'(nothing selected)'};
+      selectValue: []};
   },
   handleChange: function(e){
     this.setState({selectValue: array});

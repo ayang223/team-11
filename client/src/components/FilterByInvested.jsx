@@ -3,7 +3,7 @@ var array = [];
 
 var FilterByInvested = React.createClass({
   getInitialState:function(){
-    return {selectValue: '(nothing selected)'};
+    return {selectValue: []};
   },
   handleChange: function(e){
     this.setState({selectValue: array});

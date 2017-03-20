@@ -24,16 +24,50 @@ var ReactTabs = require('react-tabs'),
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
+        this.generateGraphs = this.generateGraphs.bind(this);
         this.state = {
             data: null,
             filterData: null
-        }
+        };
     }
     generateGraphs() {
         console.log("generate!");
-        //Need to pull data from all filters, if any filter's props are undefined we need to default to get all here or the backend.. ?
+        var filteredData = this.state.data;
+        
+        var filterByYear = this._filterByYear.state.selectValue;
+        var filterByCity = this._filterByCity.state.selectValue;
+        var filterByInvested = this._filterByInvested.state.selectValue;
+        var filterByAgency = this._filterByInvested.state.selectValue;
+        var filterByFocusArea = this._filterByFocusArea.state.selectValue;
+        var filterByPopulation = this._filterByPopulation.state.selectValue;
+        var filterByElement = this._filterByElement.state.selectValue;
+        var filterByEngagement = this._filterByEngagement.state.selectValue;
 
+        // Take stuff out of filtered data based on filters
+        // Example if delete all
+        filteredData = {
+          Program: [],
+          Location: [],
+          Agency: [],
+          AndarDataOutput: [],
+          TargetPopulation: [],
+          ProgramElement: [],
+          ProgramSubElement: [],
+          GeoArea: [],
+          Municipality: [],
+          AreaDirectory: [],
+          DonorEngagement: [],
+          Outputs: []
+        };
+        this.state.filterData = filteredData;
+
+        this._chartMoneyInvested.setState({data: filteredData});
     }
+
+    exportPDF() {
+        console.log("export!");
+    }
+
     componentWillMount() {
         var _this = this;
         var getData = $.ajax({
@@ -56,6 +90,7 @@ class Dashboard extends React.Component {
             }
         });
     }
+
     render() {
         if (this.state.data) {
             return (
@@ -66,20 +101,23 @@ class Dashboard extends React.Component {
                     }}>Dashboard Page</h2>
                     <br/>
                     <div className="row">
-                        <FilterByYear/>
-                        <FilterByCity data={this.state.data}/>
-                        <FilterByInvested/>
-                        <FilterByAgency data={this.state.data}/>
+                        <FilterByYear ref={filterbyyear => { this._filterByYear = filterbyyear}}/>
+                        <FilterByCity ref={filterbycity => { this._filterByCity = filterbycity}} data={this.state.data}/>
+                        <FilterByInvested ref={filterbyinvested => { this._filterByInvested = filterbyinvested}}/>
+                        <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/>
                     </div>
                     <br/>
                     <div className="row">
-                        <FilterByFocusArea data={this.state.data}/>
-                        <FilterByPopulation data={this.state.data}/>
-                        <FilterByElement data={this.state.data}/>
-                        <FilterByEngagement data={this.state.data}/>
+                        <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />
+                        <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
+                        <FilterByElement ref={filterbyelement => { this._filterByElement = filterbyelement}} data={this.state.data}/>
+                        <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
                         <button className="button info" onClick={this.generateGraphs} style={{
                             margin: "20px"
                         }}>Generate</button>
+                        <button className="button export" onClick={this.exportPDF} style={{
+                            margin: "20px"
+                        }}>Export PDF</button>
                     </div>
                     <br/>
                     <div>
@@ -90,7 +128,7 @@ class Dashboard extends React.Component {
                                 <Tab>Geographic Distribution</Tab>
                             </TabList>
                             <TabPanel>
-                                <ChartMoneyInvested data={this.state.filterData}/>
+                                <ChartMoneyInvested ref={chartmoneyinvested => { this._chartMoneyInvested = chartmoneyinvested}} data={this.state.filterData}/>
                             </TabPanel>
                             <TabPanel>
                                 <ChartSumClientsServed data={this.state.filterData}/>
