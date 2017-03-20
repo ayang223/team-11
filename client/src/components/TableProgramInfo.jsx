@@ -133,7 +133,19 @@ render() {
           width={200}
         />
        <Column
-          header={<Cell># Counselling Sessions</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Counselling Sessions</Cell>}
+                cell={<Cell>&#128100; &#128694; {metadata[metadata.length-1][2]} sessions in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][2]}
