@@ -29,12 +29,8 @@ var LoginForm = React.createClass({
         msTransition: 'all'
       };
       var outerStyle ={
-<<<<<<< HEAD
         paddingLeft:100,
         paddingRight:100,
-=======
-        textAlign: "center"
->>>>>>> 6711e63b7ca81b70ecb5845a5def440230a0e0fc
       }
         return (
           <div style={outerStyle}>

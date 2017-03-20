@@ -55,71 +55,6 @@ class Dashboard extends React.Component {
             }
         });
     }
-    render() {
-        if (this.state.data) {
-            return (
-                <div>
-                    <h2 style={{
-                        margin: "20px",
-                        textAlign: "center"
-                    }}>Dashboard Page</h2>
-                    <br/>
-                    <div className="row">
-                        <FilterByYear/>
-                        <FilterByCity data={this.state.data}/>
-                        <FilterByInvested/>
-                        <FilterByAgency data={this.state.data}/>
-                    </div>
-                    <br/>
-                    <div className="row">
-                        <FilterByFocusArea data={this.state.data}/>
-                        <FilterByPopulation data={this.state.data}/>
-                        <FilterByElement data={this.state.data}/>
-                        <FilterByEngagement data={this.state.data}/>
-                        <button className="button info" onClick={this.generateGraphs} style={{
-                            margin: "20px"
-                        }}>Generate</button>
-                    </div>
-                    <br/>
-                    <div>
-                        <Tabs>
-                            <TabList>
-                                <Tab>Money Invested</Tab>
-                                <Tab>Clients Served</Tab>
-                                <Tab>Geographic Distribution</Tab>
-                            </TabList>
-                            <TabPanel>
-                                <ChartMoneyInvested data={this.state.filterData}/>
-                            </TabPanel>
-                            <TabPanel>
-                                <ChartSumClientsServed data={this.state.filterData}/>
-                            </TabPanel>
-                            <TabPanel>
-                                <ChartGeographicInvestedCityGrouping data={this.state.filterData}/>
-                            </TabPanel>
-                        </Tabs>
-                    </div>
-                    <div >
-											<D3Map data={this.state.filterData}/>
-                    </div>
-										<Tabs>
-												<TabList>
-														<Tab>Table of Totals</Tab>
-														<Tab>Listings</Tab>
-												</TabList>
-												<TabPanel>
-														<TableProgramInfo data={this.state.filterData}/>
-												</TabPanel>
-												<TabPanel>
-														<h3>TODO: Listing section</h3>
-												</TabPanel>
-										</Tabs>
-                </div>
-            );
-        }
-<<<<<<< HEAD
-    });
-  }
   render(){
     if(this.state.data){
       var outerStyle ={
@@ -160,14 +95,13 @@ class Dashboard extends React.Component {
         </div>
       </div>
       );
-=======
-        return (
-            <div>Loading...
-                <div id='errorOut'></div>
-            </div>
-        );
->>>>>>> 6711e63b7ca81b70ecb5845a5def440230a0e0fc
     }
+      return (
+          <div>Loading...
+              <div id='errorOut'></div>
+          </div>
+      );
+  }
 }
 
 module.exports = Dashboard;

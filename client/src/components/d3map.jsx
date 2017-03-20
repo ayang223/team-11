@@ -7,27 +7,7 @@ var Map = require('react-d3-map').Map;
 var MarkerGroup = require('react-d3-map').MarkerGroup;
 import PlacesAutocomplete, { geocodeByAddress} from 'react-places-autocomplete';
 var ZoomControl = require('react-d3-map-core').ZoomControl;
-
-<<<<<<< HEAD
-// Example
-  var width = 890;
-  var height = 500;
-  var scale = 100000 * 5;
-  var scaleExtent = [1 << 12, 1 << 13]
-  var center = [-123.1022025, 49.2823492];
-  var mapData = {
-          "type": "Feature",
-          "properties": {
-            "text": "this is a Point!!!"
-          },
-          "geometry": {
-              "type": "Point",
-              "coordinates": [0, 0]
-          }
-      }
-var popupContent = function(d) { return 'hi, i am polygon'; }
-=======
-var width = 1000;
+var width = 890;
 var height = 500;
 var scaleExtent = [1 << 12, 1 << 30]
 var scale = 100000 * 5;
@@ -42,7 +22,6 @@ var rawJson ={
   }
 }
 var popupContent = function(d) { return d.properties.name }
->>>>>>> 6711e63b7ca81b70ecb5845a5def440230a0e0fc
 
 var onPolygonClick= function(e, d, i) {
     e.showPopup();
