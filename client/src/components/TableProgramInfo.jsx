@@ -5,7 +5,11 @@ import {Table, Column, Cell} from 'fixed-data-table';
 // Render your table
 var TableProgramInfo=React.createClass({
 
-createMetadata: function(data) {
+  getInitialState:function(){
+    return {data: this.props.data};
+  },
+
+  createMetadata: function(data) {
     var metadata = [];
     var program = data.Program;
     var outputs = data.Outputs;
@@ -88,8 +92,7 @@ createMetadata: function(data) {
 },
 
 render() {
-    var dataFromDash = this.props.data;
-    var metadata = this.createMetadata(dataFromDash)
+    var metadata = this.createMetadata(this.state.data)
     var heightTotal = metadata.length * 50 + 52;
 
     return (

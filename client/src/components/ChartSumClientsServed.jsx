@@ -2,6 +2,9 @@ import React from 'react';
 import {Bar} from 'react-chartjs-2';
 
 var ChartSumClientsServed=React.createClass({
+  getInitialState:function(){
+    return {data: this.props.data};
+  },
   createMetadata: function(data) {
     var metadata = {};
     var labels = [];
@@ -73,10 +76,9 @@ var ChartSumClientsServed=React.createClass({
     return metadata;
   },
   render() {
-    var dataFromDash = this.props.data;
     var title = "Clients Served Chart:";
 
-    var metadata = this.createMetadata(dataFromDash);
+    var metadata = this.createMetadata(this.state.data);
 
     return (
       <div className="large-6 columns">

@@ -41,7 +41,8 @@ var D3Map = React.createClass({
         return {
             scale: 100000 * 5,
             mapData: {},
-            loading: true
+            loading: true,
+            data: this.props.data
         }
     },
     componentWillMount: function() {
