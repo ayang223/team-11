@@ -98,10 +98,10 @@ render() {
     return (
       <Table
         rowHeight={50}
-        rowsCount={metadata.length}
+        rowsCount={metadata.length-1}
         width={1400}
         height={heightTotal}
-        headerHeight={50}>
+        headerHeight={150}>
         <Column
           header={<Cell>Program Name</Cell>}
           cell={({rowIndex, ...props}) => (
@@ -112,7 +112,19 @@ render() {
           width={400}
         />
          <Column
-          header={<Cell># Meals/Snacks</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Meals/Snacks</Cell>}
+                cell={<Cell>&#127822; &#127817; {metadata[metadata.length-1][1]} served in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][1]}
