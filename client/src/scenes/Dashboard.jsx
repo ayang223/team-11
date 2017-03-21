@@ -63,23 +63,18 @@ class Dashboard extends React.Component {
 
 
         this.state.filterData = filteredData;
-
-        // This will change the chart on the first tab. Tabs are causing other charts not to render (null exceptions)
         this._chartMoneyInvested.setState({data: filteredData});
-//        this._chartSumClientsServed.setState({data: filteredData});
-//        this._chartGeographicInvestedCityGrouping.setState({data: filteredData});
+     		this._chartSumClientsServed.setState({data: filteredData});
+        this._chartGeographicInvestedCityGrouping.setState({data: filteredData});
 
-          // This doesn't work, need to re-work map
-//        this._map.setState({data: filteredData});
-
-        // This changes the table
+        this._map.setState({data: filteredData});
         this._tableProgramInfo.setState({data: filteredData});
-
-        // We need to change listings too...
+				this._listing.setState({data: filteredData});
     }
 
     exportPDF() {
         console.log("export!");
+				window.print();
     }
 
     componentWillMount() {
@@ -140,7 +135,7 @@ class Dashboard extends React.Component {
 											}}>Export PDF</button></div>
                     <br/>
                     <div>
-                        <Tabs>
+                        <Tabs forceRenderTabPanel={true}>
                             <TabList>
                                 <Tab>Money Invested</Tab>
                                 <Tab>Clients Served</Tab>
@@ -151,7 +146,7 @@ class Dashboard extends React.Component {
                             </TabPanel>
                             <TabPanel>
                                 <ChartSumClientsServed ref={chartsumclientsserved => { this._chartSumClientsServed = chartsumclientsserved}} data={this.state.filterData}/>
-                            </TabPanel>
+                            </TabPanel >
                             <TabPanel>
                                 <ChartGeographicInvestedCityGrouping ref={chartgeographicinvestedcitygrouping => { this._chartGeographicInvestedCityGrouping = chartgeographicinvestedcitygrouping}} data={this.state.filterData}/>
                             </TabPanel>
@@ -160,7 +155,7 @@ class Dashboard extends React.Component {
                     <div >
 											<D3Map ref={map => { this._map = map}} data={this.state.filterData}/>
                     </div>
-										<Tabs>
+										<Tabs forceRenderTabPanel={true}>
 												<TabList>
 														<Tab>Table of Totals</Tab>
 														<Tab>Listings</Tab>
@@ -169,7 +164,7 @@ class Dashboard extends React.Component {
 														<TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
 												</TabPanel>
 												<TabPanel>
-                            <Listing data={this.state.filterData}/>
+                            <Listing ref={listing => { this._listing = listing }} data={this.state.filterData}/>
 												</TabPanel>
 										</Tabs>
                 </div>

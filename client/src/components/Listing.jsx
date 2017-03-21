@@ -26,7 +26,8 @@ var onPolygonCloseClick = function(e, id) {
 var Listing = React.createClass({
   getInitialState: function() {
       return {
-          scale: 100000 * 5
+          scale: 100000 * 5,
+          data: this.props.data
       }
   },
     zoomOut: function() {
@@ -151,7 +152,7 @@ var Listing = React.createClass({
                 }
             }
         }
-        var dataFromDash = this.props.data;
+        var dataFromDash = this.state.data;
         var programList = this.createListings(dataFromDash);
         console.log(programList);
         const listPrograms = this.renderListings(programList);
