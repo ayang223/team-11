@@ -90,8 +90,6 @@ class Dashboard extends React.Component {
             <D3Map data={this.state.data}/><br/><br/><br/>
             <ChartGeographicInvestedCityGrouping data={this.state.data}/>
           </div>
-          <div className="medium-3 columns"  style={{width: 450, height: 450}} >
-          </div>
         </div>
       </div>
       );
