@@ -48,7 +48,9 @@ var FilterByElement = React.createClass({
                 var subElementArray = [];
                 for (var j = 0; j < elements2.length; j++) {
                     if (elements[i].andar_id === elements2[j].andar_id) {
+                      if(!subElementArray.includes(elements2[j].subElement)){
                         subElementArray.push(elements2[j].subElement);
+                      }
                     }
                 }
                 element.subElement = subElementArray;
@@ -62,17 +64,23 @@ var FilterByElement = React.createClass({
         var listElements = [];
         for(var i =0 ; i< elementArr.length; i++){
           var subElementsArr = elementArr[i].subElement.map((subElement) =>
-            <option key={{subElement}} style={{marginLeft: "5px"}}>
+            <option style={{marginLeft: "10px"}}>
               {subElement}
             </option>
         );
           listElements.push(
-            <option key={elementArr[i].elementName} style={{margin:"2px"}}>
+            <div key={elementArr[i].elementName}>
+              <label>Select filters for: {elementArr[i].elementName}</label>
+              <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
+            <option  style={{margin:"2px"}}>
               {elementArr[i].elementName}
-              {subElementsArr}
             </option>
+            {subElementsArr}
+              </select>
+            </div>
           );
         }
+        return listElements;
     },
 
     render: function() {
@@ -88,9 +96,10 @@ var FilterByElement = React.createClass({
             <div className="medium-3 columns">
                 <label>Select element</label>
                 <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-                  {listElements}
+
                 </select>
                 <label>{message}</label>
+                  {listElements}
             </div>
         )
     }
