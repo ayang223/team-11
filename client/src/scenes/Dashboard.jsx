@@ -33,7 +33,7 @@ class Dashboard extends React.Component {
     generateGraphs() {
         console.log("generate!");
         var filteredData = this.state.data;
-        
+
         var filterByYear = this._filterByYear.state.selectValue;
         var filterByCity = this._filterByCity.state.selectValue;
         var filterByInvested = this._filterByInvested.state.selectValue;
@@ -68,10 +68,10 @@ class Dashboard extends React.Component {
         this._chartMoneyInvested.setState({data: filteredData});
 //        this._chartSumClientsServed.setState({data: filteredData});
 //        this._chartGeographicInvestedCityGrouping.setState({data: filteredData});
-            
+
           // This doesn't work, need to re-work map
 //        this._map.setState({data: filteredData});
-        
+
         // This changes the table
         this._tableProgramInfo.setState({data: filteredData});
 
@@ -124,15 +124,20 @@ class Dashboard extends React.Component {
                     <div className="row">
                         <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />
                         <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
-                        <FilterByElement ref={filterbyelement => { this._filterByElement = filterbyelement}} data={this.state.data}/>
                         <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
-                        <button className="button info" onClick={this.generateGraphs} style={{
-                            margin: "20px"
-                        }}>Generate</button>
-                        <button className="button export" onClick={this.exportPDF} style={{
-                            margin: "20px"
-                        }}>Export PDF</button>
+
                     </div>
+										<div className="row">
+											<FilterByElement ref={filterbyelement => { this._filterByElement = filterbyelement}} data={this.state.data}/>
+
+										</div>
+										<div className="row">
+											<button className="button info" onClick={this.generateGraphs} style={{
+													margin: "20px"
+											}}>Generate</button>
+											<button className="button export" onClick={this.exportPDF} style={{
+													margin: "20px"
+											}}>Export PDF</button></div>
                     <br/>
                     <div>
                         <Tabs>

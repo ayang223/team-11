@@ -3,20 +3,28 @@ var array = [];
 
 var FilterByElement = React.createClass({
     getInitialState: function() {
-        return {selectValue: []};
+        return {
+          selectValue: []
+        };
     },
     handleChange: function(e) {
         this.setState({selectValue: array});
         var newSelection = JSON.stringify(e.target.value);
         var isPresent = false;
-        var i;
-        for (i = 0; i < array.length; i++) {
-            if (newSelection === array[i]) {
+        var element = {
+          "elementName" : "",
+          "subElement": []
+        }
+
+        for (var i = 0; i < array.length; i++) {
+            if (newSelection === array[i].elementName) {
                 isPresent = true;
             }
         }
         if (!isPresent) {
-            array.push(JSON.stringify(e.target.value));
+            element.elementName = newSelection;
+            array.push(element);
+            console.log(this.state.selectValue);
         } else {
             var index = array.indexOf(JSON.stringify(e.target.value));
             array.splice(index, 1);
@@ -61,23 +69,25 @@ var FilterByElement = React.createClass({
     },
 
     createListings: function(elementArr){
+
         var listElements = [];
+        var ifTopSelected = false;
         for(var i =0 ; i< elementArr.length; i++){
+          var message = elementArr[i].elementName + ': ' + this.state.selectValue;
           var subElementsArr = elementArr[i].subElement.map((subElement) =>
-            <option style={{marginLeft: "10px"}}>
-              {subElement}
-            </option>
+          <label for={subElement} key={subElement}>{subElement}
+            <input id={subElement}  value={subElement} onChange={this.handleChange} type="checkbox" style={{marginLeft: "10px"}}></input>
+              </label>
         );
           listElements.push(
-            <div key={elementArr[i].elementName}>
+            <fieldset className="medium-6 columns" key={elementArr[i].elementName}>
               <label>Select filters for: {elementArr[i].elementName}</label>
-              <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-            <option  style={{margin:"2px"}}>
-              {elementArr[i].elementName}
-            </option>
-            {subElementsArr}
-              </select>
-            </div>
+                <label for={elementArr[i].elementName}> {elementArr[i].elementName}
+            <input id={elementArr[i].elementName}  value={elementArr[i].elementName} type="checkbox"  style={{margin:"2px"}} onChange={this.handleChange}></input>
+             </label>
+            {ifTopSelected ?   <div>{subElementsArr}</div> : <div></div>}
+              <label>{message}</label>
+            </fieldset>
           );
         }
         return listElements;
@@ -85,7 +95,7 @@ var FilterByElement = React.createClass({
 
     render: function() {
         var dataFromDash = this.props.data;
-        var message = 'FilterByElement: ' + this.state.selectValue;
+
         var elementArr = this.createMetadata(dataFromDash);
         console.log(elementArr);
         var listElements = this.createListings(elementArr);
@@ -93,12 +103,7 @@ var FilterByElement = React.createClass({
         //   <option key={element} value={element} style={{margin:"2px"}}>{element}</option>
         //   );
         return (
-            <div className="medium-3 columns">
-                <label>Select element</label>
-                <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-
-                </select>
-                <label>{message}</label>
+            <div>
                   {listElements}
             </div>
         )
