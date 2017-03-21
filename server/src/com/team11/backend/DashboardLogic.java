@@ -126,7 +126,9 @@ public class DashboardLogic {
 				if (dataCategory.equals("Program Elements")) {
 					
 					while (!temp.equals("100") && !temp.equals("200") && !temp.equals("300") && dataCategory.equals("Program Elements")){
-						success = DatabaseHandler.insertProgramSubElement(programAndar, programCategory, header);
+						if (!temp.isEmpty()) {
+							success = DatabaseHandler.insertProgramSubElement(programAndar, programCategory, header);
+						}
 						if (!success) {
 							return RequestHandler.getStatusFailed();
 						}
