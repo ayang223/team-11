@@ -154,7 +154,19 @@ render() {
           width={200}
         />
         <Column
-          header={<Cell># Mentors/Tutors</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Mentors/Tutors</Cell>}
+                cell={<Cell>&#128533; &#128587; {metadata[metadata.length-1][3]} mentors/tutors in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][3]}
