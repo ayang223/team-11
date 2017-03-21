@@ -93,24 +93,16 @@ var TableProgramInfo=React.createClass({
 
 render() {
     var metadata = this.createMetadata(this.state.data)
-    var heightTotal = metadata.length * 50 + 52;
+    //var heightTotal = metadata.length * 50 + 52;
+    var heightTotal = 150;
 
     return (
       <Table
         rowHeight={50}
-        rowsCount={metadata.length-1}
-        width={1400}
+        rowsCount = {0}
+        width = {1000}
         height={heightTotal}
         headerHeight={150}>
-        <Column
-          header={<Cell>Program Name</Cell>}
-          cell={({rowIndex, ...props}) => (
-            <Cell {...props}>
-              {metadata[rowIndex][0]}
-            </Cell>
-          )}
-          width={400}
-        />
          <Column
           header={
             <Table rowHeight={98}
