@@ -98,10 +98,10 @@ render() {
     return (
       <Table
         rowHeight={50}
-        rowsCount={metadata.length}
+        rowsCount={metadata.length-1}
         width={1400}
         height={heightTotal}
-        headerHeight={50}>
+        headerHeight={150}>
         <Column
           header={<Cell>Program Name</Cell>}
           cell={({rowIndex, ...props}) => (
@@ -112,7 +112,19 @@ render() {
           width={400}
         />
          <Column
-          header={<Cell># Meals/Snacks</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Meals/Snacks</Cell>}
+                cell={<Cell>&#127822; &#127817; &nbsp;{metadata[metadata.length-1][1]} served in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][1]}
@@ -121,7 +133,19 @@ render() {
           width={200}
         />
        <Column
-          header={<Cell># Counselling Sessions</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Counselling Sessions</Cell>}
+                cell={<Cell>&#128100; &#128694; &nbsp;{metadata[metadata.length-1][2]} sessions in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][2]}
@@ -130,7 +154,19 @@ render() {
           width={200}
         />
         <Column
-          header={<Cell># Mentors/Tutors</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Mentors/Tutors</Cell>}
+                cell={<Cell>&#128551; &#128214; &nbsp;{metadata[metadata.length-1][3]} mentors/tutors in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][3]}
@@ -139,7 +175,19 @@ render() {
           width={200}
         />
         <Column
-          header={<Cell># Workshops</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Workshops</Cell>}
+                cell={<Cell>&#128101; &#128108; &nbsp;{metadata[metadata.length-1][4]} workshops in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][4]}
@@ -148,7 +196,19 @@ render() {
           width={200}
         />
         <Column
-          header={<Cell># Volunteers</Cell>}
+          header={
+            <Table rowHeight={98}
+              rowsCount={1}
+              width={200}
+              height={100}
+              headerHeight={50}>
+               <Column
+                header={<Cell># Volunteers</Cell>}
+                cell={<Cell>&#9995; &#128587; &nbsp;{metadata[metadata.length-1][5]} volunteers in total</Cell>}
+                width={200}
+              />
+            </Table>
+          }
           cell={({rowIndex, ...props}) => (
             <Cell {...props}>
               {metadata[rowIndex][5]}
