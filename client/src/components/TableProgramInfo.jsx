@@ -94,119 +94,44 @@ var TableProgramInfo=React.createClass({
 render() {
     var metadata = this.createMetadata(this.state.data)
     //var heightTotal = metadata.length * 50 + 52;
-    var heightTotal = 150;
+    var heightTotal = 152;
 
     return (
       <Table
-        rowHeight={50}
-        rowsCount = {0}
-        width = {1000}
+        rowHeight={100}
+        rowsCount = {1}
+        width = {1250}
         height={heightTotal}
-        headerHeight={150}>
-         <Column
-          header={
-            <Table rowHeight={98}
-              rowsCount={1}
-              width={200}
-              height={100}
-              headerHeight={50}>
-               <Column
-                header={<Cell># Meals/Snacks</Cell>}
-                cell={<Cell>&#127822; &#127817; &nbsp;{metadata[metadata.length-1][1]} served in total</Cell>}
-                width={200}
-              />
-            </Table>
-          }
-          cell={({rowIndex, ...props}) => (
-            <Cell {...props}>
-              {metadata[rowIndex][1]}
-            </Cell>
-          )}
-          width={200}
-        />
-       <Column
-          header={
-            <Table rowHeight={98}
-              rowsCount={1}
-              width={200}
-              height={100}
-              headerHeight={50}>
-               <Column
-                header={<Cell># Counselling Sessions</Cell>}
-                cell={<Cell>&#128100; &#128694; &nbsp;{metadata[metadata.length-1][2]} sessions in total</Cell>}
-                width={200}
-              />
-            </Table>
-          }
-          cell={({rowIndex, ...props}) => (
-            <Cell {...props}>
-              {metadata[rowIndex][2]}
-            </Cell>
-          )}
-          width={200}
+        headerHeight={50}>
+        <Column
+          header={<Cell># Meals/Snacks</Cell>}
+          cell={<Cell>&#127822; &#127817; &nbsp;{metadata[metadata.length-1][1]} served in total</Cell>}
+          width={250}
+          align='center'
         />
         <Column
-          header={
-            <Table rowHeight={98}
-              rowsCount={1}
-              width={200}
-              height={100}
-              headerHeight={50}>
-               <Column
-                header={<Cell># Mentors/Tutors</Cell>}
-                cell={<Cell>&#128551; &#128214; &nbsp;{metadata[metadata.length-1][3]} mentors/tutors in total</Cell>}
-                width={200}
-              />
-            </Table>
-          }
-          cell={({rowIndex, ...props}) => (
-            <Cell {...props}>
-              {metadata[rowIndex][3]}
-            </Cell>
-          )}
-          width={200}
+          header={<Cell># Counselling Sessions</Cell>}
+          cell={<Cell>&#128100; &#128694; &nbsp;{metadata[metadata.length-1][2]} sessions in total</Cell>}
+          width={250}
+          align='center'
         />
         <Column
-          header={
-            <Table rowHeight={98}
-              rowsCount={1}
-              width={200}
-              height={100}
-              headerHeight={50}>
-               <Column
-                header={<Cell># Workshops</Cell>}
-                cell={<Cell>&#128101; &#128108; &nbsp;{metadata[metadata.length-1][4]} workshops in total</Cell>}
-                width={200}
-              />
-            </Table>
-          }
-          cell={({rowIndex, ...props}) => (
-            <Cell {...props}>
-              {metadata[rowIndex][4]}
-            </Cell>
-          )}
-          width={200}
+          header={<Cell># Mentors/Tutors</Cell>}
+          cell={<Cell>&#128551; &#128214; &nbsp;{metadata[metadata.length-1][3]} mentors/tutors in total</Cell>}
+          width={250}
+          align='center'
         />
         <Column
-          header={
-            <Table rowHeight={98}
-              rowsCount={1}
-              width={200}
-              height={100}
-              headerHeight={50}>
-               <Column
-                header={<Cell># Volunteers</Cell>}
-                cell={<Cell>&#9995; &#128587; &nbsp;{metadata[metadata.length-1][5]} volunteers in total</Cell>}
-                width={200}
-              />
-            </Table>
-          }
-          cell={({rowIndex, ...props}) => (
-            <Cell {...props}>
-              {metadata[rowIndex][5]}
-            </Cell>
-          )}
-          width={200}
+          header={<Cell># Workshops</Cell>}
+          cell={<Cell>&#128101; &#128108; &nbsp;{metadata[metadata.length-1][4]} workshops in total</Cell>}
+          width={250}
+          align='center'
+        />
+        <Column
+          header={<Cell># Volunteers</Cell>}
+          cell={<Cell>&#9995; &#128587; &nbsp;{metadata[metadata.length-1][5]} volunteers in total</Cell>}
+          width={250}
+          align='center'
         />
       </Table>
     );
