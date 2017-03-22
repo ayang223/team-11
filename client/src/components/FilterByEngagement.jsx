@@ -43,7 +43,7 @@ var FilterByEngagement = React.createClass({
       <option key={engagement} value={engagement} style={{margin:"2px"}}>{engagement}</option>
       );
     return(
-      <div className="medium-3 columns">
+      <div className="medium-4 columns">
         <label>Select engagement</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
           {listItems}

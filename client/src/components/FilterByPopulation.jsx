@@ -43,7 +43,7 @@ var FilterByPopulation = React.createClass({
       <option key={population} value={population} style={{margin:"2px"}}>{population}</option>
       );
     return(
-      <div className="medium-3 columns">
+      <div className="medium-4 columns">
         <label>Select population</label>
       <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
           {listItems}

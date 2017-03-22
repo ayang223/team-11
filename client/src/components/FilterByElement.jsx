@@ -7,29 +7,6 @@ var FilterByElement = React.createClass({
           selectValue: []
         };
     },
-    handleChange: function(e) {
-        this.setState({selectValue: array});
-        var newSelection = JSON.stringify(e.target.value);
-        var isPresent = false;
-        var element = {
-          "elementName" : "",
-          "subElement": []
-        }
-
-        for (var i = 0; i < array.length; i++) {
-            if (newSelection === array[i].elementName) {
-                isPresent = true;
-            }
-        }
-        if (!isPresent) {
-            element.elementName = newSelection;
-            array.push(element);
-            console.log(this.state.selectValue);
-        } else {
-            var index = array.indexOf(JSON.stringify(e.target.value));
-            array.splice(index, 1);
-        }
-    },
 
     createMetadata: function(data) {
         var metadata = {};
@@ -69,6 +46,37 @@ var FilterByElement = React.createClass({
         return elementArr;
     },
 
+    subElementChange: function(e){
+      var target = e.target;
+      var newSelection = JSON.stringify(target.value);
+      var parentElement = JSON.stringify(target.name);
+      var array = this.state.selectValue;
+      if(target.checked){
+        // new selection
+        for(var i = 0; i < array.length; i++){
+          if(parentElement == array[i].elementName){// find the parent first
+            array[i].subElement.push(newSelection); // add subElement to parent's subElementList
+            this.setState({ //reset state array
+              selectValue : array
+            });
+          }
+        }
+      }else{//delete selection from parent's subElementList
+        for(var i = 0; i < array.length; i++){
+          if(parentElement == array[i].elementName){ // find parent first
+            for(var j = 0; j < array[i].subElement[j]; j++){ //find subElement inside the subElement List
+              if(array[i].subElement[j] == newSelection){
+                array[i].subElement.splice(j, 1); // delete it
+              }
+            }
+            this.setState({ // reset the state array
+              selectValue : array
+            });
+          }
+        }
+      }
+    },
+
     topLevelElementChange : function(e){
       var target = e.target;
       var newSelection = JSON.stringify(target.value);
@@ -77,16 +85,13 @@ var FilterByElement = React.createClass({
         "elementName": "",
         "subElement":[]
       }
-      if(target.checked){
-        console.log("button is checked!");
+      if(target.checked){ // new selection
         element.elementName = newSelection;
         array.push(element);
         this.setState({
           selectValue : array
         })
-        console.log(this.state.selectValue);
-      }else{
-        console.log("button is not checked");
+      }else{ // take away the selection in the state
         for(var i = 0; i < array.length; i++){
           if(array[i].elementName === newSelection){
             array.splice(i, 1);
@@ -94,8 +99,7 @@ var FilterByElement = React.createClass({
         }
         this.setState({
           selectValue: array
-        })
-        console.log(this.state.selectValue);
+        });
       }
 
     },
@@ -107,25 +111,23 @@ var FilterByElement = React.createClass({
           var topSelected = false;
           for(var j = 0; j < array.length; j++){
             if(JSON.stringify(elementArr[i].elementName) == array[j].elementName){
-              console.log(array[j].elementName);
-              topSelected = true;
+                topSelected = true;
             }
           }
           //var message = elementArr[i].elementName + ': ' + this.state.selectValue;
           var subElementsArr = elementArr[i].subElement.map((subElement) =>
           <label key={subElement}>
-            <input id={subElement}  value={elementArr[i] + subElement} onChange={this.subElementChange} type="checkbox" style={{marginLeft: "10px"}}></input>
+            <input id={subElement} name={elementArr[i].elementName}  value={subElement} onChange={this.subElementChange} type="checkbox" style={{marginLeft: "20px"}}></input>
             {subElement}
               </label>
         );
           listElements.push(
             <fieldset className="medium-6 columns" key={elementArr[i].elementName}>
-              <label>Select filters for: {elementArr[i].elementName}</label>
                 <label>
             <input id={elementArr[i].elementName}  value={elementArr[i].elementName} type="checkbox" style={{margin:"2px"}} onChange={this.topLevelElementChange}></input>
              {elementArr[i].elementName}
            </label>
-            {topSelected ? <div>{subElementsArr}</div> : <p>Select top level</p>}
+            {topSelected ? <div>{subElementsArr}</div> : <p></p>}
             </fieldset>
           );
         }
@@ -135,13 +137,10 @@ var FilterByElement = React.createClass({
     render: function() {
         var dataFromDash = this.props.data;
         var elementArr = this.createMetadata(dataFromDash);
-        console.log(elementArr);
         var listElements = this.createListings(elementArr);
-        // const listItems = elementArr.map((element) =>
-        //   <option key={element} value={element} style={{margin:"2px"}}>{element}</option>
-        //   );
         return (
-            <div>
+            <div className="row" style={{margin:"10px", paddingTop: "50px"}}>
+              <label>Select Filters for Program Element:</label>
                   {listElements}
             </div>
         )
