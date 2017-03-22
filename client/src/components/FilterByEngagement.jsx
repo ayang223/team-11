@@ -29,7 +29,7 @@ var FilterByEngagement = React.createClass({
     var engagementArr = [];
     for (var i =0; i< donorEngagement.length; i++){
       if(engagementArr.includes(donorEngagement[i].engagement)){
-        console.log("engagement true")
+        //console.log("engagement true")
       } else engagementArr.push(donorEngagement[i].engagement)
     }
     return engagementArr;

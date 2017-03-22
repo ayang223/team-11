@@ -29,7 +29,7 @@ var FilterByPopulation = React.createClass({
     var popArr = [];
     for (var i =0; i< pop.length; i++){
       if(popArr.includes(pop[i].population)){
-        console.log("population true")
+        //console.log("population true")
       } else popArr.push(pop[i].population)
     }
     return popArr;

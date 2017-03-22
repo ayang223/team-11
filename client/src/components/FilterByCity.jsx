@@ -29,7 +29,7 @@ var FilterByCity = React.createClass({
     var cityArr = [];
     for (var i =0; i< city.length; i++){
       if(cityArr.includes(city[i].municipality)){
-        console.log("population true")
+        //console.log("population true")
       } else cityArr.push(city[i].municipality)
     }
     return cityArr;

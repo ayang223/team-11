@@ -29,7 +29,7 @@ createMetadata:function(data){
     var focusArr = [];
     for (var i =0; i< focusarea.length; i++){
       if(focusArr.includes(focusarea[i].focus)){
-        console.log("focus true")
+        //console.log("focus true")
       } else focusArr.push(focusarea[i].focus)
     }
     return focusArr;
