@@ -45,6 +45,7 @@ class Dashboard extends React.Component {
 
         // Take stuff out of filtered data based on filters
 
+
         // Example: Delete all data
         filteredData = {
           Program: [],

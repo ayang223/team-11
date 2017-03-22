@@ -154,7 +154,6 @@ var Listing = React.createClass({
         }
         var dataFromDash = this.state.data;
         var programList = this.createListings(dataFromDash);
-        console.log(programList);
         const listPrograms = this.renderListings(programList);
 
         return (
