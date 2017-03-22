@@ -156,6 +156,8 @@ class Dashboard extends React.Component {
                     <div >
 											<D3Map ref={map => { this._map = map}} data={this.state.filterData}/>
                     </div>
+                    <div className="row" style={{marginTop: "50px"}}>
+                    </div>
 										<Tabs forceRenderTabPanel={true}>
 												<TabList>
 														<Tab>Table of Totals</Tab>

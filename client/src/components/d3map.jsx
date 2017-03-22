@@ -83,7 +83,6 @@ var D3Map = React.createClass({
         var zoomOut = this.zoomOut;
         var styleContainer = {
             position: 'relative',
-            backgroundColor: '#EEE',
             width: this.width,
             height: this.height
         }
