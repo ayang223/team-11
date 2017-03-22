@@ -1,6 +1,8 @@
 var React = require('react');
 var Nav = require('Nav');
 
+
+
 class Main extends React.Component{
   constructor(props){
     super(props);

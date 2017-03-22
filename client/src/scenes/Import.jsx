@@ -2,16 +2,30 @@ var React = require('react');
 var Baby = require('babyparse');
 var url = require('url');
 var {hashHistory} = require('react-router');
+var loadingImg = require('public/pie.svg');
 var buttonStyle={
   margin : "20px",
   align: "center"
 }
 
+var loading={
+  width: "200px",
+  height: "200px"
+}
+
 
 
 var Import = React.createClass({
+    getInitialState: function(){
+      return{
+        loading: 0,
+      }
+    },
 
     importProgram : function(e){
+      this.setState({
+        loading : 1,
+      });
       document.getElementById('errorOut').innerHTML = "Currently uploading your data.... Please wait";
       var file = document.getElementById('CSVUpload').files[0];
       if(file == null){
@@ -45,6 +59,7 @@ var Import = React.createClass({
                  }.bind(this),
                  error:function(error){
                    console.log(error);
+                     document.getElementById('errorOut').innerHTML = "Upload Failed";
                }
              });
 
@@ -54,6 +69,10 @@ var Import = React.createClass({
       },
 
       importOutput : function(e){
+        var _this = this;
+        this.setState({
+          loading : 1,
+        });
         document.getElementById('errorOut').innerHTML = "Currently uploading your data.... Please wait";
         var file = document.getElementById('CSVUpload').files[0];
         if(file == null){
@@ -107,7 +126,11 @@ var Import = React.createClass({
                    <br/><br/>
                </form>
                <h3 style={{margin: "20px"}}>Status of Upload</h3>
-               <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here</div>
+               <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here
+                 {this.state.loading == 1 &&
+                 <div style={{width: "200px", height: "200px"}} dangerouslySetInnerHTML={{__html: loadingImg}}></div>
+               }
+               </div>
                <br/><br/>
                  <br/><br/>
             </div>

@@ -65,7 +65,8 @@ externals: {
         loader: "style-loader!css-loader",
         include: /fixed-data-table/,
         exclude: /foundation-sites/,
-      }
+      },
+      { test: /\.svg$/, loader: 'svg-inline' }
     ]
   },
   node: {

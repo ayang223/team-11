@@ -19,6 +19,7 @@ var h1style={
   textAlign: "center"
 }
 
+
 var Login = React.createClass({
   getDefaultProps: function () {
     return {
@@ -83,9 +84,10 @@ var Login = React.createClass({
       <div>
       <div className="centered" style={divStyle}>
       <h2 style={h1style}>Welcome! Please login to continue </h2>
-    
+
         <LoginForm onNewName={this.handleNewName}/>
       </div>
+
     </div>
     );
   }

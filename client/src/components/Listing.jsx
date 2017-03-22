@@ -47,15 +47,13 @@ var Listing = React.createClass({
         var program = {
             "elements": [],
             "locations": [],
-            "agency": "",
-            "AndarDataOutput": ""
+            "agency": ""
         };
 
         for (var i = 0; i < dataFromDash.Program.length; i++) {
             program = dataFromDash.Program[i];
             var locations = [];
             var elements = [];
-            var andar = {};
 
             for (var j = 0; j < dataFromDash.Location.length; j++) {
               var location = {
@@ -80,16 +78,9 @@ var Listing = React.createClass({
                     elements.push(dataFromDash.ProgramElement[l].element);
                 }
             }
-            for(var n = 0; n < dataFromDash.AndarDataOutput.length; n++){
-              if(program.id === dataFromDash.AndarDataOutput[n].program_andar){
-                andar = dataFromDash.AndarDataOutput[n];
-              }
-            }
-            program.AndarDataOutput = andar;
             program.elements = elements;
             program.locations = locations;
             programList.push(program);
-            //console.log(programList);
         }
         return programList;
     },
@@ -133,15 +124,11 @@ var Listing = React.createClass({
               <h6 style={{fontWeight: 'bold'}}>{programList[i].agency}</h6>
               <dl>
                 <dt>Program Description: </dt>
-                <dd>{programList[i].description}  {programList[i].AndarDataOutput.description}</dd>
+                <dd>{programList[i].description}</dd>
                   <dt>Program website: </dt>
                   <dd>{programList[i].website}</dd>
                     <dt>Program Elements: </dt>
                     <dd>{listElements}</dd>
-                    <dt>Yearly Allocation: </dt>
-                    <dd>${programList[i].AndarDataOutput.yearly_allocation}</dd>
-                    <dt>Program Focus: </dt>
-                    <dd>{programList[i].AndarDataOutput.focus}</dd>
               </dl>
               </div>
               <div className="large-6 column">
