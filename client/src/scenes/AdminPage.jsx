@@ -128,16 +128,20 @@ var DeleteUserForm = React.createClass({
         "user" : username
       }),
       success:function(data){
-        console.log(data)
-        if(data.status === "failed"){
-          alert("User not found");
-        }else{
-          alert("user deleted");
+        console.log(data);
+        if (data.status === "failed") {
+          if (data.main_admin) {
+            alert("User cannot be deleted");
+          } else {
+            alert("User not found");
+          }
+        } else {
+          alert("User deleted");
         }
       }.bind(this),
       error:function(error){
         console.log(error);
-        alert("user delete failed");
+        alert("User delete failed");
       }
     })
   },

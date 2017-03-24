@@ -58,7 +58,11 @@ public class UserManager {
 			return responseJson;
 		}
 		String user = requestJson.get(USER).getAsString();
-		
+		if (user.toLowerCase().equals("main_admin")) {
+			responseJson = RequestHandler.getStatusFailed();
+			responseJson.addProperty("main_admin", true);
+			return responseJson;
+		}
 		boolean success = DatabaseHandler.deleteUser(user);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
