@@ -35,33 +35,3 @@ describe('Regression Testing for Components:', () =>{
     expect(LoginForm).toExist();
   });
 });
-
-describe('LoginForm', () =>{
-
-  it('Should call NewName if valid Username and Password is enter', ()=>{
-    var spy = expect.createSpy();
-    var loginForm = TestUtils.renderIntoDocument(<LoginForm onNewName={spy}/>);
-    var $el = $(ReactDOM.findDOMNode(loginForm));
-
-    loginForm.refs.username.value = "username1";
-    loginForm.refs.password.value = "password1";
-
-    TestUtils.Simulate.submit($el.find('form')[0]);
-
-    expect(spy).toHaveBeenCalledWith("username1", "password1");
-  });
-
-  it('Should not call NewName if valid Username and Password is enter', ()=>{
-    var spy = expect.createSpy();
-    var loginForm = TestUtils.renderIntoDocument(<LoginForm onNewName={spy}/>);
-    var $el = $(ReactDOM.findDOMNode(loginForm));
-
-    loginForm.refs.username.value = "";
-    loginForm.refs.password.value = "";
-
-    TestUtils.Simulate.submit($el.find('form')[0]);
-
-    expect(spy).toNotHaveBeenCalled();
-  });
-
-});
