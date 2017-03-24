@@ -3,6 +3,7 @@ var Baby = require('babyparse');
 var url = require('url');
 var {hashHistory} = require('react-router');
 var loadingImg = require('public/pie.svg');
+var $ = require('jQuery');
 var buttonStyle={
   margin : "20px",
   align: "center"

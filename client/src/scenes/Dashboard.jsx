@@ -15,6 +15,7 @@ var TableProgramInfo = require('TableProgramInfo');
 var D3Map = require('d3map');
 var Listing = require('Listing');
 var url = require('url');
+var $ = require('jQuery');
 var loadingImg = require('public/pie.svg');
 var ReactTabs = require('react-tabs'),
     Tab = ReactTabs.Tab,

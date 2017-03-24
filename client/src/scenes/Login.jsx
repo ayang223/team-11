@@ -7,6 +7,7 @@ import cookie from 'react-cookie';
 import sha256 from 'js-sha256';
 var {hashHistory} = require('react-router');
 var url = require('url');
+var $ = require('jQuery');
 
 var divStyle={
   padding: "10%"

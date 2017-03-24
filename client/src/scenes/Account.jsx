@@ -3,6 +3,7 @@ import Login from '../scenes/Login.jsx';
 import cookie from 'react-cookie';
 var React = require('react');
 var url = require('url');
+var $ = require('jQuery');
 
 var AccountForm = React.createClass({
    onFormSubmit: function(e){
