@@ -69,6 +69,9 @@ var Login = React.createClass({
                  window.alert("Failed to login, please check your username or passsword");
                }
             }.bind(this),
+            error:function(error){
+              window.alert("There is an error with the server, please contact an Administrator");
+            }
         });
   },
 

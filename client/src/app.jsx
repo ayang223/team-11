@@ -8,7 +8,7 @@ var Import = require('Import');
 var Dashboard = require('Dashboard');
 var Logout = require('src/components/Logout.jsx');
 var AdminPage = require('src/scenes/AdminPage.jsx');
-var $ = require('jQuery');
+
 import cookie from 'react-cookie';
 require('style!css!foundation-sites/dist/foundation.min.css')
 $(document).foundation();

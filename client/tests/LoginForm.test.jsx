@@ -28,7 +28,7 @@ describe('LoginForm', () =>{
     loginForm.refs.password.value = "";
 
     TestUtils.Simulate.submit($el.find('form')[0]);
-
     expect(spy).toNotHaveBeenCalled();
   });
+  
 });
