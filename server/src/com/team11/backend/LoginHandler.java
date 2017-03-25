@@ -3,6 +3,7 @@ package com.team11.backend;
 import com.google.gson.JsonObject;
 import com.team11.backend.DatabaseHandler;
 import com.team11.backend.RequestHandler;
+import com.team11.backend.LogEventHandler;
 
 /**
  * This class handles all the logins
@@ -25,6 +26,7 @@ public class LoginHandler {
 		String password = requestJson.get(PASSWORD).getAsString();
 		
 		responseJson = DatabaseHandler.verifyUser(user, password);
+		LogEventHandler.logLogin(user, responseJson.get("status").getAsString());
 		return responseJson;
 	}
 	

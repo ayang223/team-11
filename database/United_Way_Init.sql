@@ -157,9 +157,7 @@ CREATE TABLE Log (
 	action varchar(128) NOT NULL,
 	date_time varchar(128) NOT NULL,
 
-	PRIMARY KEY (id),
-
-	FOREIGN KEY (username) REFERENCES Users(username)
+	PRIMARY KEY (id)
 );
 
 /* Initialization of main administrator account*/
