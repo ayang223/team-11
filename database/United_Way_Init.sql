@@ -151,6 +151,17 @@ CREATE TABLE Users (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE Log (
+	id integer NOT NULL AUTO_INCREMENT,
+	username varchar(32) NOT NULL,
+	action varchar(128) NOT NULL,
+	date_time varchar(128) NOT NULL,
+
+	PRIMARY KEY (id),
+
+	FOREIGN KEY (username) REFERENCES Users(username)
+);
+
 /* Initialization of main administrator account*/
 INSERT INTO Users
 VALUES (0, 'Main_Admin', '0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605', NULL, NULL, TRUE);
