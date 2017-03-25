@@ -1137,6 +1137,46 @@ public class DatabaseHandler {
 
 		return outputs;
 	}
+
+	// Monitoring tool log
+	public static boolean insertLogEvent(String username, String action, String date_time) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Log (username, action, date_time) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			stmt.setString(2, action);
+			stmt.setString(3, date_time);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		
+		return success;
+	}
+
 	
 	// User Queries
 	public static boolean insertUser(String username, String password, String firstName, String lastName, boolean adminPrivileges) {
