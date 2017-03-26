@@ -1,2 +1,0 @@
-0:0:0:0:0:0:0:1 - - [17/Mar/2017:17:04:06 -0700] "POST /BackendServer/DatabaseServlet HTTP/1.1" 200 34
-0:0:0:0:0:0:0:1 - - [17/Mar/2017:17:04:09 -0700] "POST /BackendServer/DatabaseServlet HTTP/1.1" 200 191258
