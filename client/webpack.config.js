@@ -23,12 +23,14 @@ externals: {
     root: __dirname,
     alias: {
       //rename React componenets here for cleaner imports
+      App: 'src/app.jsx',
       Nav: 'src/components/Nav.jsx',
       Main: 'src/scenes/Main.jsx',
       Login: 'src/scenes/Login.jsx',
       Account: 'src/scenes/Account.jsx',
       Import: 'src/scenes/Import.jsx',
       Dashboard: 'src/scenes/Dashboard.jsx',
+      LoginForm: 'src/components/LoginForm.jsx',
       FilterByYear: 'src/components/FilterByYear.jsx',
       FilterByFocusArea: 'src/components/FilterByFocusArea.jsx',
       FilterByCity: 'src/components/FilterByCity.jsx',

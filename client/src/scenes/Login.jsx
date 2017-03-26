@@ -7,6 +7,7 @@ import cookie from 'react-cookie';
 import sha256 from 'js-sha256';
 var {hashHistory} = require('react-router');
 var url = require('url');
+var $ = require('jQuery');
 
 var divStyle={
   padding: "10%"
@@ -68,6 +69,9 @@ var Login = React.createClass({
                  window.alert("Failed to login, please check your username or passsword");
                }
             }.bind(this),
+            error:function(error){
+              window.alert("There is an error with the server, please contact an Administrator");
+            }
         });
   },
 

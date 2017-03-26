@@ -6,8 +6,9 @@ var Login = require('Login');
 var Account = require('Account');
 var Import = require('Import');
 var Dashboard = require('Dashboard');
-var Logout = require('src/components/Logout.jsx')
-var AdminPage = require('src/scenes/AdminPage.jsx')
+var Logout = require('src/components/Logout.jsx');
+var AdminPage = require('src/scenes/AdminPage.jsx');
+
 import cookie from 'react-cookie';
 require('style!css!foundation-sites/dist/foundation.min.css')
 $(document).foundation();

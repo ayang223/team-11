@@ -1,6 +1,8 @@
 var React = require('react');
 var array = [];
-
+var activeItem =  {
+  color: 'Black', fontWeight: 'bold'
+}
 var FilterByAgency = React.createClass({
   getInitialState:function(){
     return {selectValue: [] };

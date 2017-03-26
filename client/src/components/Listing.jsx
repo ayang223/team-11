@@ -74,7 +74,7 @@ var Listing = React.createClass({
                 }
             }
             for (var l = 0; l < dataFromDash.ProgramElement.length; l++) {
-                if (program.id == dataFromDash.ProgramElement[l].andar_id) {
+                if (program.id == dataFromDash.ProgramElement[l].andar_id &&  dataFromDash.ProgramElement[l].level != 300) {
                     elements.push(dataFromDash.ProgramElement[l].element);
                 }
             }
