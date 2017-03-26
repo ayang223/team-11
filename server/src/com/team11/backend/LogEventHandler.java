@@ -52,4 +52,10 @@ public class LogEventHandler {
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
 	}
+
+	public static JsonObject listLogs(JsonObject requestJson) {
+		JsonObject responseJson = new JsonObject();
+		responseJson.add("Log Events", DatabaseHandler.getLogEvents());
+		return responseJson;
+	}
 }

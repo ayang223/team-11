@@ -1176,6 +1176,56 @@ public class DatabaseHandler {
 		return success;
 	}
 
+	public static JsonArray getLogEvents() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT TOP 25 FROM Log ORDER BY id DESC";
+		JsonArray logEvents = new JsonArray();
+
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject event = new JsonObject();
+				int id = rs.getInt("id");
+				String username = rs.getString("username");
+				String action = rs.getString("action");
+				String date_time = rs.getString("date_time");
+				event.addProperty("id", id);
+				event.addProperty("username", username);
+				event.addProperty("action", action);
+				event.addProperty("date_time", date_time);
+
+				logEvents.add(event);
+			}
+		} catch (SQLException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			logEvents.add(queryFailed);
+		} catch (ClassNotFoundException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			logEvents.add(queryFailed);
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return logEvents;
+	}
 	
 	// User Queries
 	public static boolean insertUser(String username, String password, String firstName, String lastName, boolean adminPrivileges) {

@@ -18,6 +18,7 @@ public class RequestHandler {
 	private static final String IMPORT_OUTPUT = "Import Output";
 	private static final String IMPORT_PROGRAMS = "Import Programs";
 	private static final String LIST_USER = "List User";
+	private static final String LIST_LOGS = "List Logs";
 	private static final String LOGIN_USER = "Login User";
 	private static final String LOG_FILTER = "Log Filter";
 
@@ -53,6 +54,9 @@ public class RequestHandler {
 			break;
 		case LIST_USER:
 			responseJson = UserManager.listUser(requestJson);
+			break;
+		case LIST_LOGS:
+			responseJson = LogEventHandler.listLogs(requestJson);
 			break;
 		case LOGIN_USER:
 			responseJson = LoginHandler.loginUser(requestJson);
