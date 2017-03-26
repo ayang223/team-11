@@ -1,3 +1,4 @@
+import cookie from 'react-cookie';
 var React = require('react');
 var FilterByYear = require('FilterByYear');
 var FilterByFocusArea = require('FilterByFocusArea');
@@ -47,6 +48,28 @@ class Dashboard extends React.Component {
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
 
+        var username = cookie.load('userID');
+        var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
+          filterByPopulation, filterByElement, filterByEngagement);
+        var filterString = allFilters.join(", ");
+        $.ajax({
+            url:url,
+           type: "POST",
+           data: JSON.stringify({
+             "action" : "Log Filter",
+             "user": username,
+             "filters": filterString
+           }),
+            dataType:"json",
+            success:function(data){
+               if (data.status === "success") {
+                 console.log("Filter log success");
+               } else {
+                 console.log("Filter log failed");
+               }
+            }.bind(this),
+        });
+
         // Take stuff out for Year
 
         // Take stuff out for City
@@ -59,7 +82,7 @@ class Dashboard extends React.Component {
                 for(var j = 0; j < filterByCity.length; j++) {
                     if (JSON.stringify(filteredData.Municipality[i].municipality) == filterByCity[j]) {
                         if (!this.contains(filterByCityIDs, filteredData.Municipality[i].andar_id)) {
-                            filterByCityIDs.push(filteredData.Municipality[i].andar_id);    
+                            filterByCityIDs.push(filteredData.Municipality[i].andar_id);
                         }
                         break;
                     }
