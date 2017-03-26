@@ -1,26 +1,27 @@
 var React = require('react');
 var array = [];
+var Select = require('react-select');
 
 var FilterByCity = React.createClass({
   getInitialState:function(){
-    return {selectValue: []};
+    return {
+      value: [],
+      disabled : false,
+      selectValue: [],
+    };
   },
-  handleChange: function(e){
-    this.setState({selectValue: array});
-    var newSelection = JSON.stringify(e.target.value);
-    var isPresent = false;
-    var i;
-    for(i = 0; i < array.length; i++){
-      if(newSelection === array[i]){
-        isPresent = true;
+  handleChange: function(value){
+    this.setState({
+      value : value
+    } , () => {
+      var selectArr = [];
+      for(var i = 0; i < this.state.value.length; i++){
+        selectArr.push(JSON.stringify(this.state.value[i].value));
       }
-    }
-    if(!isPresent){
-      array.push(JSON.stringify(e.target.value));
-    }else{
-      var index = array.indexOf(JSON.stringify(e.target.value));
-      array.splice(index, 1);
-    }
+      this.setState({
+        selectValue: selectArr
+      });
+    });
   },
 
   createMetadata:function(data){
@@ -28,9 +29,24 @@ var FilterByCity = React.createClass({
     var city = data.Municipality;
     var cityArr = [];
     for (var i =0; i< city.length; i++){
-      if(cityArr.includes(city[i].municipality)){
+      var object = {
+        label : "",
+        value: ""
+      }
+      object.label = city[i].municipality;
+      object.value = city[i].municipality;
+      var isDup = false;
+      for(var j = 0; j < cityArr.length; j++){
+        if(object.value == cityArr[j].municipality){
+          isDup = true;
+          break;
+        }
+      }
+      if(isDup){
         //console.log("population true")
-      } else cityArr.push(city[i].municipality)
+      } else {
+        cityArr.push(object)
+      }
     }
     return cityArr;
   },
@@ -39,17 +55,12 @@ var FilterByCity = React.createClass({
     var dataFromDash = this.props.data;
     var message = 'FilterByCity: ' + this.state.selectValue;
     var cityArr = this.createMetadata(dataFromDash);
-    const listItems = cityArr.map((municipality) =>
-      <option key={municipality} value={municipality} style={{margin:"2px"}}>{municipality}</option>
-      );
+
     return(
-      <div className="medium-3 columns">
-        <label>Select city</label>
-      <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          {listItems}
-        </select>
-        <label>{message}</label>
-      </div>
+      <div>
+        <label>City Groupings Filter</label>
+        <Select placeholder="Select City" multi disabled={this.state.disabled} value={this.state.value} options={cityArr} onChange={this.handleChange}  />
+        </div>
     )
   }
 })

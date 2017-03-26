@@ -47,13 +47,15 @@ var Listing = React.createClass({
         var program = {
             "elements": [],
             "locations": [],
-            "agency": ""
+            "agency": "",
+            "AndarDataOutput": ""
         };
 
         for (var i = 0; i < dataFromDash.Program.length; i++) {
             program = dataFromDash.Program[i];
             var locations = [];
             var elements = [];
+            var andar = {};
 
             for (var j = 0; j < dataFromDash.Location.length; j++) {
               var location = {
@@ -78,6 +80,12 @@ var Listing = React.createClass({
                     elements.push(dataFromDash.ProgramElement[l].element);
                 }
             }
+            for(var n = 0; n < dataFromDash.AndarDataOutput.length; n++){
+              if(program.id === dataFromDash.AndarDataOutput[n].program_andar){
+                andar = dataFromDash.AndarDataOutput[n];
+              }
+            }
+            program.AndarDataOutput = andar;
             program.elements = elements;
             program.locations = locations;
             programList.push(program);
@@ -129,6 +137,10 @@ var Listing = React.createClass({
                   <dd>{programList[i].website}</dd>
                     <dt>Program Elements: </dt>
                     <dd>{listElements}</dd>
+                    <dt>Yearly Allocation: </dt>
+                    <dd>${programList[i].AndarDataOutput.yearly_allocation}</dd>
+                    <dt>Program Focus: </dt>
+                    <dd>{programList[i].AndarDataOutput.focus}</dd>
               </dl>
               </div>
               <div className="large-6 column">

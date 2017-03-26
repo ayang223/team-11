@@ -64,7 +64,7 @@ var FilterByElement = React.createClass({
       }else{//delete selection from parent's subElementList
         for(var i = 0; i < array.length; i++){
           if(parentElement == array[i].elementName){ // find parent first
-            for(var j = 0; j < array[i].subElement[j]; j++){ //find subElement inside the subElement List
+            for(var j = 0; j < array[i].subElement.length; j++){ //find subElement inside the subElement List
               if(array[i].subElement[j] == newSelection){
                 array[i].subElement.splice(j, 1); // delete it
               }

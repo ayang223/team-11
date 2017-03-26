@@ -30,5 +30,5 @@ describe('LoginForm', () =>{
     TestUtils.Simulate.submit($el.find('form')[0]);
     expect(spy).toNotHaveBeenCalled();
   });
-  
+
 });

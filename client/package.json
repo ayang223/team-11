@@ -30,6 +30,7 @@
     "react-google-charts": "^1.4.2",
     "react-places-autocomplete": "^4.0.5",
     "react-router": "^2.0.0",
+    "react-select": "^1.0.0-rc.3",
     "react-tabs": "^0.8.2",
     "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",
