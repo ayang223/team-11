@@ -1173,7 +1173,6 @@ public class DatabaseHandler {
 				}
 			}
 		}
-		
 		return success;
 	}
 

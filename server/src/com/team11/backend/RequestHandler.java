@@ -59,6 +59,7 @@ public class RequestHandler {
 			break;
 		case LOG_FILTER:
 			responseJson = LogEventHandler.logFilter(requestJson);
+			break;
 		default:
 			responseJson = getStatusFailed();
 			break;

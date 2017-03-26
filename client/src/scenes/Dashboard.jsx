@@ -1,3 +1,4 @@
+import cookie from 'react-cookie';
 var React = require('react');
 var FilterByYear = require('FilterByYear');
 var FilterByFocusArea = require('FilterByFocusArea');
@@ -43,6 +44,29 @@ class Dashboard extends React.Component {
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
+
+
+        var username = cookie.load('userID');
+        var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
+          filterByPopulation, filterByElement, filterByEngagement);
+        var filterString = allFilters.join(", ");
+        $.ajax({
+            url:url,
+           type: "POST",
+           data: JSON.stringify({
+             "action" : "Log Filter",
+             "user": username,
+             "filters": filterString
+           }),
+            dataType:"json",
+            success:function(data){
+               if (data.status === "success") {
+                 console.log("Filter log success");
+               } else {
+                 console.log("Filter log failed");
+               }
+            }.bind(this),
+        });
 
         // Take stuff out of filtered data based on filters
 
