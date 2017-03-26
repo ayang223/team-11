@@ -55,7 +55,6 @@ var ChartMoneyInvested=React.createClass({
     var title = "Money Invested Bar Chart:";
 
     var metadata = this.createMetadata(this.state.data);
-
     return (
       <div className="large-6 columns">
         <h2 style={{textAlign:"left"}}>{title}</h2>
