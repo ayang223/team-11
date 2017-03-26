@@ -46,7 +46,7 @@ public class DashboardLogic {
 		ArrayList<String> headers = new ArrayList<String>();
 		itemJson = arrayJson.get(0).getAsJsonArray();
 		
-		for (int column = 0; column < itemJson.size()-1; column++) {
+		for (int column = 0; column < itemJson.size(); column++) {
 			String fieldHeader = itemJson.get(column).getAsString();
 			headers.add(fieldHeader);
 		}
