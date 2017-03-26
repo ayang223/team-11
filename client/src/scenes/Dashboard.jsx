@@ -34,8 +34,8 @@ class Dashboard extends React.Component {
             filterData: null
         };
     }
+
     generateGraphs() {
-        console.log("generate!");
         var filteredData = this.state.data;
 
         var filterByYear = this._filterByYear.state.selectValue;
@@ -57,15 +57,13 @@ class Dashboard extends React.Component {
                 filterByCityOn = false;
                 break;
             } else {
-                var isFiltered = false;
                 for(var j = 0; j < filterByCity.length; j++) {
                     if (JSON.stringify(filteredData.Municipality[i].municipality) == filterByCity[j]) {
-                        isFiltered = true;
+                        if (!this.contains(filterByCityIDs, filteredData.Municipality[i].andar_id)) {
+                            filterByCityIDs.push(filteredData.Municipality[i].andar_id);    
+                        }
                         break;
                     }
-                }
-                if (isFiltered) {
-                    filterByCityIDs.push(filteredData.Municipality[i].andar_id);
                 }
             }
         }
@@ -80,10 +78,84 @@ class Dashboard extends React.Component {
         // Take stuff out for Focus Area
 
         // Take stuff out for Population
+        var filterByPopulationOn = true;
+        var filterByPopulationIDs = [];
+        for (var i = 0; i < filteredData.TargetPopulation.length; i++) {
+            if (!$.isArray(filterByPopulation) || filterByPopulation.length == 0) {
+                filterByPopulationOn = false;
+                break;
+            } else {
+                for(var j = 0; j < filterByPopulation.length; j++) {
+                    if (JSON.stringify(filteredData.TargetPopulation[i].population) == filterByPopulation[j]) {
+                        if (!this.contains(filterByPopulationIDs, filteredData.TargetPopulation[i].andar_id)) {
+                            filterByPopulationIDs.push(filteredData.TargetPopulation[i].andar_id);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        if (filterByPopulationOn) {
+            filteredData = this.filterOutID(filteredData, filterByPopulationIDs);
+        }
 
         // Take stuff out for Engagement
+        var filterByEngagementOn = true;
+        var filterByEngagementIDs = [];
+        for (var i = 0; i < filteredData.DonorEngagement.length; i++) {
+            if (!$.isArray(filterByEngagement) || filterByEngagement.length == 0) {
+                filterByEngagementOn = false;
+                break;
+            } else {
+                for(var j = 0; j < filterByEngagement.length; j++) {
+                    if (JSON.stringify(filteredData.DonorEngagement[i].engagement) == filterByEngagement[j]) {
+                        if (!this.contains(filterByEngagementIDs, filteredData.DonorEngagement[i].andar_id)) {
+                            filterByEngagementIDs.push(filteredData.DonorEngagement[i].andar_id);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        if (filterByEngagementOn) {
+            filteredData = this.filterOutID(filteredData, filterByEngagementIDs);
+        }
 
         // Take stuff out for Element/SubElement
+        var filterByElementOn = true;
+        var filterByElementIDs = [];
+        if (!$.isArray(filterByElement) || filterByElement.length == 0) {
+            filterByElementOn = false;
+        } else {
+            for(var i = 0; i < filterByElement.length; i++) {
+                var subElementArray = filterByElement[i].subElement;
+                if(!$.isArray(subElementArray) || subElementArray.length == 0) {
+                   for (var j = 0; j < filteredData.ProgramElement.length; j++) {
+                        if(filterByElement[i].elementName == JSON.stringify(filteredData.ProgramElement[j].element)) {
+                            if(filteredData.ProgramElement[j].level != 300) {
+                                if (!this.contains(filterByElementIDs, filteredData.ProgramElement[j].andar_id)) {
+                                    filterByElementIDs.push(filteredData.ProgramElement[j].andar_id);
+                                }
+                            }
+                        }
+                   }
+                } else {
+                    var mainElementName = filterByElement[i].elementName;
+                    for (var k = 0; k < subElementArray.length; k++) {
+                        for (var l = 0; l < filteredData.ProgramSubElement.length; l++) {
+                            if(subElementArray[k] == JSON.stringify(filteredData.ProgramSubElement[l].subElement) && mainElementName == JSON.stringify(filteredData.ProgramSubElement[l].element)) {
+                                if (!this.contains(filterByElementIDs, filteredData.ProgramSubElement[l].andar_id)) {
+                                    filterByElementIDs.push(filteredData.ProgramSubElement[l].andar_id);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (filterByElementOn) {
+            filteredData = this.filterOutID(filteredData, filterByElementIDs);
+        }
 
         console.log(filteredData);
 
@@ -350,7 +422,7 @@ class Dashboard extends React.Component {
 										<div className="row">
 											<button className="button info" onClick={this.generateGraphs} style={{
 													margin: "20px"
-											}}>Generate</button>
+											}}>Apply Filter</button>
 											<button className="button export" onClick={this.exportPDF} style={{
 													margin: "20px"
 											}}>Export PDF</button></div>
