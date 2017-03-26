@@ -129,6 +129,8 @@ CREATE TABLE Location (
 	andar_id integer NOT NULL,
 	name varchar(128),
 	postal varchar(8), 
+	lat double,
+	lon double,
 
 	PRIMARY KEY (id),
 
@@ -146,6 +148,15 @@ CREATE TABLE Users (
 	last_name varchar(32),
 	admin_privileges boolean NOT NULL,
 	
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE Log (
+	id integer NOT NULL AUTO_INCREMENT,
+	username varchar(32) NOT NULL,
+	action varchar(4096) NOT NULL,
+	date_time varchar(128) NOT NULL,
+
 	PRIMARY KEY (id)
 );
 

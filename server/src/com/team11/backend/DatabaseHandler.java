@@ -1,14 +1,20 @@
 package com.team11.backend;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Types;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.team11.backend.RequestHandler;
 
 import java.sql.PreparedStatement;
@@ -476,40 +482,85 @@ public class DatabaseHandler {
 	}
 	
 	public static boolean insertLocation(int programAndar, String name, String postal) {
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Location (andar_id, name, postal) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
-		boolean success = true;
-		try {
-			conn = getConnection();
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, programAndar);
-			stmt.setString(2, name);
-			stmt.setString(3, postal);
-			int count = stmt.executeUpdate();
-			success = count > 0;
-		} catch (SQLException e) {
-			success = false;
-		} catch (ClassNotFoundException e) {
-			success = false;
-		} finally {
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					// Do nothing
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// Do nothing
-				}
-			}
-		}
 		
+		Double lat = null, lon = null;
+		
+		boolean success = true;
+		
+		String URL = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=" + postal;
+		URL = URL.replaceAll("\\s+","");
+		System.out.println(URL);
+		try {
+
+			 InputStream URLStream = new URL(URL).openStream();
+			 BufferedReader reader = new BufferedReader(new InputStreamReader(URLStream));
+		     StringBuffer buffer = new StringBuffer();
+		     int read;
+		     char[] chars = new char[1024];
+		     while ((read = reader.read(chars)) != -1){
+		        buffer.append(chars, 0, read); 
+		     }
+		     
+		     String jsonText = buffer.toString();
+		    
+		     System.out.println(jsonText);
+		     
+		     JsonObject json = new JsonObject();
+		     json = new JsonParser().parse(jsonText).getAsJsonObject();
+		     
+		     if(json != null && json.get("status").getAsString().equals("OK")) {
+			     JsonArray results = json.get("results").getAsJsonArray();
+			     JsonObject temp = results.get(0).getAsJsonObject();
+			     temp = temp.get("geometry").getAsJsonObject().get("location").getAsJsonObject();
+			     
+			     lat = temp.get("lat").getAsDouble();
+			     lon = temp.get("lng").getAsDouble(); 
+		     }
+		     
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			String sql = "INSERT INTO Location (andar_id, name, postal, lat, lon) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
+
+			try {
+				conn = getConnection();
+	
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, programAndar);
+				stmt.setString(2, name);
+				stmt.setString(3, postal);
+				if (lat == null || lon == null) {
+					stmt.setNull(4, Types.DOUBLE);
+					stmt.setNull(5, Types.DOUBLE);
+				} else {
+					stmt.setDouble(4, lat);
+					stmt.setDouble(5, lon);
+				}
+				int count = stmt.executeUpdate();
+				success = count > 0;
+			} catch (SQLException e) {
+				success = false;
+			} catch (ClassNotFoundException e) {
+				success = false;
+			} finally {
+				if (stmt != null) {
+					try {
+						stmt.close();
+					} catch (SQLException e) {
+						// Do nothing
+					}
+				}
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						// Do nothing
+					}
+				}
+			}
+		
+		} catch (IOException e) {
+			success = false;
+		}
 		return success;
 	}
 	
@@ -584,10 +635,14 @@ public class DatabaseHandler {
 				int andar_id = rs.getInt("andar_id");
 				String name = rs.getString("name");
 				String postal = rs.getString("postal");
+				double lat = rs.getDouble("lat");
+				double lon = rs.getDouble("lon");
 				row.addProperty("id", id);
 				row.addProperty("andar_id", andar_id);
 				row.addProperty("name", name);
 				row.addProperty("postal", postal);
+				row.addProperty("lat", lat);
+				row.addProperty("lon", lon);
 				
 				location.add(row);
 			}
@@ -1081,6 +1136,95 @@ public class DatabaseHandler {
 		}
 
 		return outputs;
+	}
+
+	// Monitoring tool log
+	public static boolean insertLogEvent(String username, String action, String date_time) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Log (username, action, date_time) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			stmt.setString(2, action);
+			stmt.setString(3, date_time);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
+	}
+
+	public static JsonArray getLogEvents() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Log ORDER BY id DESC LIMIT 25";
+		JsonArray logEvents = new JsonArray();
+
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject event = new JsonObject();
+				int id = rs.getInt("id");
+				String username = rs.getString("username");
+				String action = rs.getString("action");
+				String date_time = rs.getString("date_time");
+				event.addProperty("id", id);
+				event.addProperty("username", username);
+				event.addProperty("action", action);
+				event.addProperty("date_time", date_time);
+
+				logEvents.add(event);
+			}
+		} catch (SQLException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			logEvents.add(queryFailed);
+		} catch (ClassNotFoundException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			logEvents.add(queryFailed);
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return logEvents;
 	}
 	
 	// User Queries

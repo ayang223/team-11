@@ -2,6 +2,10 @@ import React from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
 
 var ChartMoneyInvested=React.createClass({
+
+  getInitialState:function(){
+    return {data: this.props.data};
+  },
   createMetadata: function(data) {
     var metadata = {};
     var labels = [];
@@ -48,15 +52,18 @@ var ChartMoneyInvested=React.createClass({
     return metadata;
   },
   render() {
+<<<<<<< HEAD
     var dataFromDash = this.props.data;
-    var title = "Money Invested Bar Chart";
-    var metadata = this.createMetadata(dataFromDash);
+    var title = "Money Invested Bar Chart:";
+
+    var metadata = this.createMetadata(this.state.data);
     var outerStyle ={
       paddingLeft:15,
       paddingRight:30,
       width:960,
       height:500,
     }
+
     return (
       <div style={outerStyle}>
         <h2 style={{textAlign:"left"}}>{title}</h2>

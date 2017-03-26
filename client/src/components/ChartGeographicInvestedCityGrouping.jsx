@@ -91,6 +91,9 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
       "Sechelt Indian Government District (Part-Sunshine Coast)"
     ]
   },
+  getInitialState:function(){
+    return {data: this.props.data};
+  },
   getGrouping: function(city) {
     var cityGroups = Object.keys(this.cityGroupings);
     for (var i = 0; i < cityGroups.length; i++) {
@@ -166,9 +169,11 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
     return metadata;
   },
   render() {
+<<<<<<< HEAD
     var dataFromDash = this.props.data;
-    var title = "Geographic Distribution based on Money Invested with City Groupings";
-    var metadata = this.createMetadata(dataFromDash);
+    var title = "Geographic Distribution based on Money Invested with City Groupings:";
+
+    var metadata = this.createMetadata(this.state.data);
     var outerStyle ={
       width:960,
       height:500,

@@ -16,9 +16,9 @@ var LoginForm = React.createClass({
     },
     render: function() {
       var innerStyle = {
-        width:"650px",
-        height:"500px",
-        padding: 100,
+        width:"500px",
+        height:"400px",
+        padding: 50,
         margin: 7,
         backgroundColor: "#D9DAE3",
         color: "#474747",
@@ -26,7 +26,8 @@ var LoginForm = React.createClass({
         fontFamily: "sans-serif",
         fontSize: "20",
         textAlign: "left",
-        msTransition: 'all'
+        msTransition: 'all',
+        boxShadow: "10px 10px 5px #888888"
       };
       var outerStyle ={
         paddingLeft:100,
@@ -35,7 +36,7 @@ var LoginForm = React.createClass({
         return (
           <div style={outerStyle}>
             <div style={innerStyle}>
-                <h4 style={{marginBottom : "10px"}}>United Way Andar Data Analytics</h4>
+                <h4 style={{marginBottom : "10px"}}></h4>
                 <form onSubmit={this.onFormSubmit}>
                     <p style={{marginBottom:"10px"}}>
                         Username
@@ -47,7 +48,7 @@ var LoginForm = React.createClass({
                         <p style={{marginBottom:"15px"}}>Password
                         </p>
                         <input type="password" ref="password" placeholder="Enter password here"/>
-                        <p className="help-text" id="passwordHelpText">If you don't have an account, speak to an Administrator to set up one</p>
+                        <p className="help-text" id="passwordHelpText">Forgot your password? Speak to an Administrator to retrieve your password</p>
                     </div>
                     <div style={{fontSize:"15"}}>
 
