@@ -116,8 +116,9 @@ class Dashboard extends React.Component {
                         <FilterByYear ref={filterbyyear => { this._filterByYear = filterbyyear}} data={this.state.data}/>
                         <FilterByCity ref={filterbycity => { this._filterByCity = filterbycity}} data={this.state.data}/>
                         <FilterByInvested ref={filterbyinvested => { this._filterByInvested = filterbyinvested}} data={this.state.data}/>
-                        <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/>
+
                     </div>
+                    <div className="row">  <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/></div>
                     <br/>
                     <div className="row">
                         <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />
@@ -127,7 +128,6 @@ class Dashboard extends React.Component {
                     </div>
 										<div className="row">
 											<FilterByElement ref={filterbyelement => { this._filterByElement = filterbyelement}} data={this.state.data}/>
-
 										</div>
 										<div className="row">
 											<button className="button info" onClick={this.generateGraphs} style={{
