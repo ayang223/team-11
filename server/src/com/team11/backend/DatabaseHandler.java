@@ -1179,7 +1179,7 @@ public class DatabaseHandler {
 	public static JsonArray getLogEvents() {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "SELECT TOP 25 FROM Log ORDER BY id DESC";
+		String sql = "SELECT * FROM Log ORDER BY id DESC LIMIT 25";
 		JsonArray logEvents = new JsonArray();
 
 		try {

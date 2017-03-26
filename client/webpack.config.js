@@ -42,6 +42,7 @@ externals: {
       ChartGeographicInvestedCityGrouping: 'src/components/ChartGeographicInvestedCityGrouping.jsx',
       TableExample: 'src/components/TableExample.jsx',
       TableAdmin: 'src/components/TableAdmin.jsx',
+      TableLogEvents: 'src/components/TableLogEvents.jsx',
       TableProgramInfo: 'src/components/TableProgramInfo.jsx',
       d3map: 'src/components/d3map.jsx',
       Listing: 'src/components/Listing.jsx',
