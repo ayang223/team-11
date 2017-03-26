@@ -26,6 +26,8 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.generateGraphs = this.generateGraphs.bind(this);
+        this.filterOutID = this.filterOutID.bind(this);
+        this.contains = this.contains.bind(this);
         this.state = {
             data: null,
             filterData: null
@@ -41,37 +43,253 @@ class Dashboard extends React.Component {
         var filterByAgency = this._filterByInvested.state.selectValue;
         var filterByFocusArea = this._filterByFocusArea.state.selectValue;
         var filterByPopulation = this._filterByPopulation.state.selectValue;
-        var filterByElement = this._filterByElement.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
+        var filterByElement = this._filterByElement.state.selectValue;
 
-        // Take stuff out of filtered data based on filters
+        // Take stuff out for Year
 
+        // Take stuff out for City
+        var filterByCityOn = true;
+        var filterByCityIDs = [];
+        for (var i = 0; i < filteredData.Municipality.length; i++) {
+            if (!$.isArray(filterByCity) || filterByCity.length == 0) {
+                filterByCityOn = false;
+                break;
+            } else {
+                var isFiltered = false;
+                for(var j = 0; j < filterByCity.length; j++) {
+                    if (JSON.stringify(filteredData.Municipality[i].municipality) == filterByCity[j]) {
+                        isFiltered = true;
+                        break;
+                    }
+                }
+                if (isFiltered) {
+                    filterByCityIDs.push(filteredData.Municipality[i].andar_id);
+                }
+            }
+        }
+        if (filterByCityOn) {
+            filteredData = this.filterOutID(filteredData, filterByCityIDs);
+        }
 
-        // Example: Delete all data
-        filteredData = {
-          Program: [],
-          Location: [],
-          Agency: [],
-          AndarDataOutput: [],
-          TargetPopulation: [],
-          ProgramElement: [],
-          ProgramSubElement: [],
-          GeoArea: [],
-          Municipality: [],
-          AreaDirectory: [],
-          DonorEngagement: [],
-          Outputs: []
-        };
+        // Take stuff out for Invested
 
+        // Take stuff out for Agency (Should only affect it's own table)
 
-        this.state.filterData = filteredData;
+        // Take stuff out for Focus Area
+
+        // Take stuff out for Population
+
+        // Take stuff out for Engagement
+
+        // Take stuff out for Element/SubElement
+
+        console.log(filteredData);
+
+        this.setState({filterData: filteredData});
+
         this._chartMoneyInvested.setState({data: filteredData});
-     		this._chartSumClientsServed.setState({data: filteredData});
+     	this._chartSumClientsServed.setState({data: filteredData});
         this._chartGeographicInvestedCityGrouping.setState({data: filteredData});
 
         this._map.setState({data: filteredData});
         this._tableProgramInfo.setState({data: filteredData});
-				this._listing.setState({data: filteredData});
+		this._listing.setState({data: filteredData});
+    }
+
+    filterOutID(data, filterIDs) {
+        var filteredData = JSON.parse(JSON.stringify(data));
+
+        // Filter Program
+        for(var i = 0; i < data.Program.length; i++) {
+            var programID = data.Program[i].id;
+            if (!this.contains(filterIDs, programID)) {
+                var programObject = JSON.stringify(data.Program[i]);
+                var programIndex = -1;
+                for(var j = 0; j < filteredData.Program.length; j++) {
+                    if(JSON.stringify(filteredData.Program[j]) == programObject) {
+                        programIndex = j;
+                        break;
+                    }
+                }
+                if (programIndex > -1) {
+                    filteredData.Program.splice(programIndex, 1);
+                } 
+            }
+        }
+
+        // Filter Location
+        for(var i = 0; i < data.Location.length; i++) {
+            var locationAndarID = data.Location[i].andar_id;
+            if (!this.contains(filterIDs, locationAndarID)) {
+                var locationObject = JSON.stringify(data.Location[i])
+                var locationIndex = -1;
+                for(var j = 0; j < filteredData.Location.length; j++) {
+                    if(JSON.stringify(filteredData.Location[j]) == locationObject) {
+                        locationIndex = j;
+                        break;
+                    }
+                }
+                if  (locationIndex > -1) {
+                    filteredData.Location.splice(locationIndex, 1);
+                }
+            }
+        }
+
+        // Filter out Andar Data Output
+        for(var i = 0; i < data.AndarDataOutput.length; i++) {
+            var andarOutputID = data.AndarDataOutput[i].program_andar;
+            if (!this.contains(filterIDs, andarOutputID)) {
+                var andarOutputObject = JSON.stringify(data.AndarDataOutput[i])
+                var andarOutputIndex = -1;
+                for(var j = 0; j < filteredData.AndarDataOutput.length; j++) {
+                    if(JSON.stringify(filteredData.AndarDataOutput[j]) == andarOutputObject) {
+                        andarOutputIndex = j;
+                        break;
+                    }
+                }
+                if  (andarOutputIndex > -1) {
+                    filteredData.AndarDataOutput.splice(andarOutputIndex, 1);
+                }
+            }
+        }
+
+        // Filter out Target Population
+        for(var i = 0; i < data.TargetPopulation.length; i++) {
+            var targetPopulationID = data.TargetPopulation[i].andar_id;
+            if (!this.contains(filterIDs, targetPopulationID)) {
+                var targetPopulationObject = JSON.stringify(data.TargetPopulation[i])
+                var targetPopulationIndex = -1;
+                for(var j = 0; j < filteredData.TargetPopulation.length; j++) {
+                    if(JSON.stringify(filteredData.TargetPopulation[j]) == targetPopulationObject) {
+                        targetPopulationIndex = j;
+                        break;
+                    }
+                }
+                if  (targetPopulationIndex > -1) {
+                    filteredData.TargetPopulation.splice(targetPopulationIndex, 1);
+                }
+            }
+        }
+
+        // Filter out Program Element
+        for(var i = 0; i < data.ProgramElement.length; i++) {
+            var programElementID = data.ProgramElement[i].andar_id
+            if (!this.contains(filterIDs, programElementID)) {
+                var programElementObject = JSON.stringify(data.ProgramElement[i])
+                var programElementIndex = -1;
+                for(var j = 0; j < filteredData.ProgramElement.length; j++) {
+                    if(JSON.stringify(filteredData.ProgramElement[j]) == programElementObject) {
+                        programElementIndex = j;
+                        break;
+                    }
+                }
+                if  (programElementIndex > -1) {
+                    filteredData.ProgramElement.splice(programElementIndex, 1);
+                }
+            }
+        }
+
+        // Filter out Program Sub Element
+        for(var i = 0; i < data.ProgramSubElement.length; i++) {
+            var programSubElementID = data.ProgramSubElement[i].andar_id
+            if (!this.contains(filterIDs, programSubElementID)) {
+                var programSubElementObject = JSON.stringify(data.ProgramSubElement[i])
+                var programSubElementIndex = -1;
+                for(var j = 0; j < filteredData.ProgramSubElement.length; j++) {
+                    if(JSON.stringify(filteredData.ProgramSubElement[j]) == programSubElementObject) {
+                        programSubElementIndex = j;
+                        break;
+                    }
+                }
+                if  (programSubElementIndex > -1) {
+                    filteredData.ProgramSubElement.splice(programSubElementIndex, 1);
+                }
+            }
+        }
+
+        // Filter out Geo Area
+        for(var i = 0; i < data.GeoArea.length; i++) {
+            var geoAreaID = data.GeoArea[i].andar_id
+            if (!this.contains(filterIDs, geoAreaID)) {
+                var geoAreaObject = JSON.stringify(data.GeoArea[i])
+                var geoAreaIndex = -1;
+                for(var j = 0; j < filteredData.GeoArea.length; j++) {
+                    if(JSON.stringify(filteredData.GeoArea[j]) == geoAreaObject) {
+                        geoAreaIndex = j;
+                        break;
+                    }
+                }
+                if  (geoAreaIndex > -1) {
+                    filteredData.GeoArea.splice(geoAreaIndex, 1);
+                }
+            }
+        }
+
+        // Filter out Municipality
+        for(var i = 0; i < data.Municipality.length; i++) {
+            var municipalityID = data.Municipality[i].andar_id
+            if (!this.contains(filterIDs, municipalityID)) {
+                var municipalityObject = JSON.stringify(data.Municipality[i])
+                var municipalityIndex = -1;
+                for(var j = 0; j < filteredData.Municipality.length; j++) {
+                    if(JSON.stringify(filteredData.Municipality[j]) == municipalityObject) {
+                        municipalityIndex = j;
+                        break;
+                    }
+                }
+                if  (municipalityIndex > -1) {
+                    filteredData.Municipality.splice(municipalityIndex, 1);
+                }
+            }
+        }
+        
+        // Filter out Donor Engagement
+        for(var i = 0; i < data.DonorEngagement.length; i++) {
+            var donorEngagementID = data.DonorEngagement[i].andar_id
+            if (!this.contains(filterIDs, donorEngagementID)) {
+                var donorEngagementObject = JSON.stringify(data.DonorEngagement[i])
+                var donorEngagementIndex = -1;
+                for(var j = 0; j < filteredData.DonorEngagement.length; j++) {
+                    if(JSON.stringify(filteredData.DonorEngagement[j]) == donorEngagementObject) {
+                        donorEngagementIndex = j;
+                        break;
+                    }
+                }
+                if  (donorEngagementIndex > -1) {
+                    filteredData.DonorEngagement.splice(donorEngagementIndex, 1);
+                }
+            }
+        }
+
+        // Filter out Output
+        for(var i = 0; i < data.Outputs.length; i++) {
+            var outputID = data.Outputs[i].andar_id
+            if (!this.contains(filterIDs, outputID)) {
+                var outputObject = JSON.stringify(data.Outputs[i])
+                var outputIndex = -1;
+                for(var j = 0; j < filteredData.Outputs.length; j++) {
+                    if(JSON.stringify(filteredData.Outputs[j]) == outputObject) {
+                        outputIndex = j;
+                        break;
+                    }
+                }
+                if  (outputIndex > -1) {
+                    filteredData.Outputs.splice(outputIndex, 1);
+                }
+            }
+        }
+
+        return filteredData;
+    }
+
+    contains(array, obj) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] === obj) {
+            return true;
+        }
+    }
+        return false;
     }
 
     exportPDF() {
