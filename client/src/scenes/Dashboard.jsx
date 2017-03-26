@@ -41,12 +41,14 @@ class Dashboard extends React.Component {
         var filterByYear = this._filterByYear.state.selectValue;
         var filterByCity = this._filterByCity.state.selectValue;
         var filterByInvested = this._filterByInvested.state.selectValue;
-        var filterByAgency = this._filterByInvested.state.selectValue;
+        var filterByAgency = this._filterByAgency.state.selectValue;
         var filterByFocusArea = this._filterByFocusArea.state.selectValue;
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
-
+        console.log(filterByCity);
+        console.log(filterByFocusArea);
+        //console.log(filterByAgency);
         // Take stuff out for Year
 
         // Take stuff out for City
@@ -115,7 +117,7 @@ class Dashboard extends React.Component {
                 }
                 if (programIndex > -1) {
                     filteredData.Program.splice(programIndex, 1);
-                } 
+                }
             }
         }
 
@@ -244,7 +246,7 @@ class Dashboard extends React.Component {
                 }
             }
         }
-        
+
         // Filter out Donor Engagement
         for(var i = 0; i < data.DonorEngagement.length; i++) {
             var donorEngagementID = data.DonorEngagement[i].andar_id
@@ -332,15 +334,19 @@ class Dashboard extends React.Component {
                     <br/>
                     <div className="row">
                         <FilterByYear ref={filterbyyear => { this._filterByYear = filterbyyear}} data={this.state.data}/>
-                        <FilterByCity ref={filterbycity => { this._filterByCity = filterbycity}} data={this.state.data}/>
+
                         <FilterByInvested ref={filterbyinvested => { this._filterByInvested = filterbyinvested}} data={this.state.data}/>
 
                     </div>
-                    <div className="row">  <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/></div>
+                    <div className="row">
+                        <FilterByCity ref={filterbycity => { this._filterByCity = filterbycity}} data={this.state.data}/>
+                        <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/>
+                        <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
+                   </div>
                     <br/>
                     <div className="row">
                         <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />
-                        <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
+
                         <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
 
                     </div>

@@ -42,7 +42,7 @@ var FilterByYear = React.createClass({
       );
     return(
       <div className="medium-3 columns">
-        <label>Select year</label>
+        <label>Funding Year</label>
         <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
           {listItems}
         </select>

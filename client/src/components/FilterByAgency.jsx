@@ -15,16 +15,15 @@ var FilterByAgency = React.createClass({
   handleChange: function(value){
     this.setState({
       value : value
+    } , () => {
+      var selectArr = [];
+      for(var i = 0; i < this.state.value.length; i++){
+          selectArr.push(JSON.stringify(this.state.value[i].value));
+      }
+      this.setState({
+        selectValue: selectArr
+      });
     });
-    var selectArr = [];
-    for(var i = 0; i < this.state.value.length; i++){
-      selectArr.push(this.state.value[i].value);
-    }
-    this.setState({
-      selectValue: selectArr
-    })
-    console.log(this.state.selectValue);
-    console.log(this.state.value);
   },
   createMetadata : function(data){
     var metadata = {};
@@ -50,18 +49,11 @@ var FilterByAgency = React.createClass({
         );
     return(
         <div>
-          <label>Select Agency</label>
-          <Select multi disabled={this.state.disabled} value={this.state.value} options={agencyNames} onChange={this.handleChange}  />
+          <label>Agency Filter</label>
+          <Select placeholder="Select Agency" multi disabled={this.state.disabled} value={this.state.value} options={agencyNames} onChange={this.handleChange}  />
           </div>
     )
   }
 })
 
 module.exports = FilterByAgency;
-// <div className="medium-3 columns">
-//   <label>Select Agency</label>
-// <select multiple={true} size="3" value={this.state.selectValue} onChange={this.handleChange}>
-//     {listItems}
-//   </select>
-//   <label>{message}</label>
-// </div>

@@ -1,57 +1,68 @@
 var React = require('react');
 var array = [];
+var Select = require('react-select');
 
 var FilterByPopulation = React.createClass({
   getInitialState:function(){
-    return {selectValue: []};
+    return {
+      value: [],
+      disabled : false,
+      selectValue: [],
+    };
   },
-  handleChange: function(e){
-    this.setState({selectValue: array});
-    var newSelection = JSON.stringify(e.target.value);
-    var isPresent = false;
-    var i;
-    for(i = 0; i < array.length; i++){
-      if(newSelection === array[i]){
-        isPresent = true;
-      }
-    }
-    if(!isPresent){
-      array.push(JSON.stringify(e.target.value));
-    }else{
-      var index = array.indexOf(JSON.stringify(e.target.value));
-      array.splice(index, 1);
-    }
-  },
+    handleChange: function(value) {
+      this.setState({
+        value : value
+      } , () => {
+        var selectArr = [];
+        for(var i = 0; i < this.state.value.length; i++){
+          selectArr.push(JSON.stringify(this.state.value[i].value));
+        }
+        this.setState({
+          selectValue: selectArr
+        });
+      });
+    },
 
-  createMetadata:function(data){
-    var metadata = {};
-    var pop = data.TargetPopulation;
-    var popArr = [];
-    for (var i =0; i< pop.length; i++){
-      if(popArr.includes(pop[i].population)){
-        //console.log("population true")
-      } else popArr.push(pop[i].population)
-    }
-    return popArr;
-  },
+    createMetadata: function(data) {
+        var metadata = {};
+        var pop = data.TargetPopulation;
+        var popArr = [];
+        for (var i = 0; i < pop.length; i++) {
+            var object = {
+                label: "",
+                value: ""
+            }
+            object.label = pop[i].population;
+            object.value = pop[i].population;
+            var isDup = false;
+            for(var j = 0; j < popArr.length; j++){
+              if(object.value == popArr[j].value){
+                isDup = true;
+                break;
+              }
+            }
+            if (isDup) {
+                //console.log("population true")
+            } else{
+              popArr.push(object);
+            }
+        }
+        return popArr;
+    },
 
-  render:function(){
-    var dataFromDash = this.props.data;
-    var message = 'FilterByPopulation: ' + this.state.selectValue;
-    var popArr = this.createMetadata(dataFromDash);
-    const listItems = popArr.map((population) =>
-      <option key={population} value={population} style={{margin:"2px"}}>{population}</option>
-      );
-    return(
-      <div className="medium-4 columns">
-        <label>Select population</label>
-      <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          {listItems}
-        </select>
-        <label>{message}</label>
-      </div>
-    )
-  }
+    render: function() {
+        var dataFromDash = this.props.data;
+        var message = 'FilterByPopulation: ' + this.state.selectValue;
+        var popArr = this.createMetadata(dataFromDash);
+
+        return (
+            <div>
+                <label>Target Population Filter</label>
+                <Select placeholder="Select Population" multi disabled={this.state.disabled} value={this.state.value} options={popArr} onChange={this.handleChange}/>
+            </div>
+        )
+    }
 })
 
 module.exports = FilterByPopulation;
