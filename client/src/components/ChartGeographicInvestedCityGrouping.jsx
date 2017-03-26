@@ -169,7 +169,6 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
     return metadata;
   },
   render() {
-<<<<<<< HEAD
     var dataFromDash = this.props.data;
     var title = "Geographic Distribution based on Money Invested with City Groupings:";
 
