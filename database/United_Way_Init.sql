@@ -154,7 +154,7 @@ CREATE TABLE Users (
 CREATE TABLE Log (
 	id integer NOT NULL AUTO_INCREMENT,
 	username varchar(32) NOT NULL,
-	action varchar(128) NOT NULL,
+	action varchar(4096) NOT NULL,
 	date_time varchar(128) NOT NULL,
 
 	PRIMARY KEY (id)
