@@ -1,38 +1,64 @@
 var React = require('react');
 var array = [];
+var Select = require('react-select');
 
 var FilterByYear = React.createClass({
   getInitialState:function(){
     return {
-      selectValue: []};
+      value: [],
+      disabled : false,
+      selectValue: [],
+    };
   },
-  handleChange: function(e){
-    this.setState({selectValue: array});
-    var newSelection = JSON.stringify(e.target.value);
-    var isPresent = false;
-    var i;
-    for(i = 0; i < array.length; i++){
-      if(newSelection === array[i]){
-        isPresent = true;
+  handleChange: function(value) {
+    this.setState({
+      value : value
+    } , () => {
+      var selectArr = [];
+      for(var i = 0; i < this.state.value.length; i++){
+        selectArr.push(JSON.stringify(this.state.value[i].value));
+      }
+      this.setState({
+        selectValue: selectArr
+      });
+    });
+  },
+  createMetadata : function(data){
+    var metadata = {};
+    var year = data.AndarDataOutput;
+    var yearArr = [];
+    for(var i =0; i< year.length; i++){
+      var object = {
+          label: "",
+          value: ""
+      }
+      object.label = year[i].grant_date.substring(0,4) + "/" +year[i].grant_end.substring(0,4);
+      object.value = year[i].grant_date.substring(0,4) + "/" +year[i].grant_end.substring(0,4);
+      var isDup = false;
+      for(var j = 0; j < yearArr.length; j++){
+        if(object.value == yearArr[j].value){
+          isDup = true;
+          break;
+        }
+      }
+      if(isDup){
+        //console.log("years already contained in array")
+      } else {
+        yearArr.push(object)
       }
     }
-    if(!isPresent){
-      array.push(JSON.stringify(e.target.value));
-    }
+  //  console.log( "years: " + yearArr);
+    return yearArr;
   },
 
-  render:
-  function(){
+  render: function(){
+    var dataFromDash = this.props.data;
     var message = 'FilterByYear: ' + this.state.selectValue;
+    var yearArr = this.createMetadata(dataFromDash);
     return(
-      <div className="medium-3 columns">
-        <label>Select year</label>
-        <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          <option value="2017/18">2017/18</option>
-          <option value="2016/17">2016/17</option>
-          <option value="2015/16">2015/16</option>
-        </select>
-        <label>{message}</label>
+      <div>
+          <label>Funding Year Filter</label>
+          <Select placeholder="Select Funding Year" multi disabled={this.state.disabled} value={this.state.value} options={yearArr} onChange={this.handleChange}/>
       </div>
     )
   },

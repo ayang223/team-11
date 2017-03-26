@@ -1137,6 +1137,95 @@ public class DatabaseHandler {
 
 		return outputs;
 	}
+
+	// Monitoring tool log
+	public static boolean insertLogEvent(String username, String action, String date_time) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO Log (username, action, date_time) VALUES (?, ?, ?)";
+		boolean success = true;
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, username);
+			stmt.setString(2, action);
+			stmt.setString(3, date_time);
+			int count = stmt.executeUpdate();
+			success = count > 0;
+		} catch (SQLException e) {
+			success = false;
+		} catch (ClassNotFoundException e) {
+			success = false;
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+		return success;
+	}
+
+	public static JsonArray getLogEvents() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Log ORDER BY id DESC LIMIT 25";
+		JsonArray logEvents = new JsonArray();
+
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject event = new JsonObject();
+				int id = rs.getInt("id");
+				String username = rs.getString("username");
+				String action = rs.getString("action");
+				String date_time = rs.getString("date_time");
+				event.addProperty("id", id);
+				event.addProperty("username", username);
+				event.addProperty("action", action);
+				event.addProperty("date_time", date_time);
+
+				logEvents.add(event);
+			}
+		} catch (SQLException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			logEvents.add(queryFailed);
+		} catch (ClassNotFoundException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			logEvents.add(queryFailed);
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return logEvents;
+	}
 	
 	// User Queries
 	public static boolean insertUser(String username, String password, String firstName, String lastName, boolean adminPrivileges) {

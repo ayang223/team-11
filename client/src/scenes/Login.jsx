@@ -7,6 +7,7 @@ import cookie from 'react-cookie';
 import sha256 from 'js-sha256';
 var {hashHistory} = require('react-router');
 var url = require('url');
+var $ = require('jQuery');
 
 var divStyle={
   padding: "10%"
@@ -18,6 +19,7 @@ var h1style={
   padding: "10px",
   textAlign: "center"
 }
+
 
 var Login = React.createClass({
   getDefaultProps: function () {
@@ -67,6 +69,9 @@ var Login = React.createClass({
                  window.alert("Failed to login, please check your username or passsword");
                }
             }.bind(this),
+            error:function(error){
+              window.alert("There is an error with the server, please contact an Administrator");
+            }
         });
   },
 
@@ -83,9 +88,10 @@ var Login = React.createClass({
       <div>
       <div className="centered" style={divStyle}>
       <h2 style={h1style}>Welcome! Please login to continue </h2>
-    
+
         <LoginForm onNewName={this.handleNewName}/>
       </div>
+
     </div>
     );
   }

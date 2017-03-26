@@ -2,6 +2,7 @@ package com.team11.backend;
 
 import com.google.gson.JsonObject;
 import com.team11.backend.DatabaseHandler;
+import com.team11.backend.LogEventHandler;
 
 /**
  * This class manages all users. 
@@ -27,10 +28,18 @@ public class UserManager {
 			return responseJson;
 		}
 		String user = requestJson.get(USER).getAsString();
+		String oldPassword = requestJson.get(OLD_PASSWORD).getAsString();
 		String newPassword = requestJson.get(NEW_PASSWORD).getAsString();
-		
-		boolean success = DatabaseHandler.changePassword(user, newPassword);
-		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
+
+		responseJson = DatabaseHandler.verifyUser(user, oldPassword);
+		if (responseJson.get("status").getAsString().equals("success")) {
+			boolean success = DatabaseHandler.changePassword(user, newPassword);
+			LogEventHandler.logChangePassword(user, success);
+			responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
+		} else {
+			LogEventHandler.logChangePassword(user, false);
+		}
+
 		return responseJson;
 	}
 
@@ -58,7 +67,11 @@ public class UserManager {
 			return responseJson;
 		}
 		String user = requestJson.get(USER).getAsString();
-		
+		if (user.toLowerCase().equals("main_admin")) {
+			responseJson = RequestHandler.getStatusFailed();
+			responseJson.addProperty("main_admin", true);
+			return responseJson;
+		}
 		boolean success = DatabaseHandler.deleteUser(user);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
