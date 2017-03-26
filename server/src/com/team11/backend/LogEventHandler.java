@@ -24,4 +24,16 @@ public class LogEventHandler {
 		}
 		return logSuccess;
 	}
+	
+	public static boolean logChangePassword(String username, boolean success) {
+		boolean logSuccess = true;
+
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+		if (success) {
+			logSuccess = DatabaseHandler.insertLogEvent(username, "Change Password Success", timeStamp);
+		} else {
+			logSuccess = DatabaseHandler.insertLogEvent(username, "Change Password Failed", timeStamp);
+		}
+		return logSuccess;
+	}
 }
