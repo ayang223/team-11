@@ -4,6 +4,7 @@ import {Table, Column, Cell} from 'fixed-data-table'
 var React = require('react');
 var TableExample = require('TableExample');
 var TableAdmin = require('TableAdmin');
+var TableLogEvents = require('TableLogEvents');
 var url = require('url');
 
 
@@ -58,8 +59,6 @@ var AccountForm = React.createClass({
       }
     })
   },
-
-
 
   render: function(){
     return(
@@ -188,18 +187,32 @@ var AdminPage = React.createClass({
       type: "POST",
       data: JSON.stringify({
         "action" : "List User"
-        }),
+      }),
       dataType:"json",
       success:function(data){
         console.log(data)
-        this.setState({
-          data: data
-        })
-        }.bind(this),
-        error:function(error){
-          console.log(error);
+        var getLogEvents = $.ajax({
+          url: url,
+          type: "POST",
+          data: JSON.stringify({
+            "action" : "List Logs"
+          }),
+          dataType: "json",
+          success: function(dataLogEvents) {
+            this.setState({
+              data: data,
+              dataLogEvents: dataLogEvents
+            })
+          }.bind(this),
+          error: function (error){
+            console.log(error);
           }
-          });
+        });
+      }.bind(this),
+      error:function(error){
+        console.log(error);
+      }
+    });
   },
 
   componentDidMount:function() {
@@ -228,7 +241,7 @@ var AdminPage = React.createClass({
       type: "POST",
       data: JSON.stringify({
         "action" : "List User"
-        }),
+      }),
       dataType:"json",
       success:function(data){
         this.setState({
@@ -245,14 +258,20 @@ var AdminPage = React.createClass({
     return(
      <div className="row">
        <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
+       <div>
        <h2>List of users: </h2>
        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
        <TableAdmin data={this.state.data} />
+       </div>
        <div>
        <AccountForm onNewAccount={this.handleNewAccount}/>
        </div>
        <div>
        <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
+       </div>
+       <div>
+       <h2>Recent actions: </h2>
+       <TableLogEvents data={this.state.dataLogEvents} />
        </div>
      </div>
       )
