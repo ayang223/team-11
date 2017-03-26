@@ -46,10 +46,7 @@ class Dashboard extends React.Component {
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
-        //console.log(filterByCity);
-        console.log(filterByFocusArea);
-        console.log(filterByElement);
-        //console.log(filterByAgency);
+
         // Take stuff out for Year
 
         // Take stuff out for City
@@ -343,13 +340,8 @@ class Dashboard extends React.Component {
                         <FilterByCity ref={filterbycity => { this._filterByCity = filterbycity}} data={this.state.data}/>
                         <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/>
                         <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
-                   </div>
-                    <br/>
-                    <div className="row">
-
-                        <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
-
-                    </div>
+                          <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
+                 </div>
 										<div className="row">
                       <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />
 											<FilterByElement ref={filterbyelement => { this._filterByElement = filterbyelement}} data={this.state.data}/>
