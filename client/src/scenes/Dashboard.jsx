@@ -73,12 +73,10 @@ class Dashboard extends React.Component {
         // Take stuff out for Year
         var filterByYearOn = true;
         var filterByYearIDs = [];
-        for(var i = 0; i < filteredData.AndarDataOutput.length; i++){
-          if(!$.isArray(filterByYear) || filterByYear.length == 0){
-            filterByYearOn = false;
-            break;
-          } else {
-            var isFiltered = false;
+        if(!$.isArray(filterByYear) || filterByYear.length == 0){
+          filterByYearOn = false;
+        } else {
+          for(var i = 0; i < filteredData.AndarDataOutput.length; i++){
             for(var j = 0; j < filterByYear.length; j++){
               if(JSON.stringify(filteredData.AndarDataOutput[i].grant_date.substring(0,4) + "/" + filteredData.AndarDataOutput[i].grant_end.substring(0,4))== filterByYear[j]){
                 if(!this.contains(filterByYearIDs, filteredData.AndarDataOutput[i].program_andar)){
@@ -117,42 +115,40 @@ class Dashboard extends React.Component {
         // Take stuff out for Invested
         var filterByInvestedOn = true;
         var filterByInvestedIDs = [];
-        for(var i = 0; i < filteredData.AndarDataOutput.length; i++){
-          if(!$.isArray(filterByInvested) || filterByInvested.length == 0){
-            filterByInvestedOn = false;
-            break;
+        if(!$.isArray(filterByInvested) || filterByInvested.length == 0){
+          filterByInvestedOn = false;
           } else {
-            var isFiltered = false;
-            for(var j = 0; j < filterByInvested.length; j++){
-             
-              if(filteredData.AndarDataOutput[i].yearly_allocation < 5000){
-                var _invested = "less than $5000";
-              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 5000 && filteredData.AndarDataOutput[i].yearly_allocation <= 10000){
-                var _invested = "5000-$10000";
-              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 10000 && filteredData.AndarDataOutput[i].yearly_allocation <= 50000){
-                var _invested = "$10000-$50000";
-              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 50000 && filteredData.AndarDataOutput[i].yearly_allocation <= 100000){
-                var _invested = "$50000-$100000"; 
-              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 100000 && filteredData.AndarDataOutput[i].yearly_allocation <= 250000){
-                var _invested = "$100000-$250000";
-              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 250000 && filteredData.AndarDataOutput[i].yearly_allocation <= 500000){
-                var _invested = "250000-$500000";
-              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 500000 && filteredData.AndarDataOutput[i].yearly_allocation<= 1000000){
-                var _invested = "$500000-$1000000"; 
-              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 1000000){
-                var _invested = "more than $1000000";
-              }
-              if(JSON.stringify(_invested) == filterByInvested[j]){
-                if(!this.contains(filterByInvestedIDs, filteredData.AndarDataOutput[i].program_andar)){
-                  filterByInvestedIDs.push(filteredData.AndarDataOutput[i].program_andar);
-                }break;
+            for(var i = 0; i < filteredData.AndarDataOutput.length; i++){
+              for(var j = 0; j < filterByInvested.length; j++){
+
+               if(filteredData.AndarDataOutput[i].yearly_allocation < 5000){
+                  var _invested = "less than $5000";
+                } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 5000 && filteredData.AndarDataOutput[i].yearly_allocation <= 10000){
+                  var _invested = "5000-$10000";
+                } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 10000 && filteredData.AndarDataOutput[i].yearly_allocation <= 50000){
+                  var _invested = "$10000-$50000";
+                } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 50000 && filteredData.AndarDataOutput[i].yearly_allocation <= 100000){
+                  var _invested = "$50000-$100000"; 
+                } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 100000 && filteredData.AndarDataOutput[i].yearly_allocation <= 250000){
+                  var _invested = "$100000-$250000";
+                } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 250000 && filteredData.AndarDataOutput[i].yearly_allocation <= 500000){
+                 var _invested = "250000-$500000";
+                } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 500000 && filteredData.AndarDataOutput[i].yearly_allocation<= 1000000){
+                  var _invested = "$500000-$1000000"; 
+                } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 1000000){
+                  var _invested = "more than $1000000";
+                }
+                if(JSON.stringify(_invested) == filterByInvested[j]){
+                  if(!this.contains(filterByInvestedIDs, filteredData.AndarDataOutput[i].program_andar)){
+                    filterByInvestedIDs.push(filteredData.AndarDataOutput[i].program_andar);
+                  }break;
+                }
               }
             }
+          } 
+          if(FilterByInvested){
+            filteredData = this.filterOutID(filteredData, filterByInvestedIDs);
           }
-        } 
-        if(FilterByInvested){
-          filteredData = this.filterOutID(filteredData, filterByInvestedIDs);
-        }
 
         // Take stuff out for Agency (Should only affect it's own table)
         var filterByAgencyOn = true;
@@ -303,22 +299,21 @@ class Dashboard extends React.Component {
         
         // Filter Agency
         for(var i = 0; i < data.Agency.length; i++){
-          var aggencyName = data.Agency.name;
-          if(!this.contains(filterIDs, aggencyName)){
-            var aggencyObject = JSON.stringify(data.Agency[i]);
-            var aggencyIndex = -1;
-            for(var j = 0 ; j < filteredData.Agency.length; j++){
-              if(JSON.stringify(filteredData.Agency[j]) == aggencyObject){
-                aggencyIndex = j;
+          var agencyName = data.Agency[i].name;
+          if(!this.contains(filterIDs, agencyName)){
+            var agencyObject = JSON.stringify(data.Agency[i].id)
+            var agencyIndex = -1;
+            for(var j = 0; j < filteredData.Program.length; j++){
+              if(JSON.stringify(filteredData.Program[j].id) == agencyObject){
+                agencyIndex = j;
                 break;
               }
             }
-            if (aggencyIndex > -1){
-              filteredData.Agency.splice(aggencyIndex, 1);
+            if(programIndex > -1){
+              filteredData.Program.splice(agencyIndex,1);
             }
           }
         }
-
 
         // Filter Program
         for(var i = 0; i < data.Program.length; i++) {
