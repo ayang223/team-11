@@ -29,6 +29,4 @@ public class LoginHandler {
 		LogEventHandler.logLogin(user, responseJson.get("status").getAsString());
 		return responseJson;
 	}
-	
-	//TODO: Add encoding and decoding in base64 to the current login method
 }

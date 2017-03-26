@@ -2,6 +2,7 @@ package com.team11.backend;
 
 import java.text.SimpleDateFormat;
 
+import com.google.gson.JsonObject;
 import com.team11.backend.DatabaseHandler;
 
 /**
@@ -35,5 +36,20 @@ public class LogEventHandler {
 			logSuccess = DatabaseHandler.insertLogEvent(username, "Change Password Failed", timeStamp);
 		}
 		return logSuccess;
+	}
+
+	public static JsonObject logFilter(JsonObject requestJson) {
+		JsonObject responseJson = new JsonObject();
+		if (!requestJson.has("user") || !requestJson.has("filters")) {
+			responseJson = RequestHandler.getStatusFailed();
+			return responseJson;
+		}
+		String user = requestJson.get("user").getAsString();
+		String filters = requestJson.get("filters").getAsString();
+
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+		boolean success = DatabaseHandler.insertLogEvent(user, "Filter: " + filters, timeStamp);
+		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
+		return responseJson;
 	}
 }
