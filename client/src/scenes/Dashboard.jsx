@@ -52,11 +52,10 @@ class Dashboard extends React.Component {
         // Take stuff out for City
         var filterByCityOn = true;
         var filterByCityIDs = [];
-        for (var i = 0; i < filteredData.Municipality.length; i++) {
-            if (!$.isArray(filterByCity) || filterByCity.length == 0) {
+        if (!$.isArray(filterByCity) || filterByCity.length == 0) {
                 filterByCityOn = false;
-                break;
-            } else {
+        } else {
+            for (var i = 0; i < filteredData.Municipality.length; i++) {
                 for(var j = 0; j < filterByCity.length; j++) {
                     if (JSON.stringify(filteredData.Municipality[i].municipality) == filterByCity[j]) {
                         if (!this.contains(filterByCityIDs, filteredData.Municipality[i].andar_id)) {
@@ -76,15 +75,43 @@ class Dashboard extends React.Component {
         // Take stuff out for Agency (Should only affect it's own table)
 
         // Take stuff out for Focus Area
+        var filterByFocusAreaOn = true;
+        var filterByFocusAreaIDs = [];
+        if (!$.isArray(filterByFocusArea) || filterByFocusArea.length == 0) {
+            filterByFocusAreaOn = false;
+        } else {
+            for (var i = 0; i < filteredData.AndarDataOutput.length; i++) {
+                for(var j = 0; j < filterByFocusArea.length; j++) {
+                    var focusAreaOutcome = filterByFocusArea[j].subFocus;
+                    if(!$.isArray(focusAreaOutcome) || focusAreaOutcome.length == 0) {
+                        if(JSON.stringify(filteredData.AndarDataOutput[i].focus) == filterByFocusArea[j].mainFocus) {
+                                if (!this.contains(filterByFocusAreaIDs, filteredData.AndarDataOutput[i].program_andar)) {
+                                    filterByFocusAreaIDs.push(filteredData.AndarDataOutput[i].program_andar);
+                                }
+                        }
+                    } else {
+                         for(var k = 0; k < focusAreaOutcome.length; k++) {
+                            if (JSON.stringify(filteredData.AndarDataOutput[i].outcome) == focusAreaOutcome[k]) {
+                                if (!this.contains(filterByFocusAreaIDs, filteredData.AndarDataOutput[i].program_andar)) {
+                                    filterByFocusAreaIDs.push(filteredData.AndarDataOutput[i].program_andar);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (filterByFocusAreaOn) {
+            filteredData = this.filterOutID(filteredData, filterByFocusAreaIDs);
+        }
 
         // Take stuff out for Population
         var filterByPopulationOn = true;
         var filterByPopulationIDs = [];
-        for (var i = 0; i < filteredData.TargetPopulation.length; i++) {
-            if (!$.isArray(filterByPopulation) || filterByPopulation.length == 0) {
+        if (!$.isArray(filterByPopulation) || filterByPopulation.length == 0) {
                 filterByPopulationOn = false;
-                break;
-            } else {
+        } else {
+            for (var i = 0; i < filteredData.TargetPopulation.length; i++) {
                 for(var j = 0; j < filterByPopulation.length; j++) {
                     if (JSON.stringify(filteredData.TargetPopulation[i].population) == filterByPopulation[j]) {
                         if (!this.contains(filterByPopulationIDs, filteredData.TargetPopulation[i].andar_id)) {
@@ -102,11 +129,10 @@ class Dashboard extends React.Component {
         // Take stuff out for Engagement
         var filterByEngagementOn = true;
         var filterByEngagementIDs = [];
-        for (var i = 0; i < filteredData.DonorEngagement.length; i++) {
-            if (!$.isArray(filterByEngagement) || filterByEngagement.length == 0) {
-                filterByEngagementOn = false;
-                break;
-            } else {
+        if (!$.isArray(filterByEngagement) || filterByEngagement.length == 0) {
+            filterByEngagementOn = false;
+        } else {
+            for (var i = 0; i < filteredData.DonorEngagement.length; i++) {
                 for(var j = 0; j < filterByEngagement.length; j++) {
                     if (JSON.stringify(filteredData.DonorEngagement[i].engagement) == filterByEngagement[j]) {
                         if (!this.contains(filterByEngagementIDs, filteredData.DonorEngagement[i].andar_id)) {
