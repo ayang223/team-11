@@ -24,15 +24,13 @@ var Import = React.createClass({
     },
 
     importProgram : function(e){
-      this.setState({
-        loading : 1,
-      });
+
       document.getElementById('errorOut').innerHTML = "";
       var file = document.getElementById('CSVUpload').files[0];
       if(file == null){
         alert("No file selected!");
         return null;
-      }
+      }else{
       console.log(file);
        var reader = new FileReader();
        reader.onload = function () {
@@ -67,19 +65,21 @@ var Import = React.createClass({
          };
        // start reading the file. When it is done, calls the onload event defined above.
        reader.readAsBinaryString(file);
+     }
       },
 
       importOutput : function(e){
         var _this = this;
-        this.setState({
-          loading : 1,
-        });
+
         document.getElementById('errorOut').innerHTML = "";
         var file = document.getElementById('CSVUpload').files[0];
         if(file == null){
           alert("No file selected!");
           return null;
-        }
+        }else{
+          this.setState({
+            loading : 1,
+          });
         console.log(file);
         var reader = new FileReader();
          reader.onload = function () {
@@ -112,6 +112,7 @@ var Import = React.createClass({
            };
          // start reading the file. When it is done, calls the onload event defined above.
          reader.readAsBinaryString(file);
+       }
         },
 
     render: function() {
@@ -131,7 +132,7 @@ var Import = React.createClass({
                  {this.state.loading == 1 &&
                  <div style={{width: "200px", height: "200px"}} dangerouslySetInnerHTML={{__html: loadingImg}}></div>
                }
-               </div>
+             </div>
                <br/><br/>
                  <br/><br/>
             </div>
