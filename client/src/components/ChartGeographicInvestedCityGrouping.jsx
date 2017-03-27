@@ -169,13 +169,13 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
     return metadata;
   },
   render() {
-    var title = "Geographic Distribution based on Money Invested with City Groupings";
+    var title = "Geographic Distribution based on Money Invested with City Groupings:";
 
     var metadata = this.createMetadata(this.state.data);
 
     return (
       <div className="large-6 columns">
-        <h4 style={{textAlign:"left"}}>{title}</h4><hr />
+        <h2 style={{textAlign:"left"}}>{title}</h2>
         <Pie data={metadata}/>
       </div>
     );

@@ -24,7 +24,7 @@ var TableAdmin=React.createClass({
       }
 
       if(currentUsername != null) {
-        row.push(currentUsername);
+        row.push(currentUsername);        
       } else {
         row.push("N/A");
       }
@@ -56,13 +56,12 @@ render() {
     var heightTotal = metadata.length*50 + 52
 
     return (
-      <div >
       <Table
-        rowHeight={38}
+        rowHeight={50}
         rowsCount={metadata.length}
-        width={900}
+        width={960}
         height={heightTotal}
-        headerHeight={38}>
+        headerHeight={50}>
         <Column
           header={<Cell>ID</Cell>}
           cell={({rowIndex, ...props}) => (
@@ -70,7 +69,7 @@ render() {
               {metadata[rowIndex][0]}
             </Cell>
           )}
-          width={225}
+          width={240}
         />
         <Column
           header={<Cell>Username</Cell>}
@@ -79,7 +78,7 @@ render() {
               {metadata[rowIndex][1]}
             </Cell>
           )}
-          width={225}
+          width={240}
         />
         <Column
           header={<Cell>First Name</Cell>}
@@ -88,7 +87,7 @@ render() {
               {metadata[rowIndex][2]}
             </Cell>
           )}
-          width={225}
+          width={240}
         />
         <Column
           header={<Cell>Last Name</Cell>}
@@ -97,10 +96,9 @@ render() {
               {metadata[rowIndex][3]}
             </Cell>
           )}
-          width={225}
+          width={240}
         />
       </Table>
-      </div>
     );
   }
 });

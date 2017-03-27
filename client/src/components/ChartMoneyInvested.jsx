@@ -52,12 +52,12 @@ var ChartMoneyInvested=React.createClass({
     return metadata;
   },
   render() {
-    var title = "Money Invested Bar Chart";
+    var title = "Money Invested Bar Chart:";
 
     var metadata = this.createMetadata(this.state.data);
     return (
       <div className="large-6 columns">
-        <h4 style={{textAlign:"left"}}>{title}</h4><hr />
+        <h2 style={{textAlign:"left"}}>{title}</h2>
         <HorizontalBar data={metadata}/>
         </div>
     );
