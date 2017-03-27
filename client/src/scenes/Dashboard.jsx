@@ -565,9 +565,12 @@ class Dashboard extends React.Component {
                         textAlign: "center"
                     }}>Dashboard Page</h2>
                     <br/>
+                    <div style={{
+                        border:'1px solid grey',
+                        borderRadius:30,
+                        borderWidth: 10,
+                        borderHeight:15}}>
                     <div className="row">
-
-
                         <FilterByInvested ref={filterbyinvested => { this._filterByInvested = filterbyinvested}} data={this.state.data}/>
 
                     </div>
@@ -589,7 +592,8 @@ class Dashboard extends React.Component {
 											<button className="button export" onClick={this.exportPDF} style={{
 													margin: "20px"
 											}}>Export PDF</button></div>
-                    <br/>
+                  </div>
+                    <br/><br/>
                     <div>
                         <Tabs forceRenderTabPanel={true}>
                             <TabList>
