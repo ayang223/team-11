@@ -1,6 +1,6 @@
 import sha256 from 'js-sha256';
 import 'fixed-data-table/dist/fixed-data-table.css';
-import {Table, Column, Cell} from 'fixed-data-table'
+import {Table, Column, Cell} from 'fixed-data-table';
 var React = require('react');
 var TableExample = require('TableExample');
 var TableAdmin = require('TableAdmin');
@@ -62,41 +62,46 @@ var AccountForm = React.createClass({
 
   render: function(){
     return(
-      <div className="row">
-      <h2> Create new account </h2>
+      <div style={{
+        width:1100,
+        height:400,
+        margin:20,
+        paddingLeft:130,
+        paddingRight:120}}>
       <form onFormAccount={this.onFormAccount}>
         <div className="row">
-        <div className="medium-6 columns">
-        <p> Username: </p>
+        <div className="medium-15 columns">
+        <h3> Create new account </h3>
+        <label> Username </label>
         <input type="text" ref="username" placeholder="Please enter username. "/>
         </div>
         </div>
         <div className="row">
-        <div className="medium-6 columns">
-        <p> Password: </p>
+        <div className="medium-15 columns">
+        <label> Password </label>
         <input type="password" ref ="password" placeholder="Please enter password." />
         </div>
         </div>
         <div className="row">
-        <div className="medium-6 columns">
-        <p> Verify password: </p>
+        <div className="medium-15 columns">
+        <label> Verify password </label>
         <input type="password" ref ="verifypassword" placeholder="Please re-enter password." />
         </div>
         </div>
         <div className="row">
-        <div className="medium-6 columns">
-        <p> First name: </p>
+        <div className="medium-15 columns">
+        <label> First name </label>
         <input type="text" ref ="fname" placeholder="Please enter first name." />
         </div>
         </div>
         <div className="row">
-        <div className="medium-6 columns">
-        <p> Last name: </p>
+        <div className="medium-15 columns">
+        <label> Last name </label>
         <input type="text" ref ="lname" placeholder="Please enter last name." />
         </div>
         </div>
         <div className="row">
-        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.createNewAccount}>Create account</button>
+        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40, float:"right"}} onClick={this.createNewAccount}>Create account</button>
         </div>
       </form>
       </div>
@@ -147,16 +152,17 @@ var DeleteUserForm = React.createClass({
 
   render:function(){
     return(
-      <div className="row">
-      <h2> Delete an User  </h2>
+      <div style={{width:1100,height:300,margin:30,paddingLeft:130,paddingRight:120}}>
+
       <form onDeleteUserForm={this.onDeleteUserForm}>
         <div className="row">
-        <div className="medium-6 columns">
-        <p> Username: </p>
+        <div className="medium-15 columns">
+          <h3> Delete an User </h3>
+        <label> Username </label>
         <input type="text" ref="username" placeholder="Please enter username. "/>
         </div>
         </div>
-         <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.deleteUser}>Delete user</button>
+         <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40,float:"right"}} onClick={this.deleteUser}>Delete user</button>
       </form>
       </div>
       )
@@ -255,25 +261,54 @@ var AdminPage = React.createClass({
   },
 
   render:function(){
+    var innerStyle = {
+      width:"1260px",
+      height:"1200px",
+      padding: 50,
+      margin: 7,
+      backgroundColor: "#D9DAE3",
+      color: "#474747",
+      display: "inline-block",
+      fontFamily: "sans-serif",
+      fontSize: "18",
+    };
+    var outerStyle ={
+      paddingLeft:240,
+      paddingRight:100,
+    };
     return(
-     <div className="row">
-       <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
-       <div>
-       <h2>List of users: </h2>
-       <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
-       <TableAdmin data={this.state.data} />
-       </div>
-       <div>
-       <AccountForm onNewAccount={this.handleNewAccount}/>
-       </div>
-       <div>
-       <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
-       </div>
-       <div>
-       <h2>Recent actions: </h2>
-       <TableLogEvents data={this.state.dataLogEvents} />
-       </div>
-     </div>
+        <div style={innerStyle}>
+          <h2 style={{margin:"10px", textAlign: "center"}} >Admin Page</h2>
+            <div style={{paddingLeft:130,paddingRight:120}}>
+                <h3>User lists </h3>
+                <TableAdmin data={this.state.data} />
+                <br/>
+                <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40, float:"right"}} onClick={this.refreshList}>Refresh List</button>
+                </div>
+                <div style={{textAlign:"left"}}>
+                  <AccountForm onNewAccount={this.handleNewAccount}/>
+                  <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
+                </div>
+        </div>
+
+    //  <div className="row">
+    //    <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
+    //    <div style={{divStyle}}>
+    //    <h2>User lists </h2>
+    //    <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
+    //    <TableAdmin data={this.state.data} />
+    //    </div>
+    //    <div>
+    //    <AccountForm onNewAccount={this.handleNewAccount}/>
+    //    </div>
+    //    <div>
+    //    <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
+    //    </div>
+    //    <div>
+    //    <h2>Recent actions: </h2>
+    //    <TableLogEvents data={this.state.dataLogEvents} />
+    //    </div>
+    //  </div>
       )
   }
 });
