@@ -47,7 +47,6 @@ class Dashboard extends React.Component {
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
-<<<<<<< HEAD
 
         var username = cookie.load('userID');
         var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
@@ -70,10 +69,6 @@ class Dashboard extends React.Component {
                }
             }.bind(this),
         });
-
-=======
- console.log(filteredData);
->>>>>>> finished filter for agency
         // Take stuff out for Year
         var filterByYearOn = true;
         var filterByYearIDs = [];
@@ -93,7 +88,6 @@ class Dashboard extends React.Component {
         if (filterByYearOn){
           filteredData = this.filterOutID(filteredData, filterByYearIDs);
         }
- console.log(filteredData);
         // Take stuff out for City
         var filterByCityOn = true;
         var filterByCityIDs = [];
@@ -115,11 +109,10 @@ class Dashboard extends React.Component {
         if (filterByCityOn) {
             filteredData = this.filterOutID(filteredData, filterByCityIDs);
         }
- console.log(filteredData);
+
         // Take stuff out for Invested
         var filterByInvestedOn = true;
         var filterByInvestedIDs = [];
-        console.log(filterByInvested);
         if(!$.isArray(filterByInvested) || filterByInvested.length == 0){
           filterByInvestedOn = false;
           } else {
@@ -154,9 +147,8 @@ class Dashboard extends React.Component {
           if(filterByInvestedOn){
             filteredData = this.filterOutID(filteredData, filterByInvestedIDs);
           }
-          console.log(filteredData);
-          console.log("string before agency");
-        // Take stuff out for Agency (Should only affect it's own table)
+
+        // Take stuff out for Agency 
         var filterByAgencyOn = true;
         var filterByAgencyIDs = [];
         if(!$.isArray(filterByAgency) || filterByAgency.length == 0){
@@ -165,16 +157,11 @@ class Dashboard extends React.Component {
           for(var i = 0; i < filteredData.Agency.length; i++){
             for(var j = 0; j < filterByAgency.length; j++){
 
-              if(JSON.stringify(filteredData.Agency[i].name) == filterByAgency[j]){ // find agency name that matches the one want to filter
-                // want to get andar id 
-                console.log("filteredData agency name match with selected filter");
-                for(k = 0; k < filteredData.Program.length; k++ ){ // go through program object
-                  console.log("programs: " + filteredData.Program.length);
+              if(JSON.stringify(filteredData.Agency[i].name) == filterByAgency[j]){
+                for(k = 0; k < filteredData.Program.length; k++ ){ 
                   if(JSON.stringify(filteredData.Agency[i].id) == filteredData.Program[k].agency_andar){
-                    console.log("agency id match with program agency id");
                     if(!this.contains(filterByAgencyIDs, filteredData.Program[k].id)){
-                      filterByAgencyIDs.push(filteredData.Program[k].id); // push matching id to array
-                      console.log(filterByInvestedIDs);
+                      filterByAgencyIDs.push(filteredData.Program[k].id); 
                       }
                       break;
                     }

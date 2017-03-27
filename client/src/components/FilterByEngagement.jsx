@@ -56,7 +56,7 @@ var FilterByEngagement = React.createClass({
     return(
       <div>
           <label>Engagement Filter</label>
-          <Select placeholder="Select Engagment" multi disabled={this.state.disabled} value={this.state.value} options={engagementArr} onChange={this.handleChange}/>
+          <Select placeholder="Select Engagement" multi disabled={this.state.disabled} value={this.state.value} options={engagementArr} onChange={this.handleChange}/>
       </div>
     )
   }

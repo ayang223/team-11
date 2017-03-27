@@ -148,7 +148,7 @@ var FilterByInvested = React.createClass({
         return (
           <div>
               <label>Investment Filter</label>
-              <Select placeholder="Select Invesment Range" multi disabled={this.state.disabled} value={this.state.value} options={investedFilterArr} onChange={this.handleChange}/>
+              <Select placeholder="Select Investment Range" multi disabled={this.state.disabled} value={this.state.value} options={investedFilterArr} onChange={this.handleChange}/>
           </div>
         )
     }
