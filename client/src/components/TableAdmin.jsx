@@ -99,7 +99,6 @@ render() {
           width={225}
         />
       </Table>
-      
     );
   }
 });
