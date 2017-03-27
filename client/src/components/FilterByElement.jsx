@@ -140,7 +140,7 @@ var FilterByElement = React.createClass({
         var listElements = this.createListings(elementArr);
         return (
             <div className="row" style={{margin:"10px", paddingTop: "50px"}}>
-              <label>Select Filters for Program Element:</label>
+              <label>Program Element Filter </label>
                   {listElements}
             </div>
         )

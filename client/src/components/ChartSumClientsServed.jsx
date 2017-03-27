@@ -76,13 +76,13 @@ var ChartSumClientsServed=React.createClass({
     return metadata;
   },
   render() {
-    var title = "Clients Served Chart:";
+    var title = "Clients Served Chart";
 
     var metadata = this.createMetadata(this.state.data);
 
     return (
       <div className="large-6 columns">
-        <h2 style={{textAlign:"left"}}>{title}</h2>
+        <h4 style={{textAlign: "center"}}>{title}</h4><hr />
         <Bar
             data={metadata}
             width={1400}

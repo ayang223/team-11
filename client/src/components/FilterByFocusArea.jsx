@@ -152,7 +152,7 @@ createMetadata:function(data){
 
     return(
       <div className="row" style={{margin:"10px", paddingTop: "50px"}}>
-        <label>Select Filters for Focus Area :</label>
+        <label>Focus Area Filter </label>
             {listFocus}
       </div>
     )

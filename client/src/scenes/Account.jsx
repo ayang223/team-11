@@ -49,36 +49,32 @@ var AccountForm = React.createClass({
 
      render: function(){
        var innerStyle = {
-         width:"900px",
-         height:"500px",
-         padding: 100,
-         margin: 7,
-         backgroundColor: "#D9DAE3",
+         width:"500px",
+         height:"600px",
+         padding: "50px",
+         backgroundColor: "#f0f0f5",
          color: "#474747",
          display: "inline-block",
          fontFamily: "sans-serif",
          fontSize: "18",
          textAlign: "left",
-       };
-       var outerStyle ={
-         paddingLeft:180,
-         paddingRight:100,
-         paddingTop:50,
+         boxShadow: "10px 10px 5px #888888"
        };
      return (
-       <div style={outerStyle} >
+       <div className="row">
        <div style={innerStyle}>
        <form onFormAccount={this.onFormAccount}>
          <div className="row">
-         <p> Old password </p>
+           <h4>Password Change</h4> <hr />
+         <p> Old password </p> <hr />
          <input type="password" ref="oldpassword" placeholder="Please enter your old password. "/>
          </div>
          <div className="row">
-         <p> New password </p>
+         <p> New password </p><hr />
          <input type="password" ref="newpassword" placeholder="Please enter your new password"/>
          </div>
          <div className="row">
-         <p> Verify new password </p>
+         <p> Verify new password </p><hr />
          <input type="password" ref="verifynewpassword" placeholder="Please re-enter your new password"/>
          </div>
          <br/>
@@ -124,7 +120,7 @@ var Account = React.createClass({
 
     return(
       <div>
-     <h2 style={{margin:"20px", textAlign: "center"}}>Account Page</h2>
+     <h2 style={{margin:"20px", textAlign: "center"}}>Account Page</h2> <hr />
      <AccountForm onNewAccount={this.handleNewAccount}/>
      </div>
     );

@@ -133,14 +133,16 @@ var Listing = React.createClass({
               <dl>
                 <dt>Program Description: </dt>
                 <dd>{programList[i].description}</dd>
+                  <dd>{programList[i].AndarDataOutput.description}</dd>
                   <dt>Program website: </dt>
                   <dd>{programList[i].website}</dd>
+                    <dt>Program Focus: </dt>
+                    <dd>{programList[i].AndarDataOutput.focus}</dd>
                     <dt>Program Elements: </dt>
                     <dd>{listElements}</dd>
                     <dt>Yearly Allocation: </dt>
                     <dd>${programList[i].AndarDataOutput.yearly_allocation}</dd>
-                    <dt>Program Focus: </dt>
-                    <dd>{programList[i].AndarDataOutput.focus}</dd>
+
               </dl>
               </div>
               <div className="large-6 column">
@@ -148,6 +150,7 @@ var Listing = React.createClass({
                     <MarkerGroup key={"polygon-test"} data={mapData} popupContent={popupContent} onClick={onPolygonClick} onCloseClick={onPolygonCloseClick} markerClass={"your-marker-css-class"}/>
                 </Map>
                 </div>
+                <hr />
             </div>
           );
         }
@@ -169,7 +172,10 @@ var Listing = React.createClass({
         const listPrograms = this.renderListings(programList);
 
         return (
-            <div className="row">
+            <div className="row"><h4 style={{
+                margin: "20px",
+                textAlign: "center"
+            }}>Listing Section</h4> <hr />
               {listPrograms}
             </div>
         )

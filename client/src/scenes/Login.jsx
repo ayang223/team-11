@@ -87,7 +87,7 @@ var Login = React.createClass({
     return (
       <div>
       <div className="centered" style={divStyle}>
-      <h2 style={h1style}>Welcome! Please login to continue </h2>
+      <h2 style={h1style}>Welcome! Please login to continue </h2> <hr />
 
         <LoginForm onNewName={this.handleNewName}/>
       </div>

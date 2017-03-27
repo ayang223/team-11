@@ -17,10 +17,10 @@ var LoginForm = React.createClass({
     render: function() {
       var innerStyle = {
         width:"500px",
-        height:"400px",
+        height:"450px",
         padding: 50,
         margin: 7,
-        backgroundColor: "#D9DAE3",
+        backgroundColor: "#f0f0f5",
         color: "#474747",
         display: "inline-block",
         fontFamily: "sans-serif",
@@ -39,13 +39,13 @@ var LoginForm = React.createClass({
                 <form onSubmit={this.onFormSubmit}>
                     <p style={{marginBottom:"10px"}}>
                         Username
-                    </p>
+                    </p><hr />
                     <div >
                         <input type="text" ref="username" placeholder="Enter username here"/>
                     </div>
                     <div >
                         <p style={{marginBottom:"15px"}}>Password
-                        </p>
+                        </p><hr />
                         <input type="password" ref="password" placeholder="Enter password here"/>
                         <p className="help-text" id="passwordHelpText">Forgot your password? Speak to an Administrator to retrieve your password</p>
                     </div>

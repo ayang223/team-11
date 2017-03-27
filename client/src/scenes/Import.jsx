@@ -118,7 +118,7 @@ var Import = React.createClass({
     render: function() {
         return (
             <div className="row" style={{padding: "10%"}}>
-              <h2 style={{margin:"20px", textAlign: "center"}}>Welcome to the Import Page!</h2>
+              <h2 style={{margin:"20px", textAlign: "center"}}>Welcome to the Import Page!</h2><hr />
               <p className="help-text" style={{margin:"20px", textAlign: "center"}}>You can import new Andar Data below. Please click the appropriate upload button depending on the data you are uploading</p>
                <form ref="uploadForm" className="uploader" encType="multipart/form-data" >
                    <input className="button success button" style={buttonStyle}  ref="file" id="CSVUpload" type="file" name="file" className="upload-file"/>
@@ -126,7 +126,7 @@ var Import = React.createClass({
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Program File" onClick={this.importProgram} />
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Output File" onClick={this.importOutput} />
                    <br/><br/>
-               </form>
+               </form> <hr />
                <h3 style={{margin: "20px"}}>Status of Upload:</h3>
                <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here
                  {this.state.loading == 1 &&

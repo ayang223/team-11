@@ -97,6 +97,12 @@ render() {
     var heightTotal = 152;
 
     return (
+      <div>
+      <h4 style={{
+          margin: "20px",
+          textAlign: "center"
+      }}>Table of Totals</h4><hr />
+    <div className="row"style={{padding: "50px"}}>
       <Table
         rowHeight={100}
         rowsCount = {1}
@@ -134,6 +140,8 @@ render() {
           align='center'
         />
       </Table>
+      </div>
+      </div>
     );
   }
 });

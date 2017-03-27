@@ -127,13 +127,13 @@ class Dashboard extends React.Component {
                 } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 10000 && filteredData.AndarDataOutput[i].yearly_allocation <= 50000){
                   var _invested = "$10000-$50000";
                 } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 50000 && filteredData.AndarDataOutput[i].yearly_allocation <= 100000){
-                  var _invested = "$50000-$100000"; 
+                  var _invested = "$50000-$100000";
                 } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 100000 && filteredData.AndarDataOutput[i].yearly_allocation <= 250000){
                   var _invested = "$100000-$250000";
                 } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 250000 && filteredData.AndarDataOutput[i].yearly_allocation <= 500000){
                  var _invested = "250000-$500000";
                 } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 500000 && filteredData.AndarDataOutput[i].yearly_allocation<= 1000000){
-                  var _invested = "$500000-$1000000"; 
+                  var _invested = "$500000-$1000000";
                 } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 1000000){
                   var _invested = "more than $1000000";
                 }
@@ -144,12 +144,12 @@ class Dashboard extends React.Component {
                 }
               }
             }
-          } 
+          }
           if(filterByInvestedOn){
             filteredData = this.filterOutID(filteredData, filterByInvestedIDs);
           }
 
-        // Take stuff out for Agency 
+        // Take stuff out for Agency
         var filterByAgencyOn = true;
         var filterByAgencyIDs = [];
         if(!$.isArray(filterByAgency) || filterByAgency.length == 0){
@@ -159,10 +159,10 @@ class Dashboard extends React.Component {
             for(var j = 0; j < filterByAgency.length; j++){
 
               if(JSON.stringify(filteredData.Agency[i].name) == filterByAgency[j]){
-                for(k = 0; k < filteredData.Program.length; k++ ){ 
+                for(k = 0; k < filteredData.Program.length; k++ ){
                   if(JSON.stringify(filteredData.Agency[i].id) == filteredData.Program[k].agency_andar){
                     if(!this.contains(filterByAgencyIDs, filteredData.Program[k].id)){
-                      filterByAgencyIDs.push(filteredData.Program[k].id); 
+                      filterByAgencyIDs.push(filteredData.Program[k].id);
                       }
                       break;
                     }
@@ -299,7 +299,7 @@ class Dashboard extends React.Component {
 
     filterOutID(data, filterIDs) {
         var filteredData = JSON.parse(JSON.stringify(data));
-        
+
         // Filter Agency
         for(var i = 0; i < data.Agency.length; i++){
           var agencyName = data.Agency[i].name;
@@ -563,7 +563,7 @@ class Dashboard extends React.Component {
                     <h2 style={{
                         margin: "20px",
                         textAlign: "center"
-                    }}>Dashboard Page</h2>
+                    }}>Dashboard Page</h2> <hr />
                     <br/>
                     <div className="row">
 
@@ -580,6 +580,7 @@ class Dashboard extends React.Component {
                  </div>
 										<div className="row">
                       <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />
+                      <hr />
 											<FilterByElement ref={filterbyelement => { this._filterByElement = filterbyelement}} data={this.state.data}/>
 										</div>
 										<div className="row">

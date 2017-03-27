@@ -62,8 +62,8 @@ var AccountForm = React.createClass({
 
   render: function(){
     return(
-      <div className="row">
-      <h2> Create new account </h2>
+      <div className="medium-6 columns">
+      <h4> Create new account </h4><hr />
       <form onFormAccount={this.onFormAccount}>
         <div className="row">
         <div className="medium-6 columns">
@@ -96,8 +96,10 @@ var AccountForm = React.createClass({
         </div>
         </div>
         <div className="row">
+          <div className="medium-6 columns">
         <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.createNewAccount}>Create account</button>
         </div>
+      </div>
       </form>
       </div>
       )
@@ -147,8 +149,8 @@ var DeleteUserForm = React.createClass({
 
   render:function(){
     return(
-      <div className="row">
-      <h2> Delete an User  </h2>
+      <div className="medium-6 columns">
+      <h4> Delete an User  </h4><hr />
       <form onDeleteUserForm={this.onDeleteUserForm}>
         <div className="row">
         <div className="medium-6 columns">
@@ -257,20 +259,18 @@ var AdminPage = React.createClass({
   render:function(){
     return(
      <div className="row">
-       <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2>
-       <div>
-       <h2>List of users: </h2>
+       <h2 style={{margin:"20px", textAlign: "center"}} >Admin Page</h2> <hr />
+       <div className="row" style={{padding : "50px"}}>
+       <h4>List of users: </h4><hr />
        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
        <TableAdmin data={this.state.data} />
        </div>
-       <div>
+       <div className="row">
        <AccountForm onNewAccount={this.handleNewAccount}/>
-       </div>
-       <div>
        <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
        </div>
-       <div>
-       <h2>Recent actions: </h2>
+       <div className="row" style={{padding: "50px"}}>
+       <h4>Recent actions: </h4> <hr />
        <TableLogEvents data={this.state.dataLogEvents} />
        </div>
      </div>
