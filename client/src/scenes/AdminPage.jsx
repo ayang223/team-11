@@ -297,9 +297,6 @@ var AdminPage = React.createClass({
                     <div style={{
                         width: "100%",
                         height: "100%",
-                        border: '1px solid Silver',
-                        borderWidth: 5,
-                        borderHeight: 5
                     }}>
                         <div style={{
                             padding: '50px',
@@ -334,9 +331,6 @@ var AdminPage = React.createClass({
                     <div style={{
                         width: "100%",
                         height: "100%",
-                        border: '1px solid Silver',
-                        borderWidth: 5,
-                        borderHeight: 5
                     }}>
                         <div style={{
                             padding: '50px'
