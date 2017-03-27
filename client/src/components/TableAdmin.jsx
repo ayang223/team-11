@@ -59,7 +59,7 @@ render() {
       <Table
         rowHeight={38}
         rowsCount={metadata.length}
-        width={920}
+        width={900}
         height={heightTotal}
         headerHeight={38}>
         <Column
@@ -69,7 +69,7 @@ render() {
               {metadata[rowIndex][0]}
             </Cell>
           )}
-          width={230}
+          width={225}
         />
         <Column
           header={<Cell>Username</Cell>}
@@ -78,7 +78,7 @@ render() {
               {metadata[rowIndex][1]}
             </Cell>
           )}
-          width={230}
+          width={225}
         />
         <Column
           header={<Cell>First Name</Cell>}
@@ -87,7 +87,7 @@ render() {
               {metadata[rowIndex][2]}
             </Cell>
           )}
-          width={230}
+          width={225}
         />
         <Column
           header={<Cell>Last Name</Cell>}
@@ -96,9 +96,10 @@ render() {
               {metadata[rowIndex][3]}
             </Cell>
           )}
-          width={230}
+          width={225}
         />
       </Table>
+      
     );
   }
 });

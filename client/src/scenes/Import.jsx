@@ -115,25 +115,52 @@ var Import = React.createClass({
         },
 
     render: function() {
+      var innerStyle = {
+        width:"1265px",
+        height:"1050px",
+        padding: 100,
+        margin: 7,
+        backgroundColor: "#D9DAE3",
+        color: "#474747",
+        display: "inline-block",
+        fontFamily: "sans-serif",
+        fontSize: "18",
+        textAlign: "left",
+      };
         return (
-            <div className="row" style={{padding: "10%"}}>
-              <h2 style={{margin:"20px", textAlign: "center"}}>Welcome to the Import Page!</h2>
-              <p className="help-text" style={{margin:"20px", textAlign: "center"}}>You can import new Andar Data below. Please click the appropriate upload button depending on the data you are uploading</p>
+          <div style={innerStyle}>
+          <h2 style={{margin:"5px", textAlign: "center"}}>Welcome to the Import Page!</h2>
+            <div className="row" style={{padding: "2%"}}>
+              <p className="help-text" style={{margin:"5px", textAlign: "center"}}>You can import new Andar Data below. Please click the appropriate upload button depending on the data you are uploading</p>
+              <div style={{
+              border:'1px solid grey',
+              borderRadius:30,
+              borderWidth: 10,
+              borderHeight:20}}>
                <form ref="uploadForm" className="uploader" encType="multipart/form-data" >
                    <input className="button success button" style={buttonStyle}  ref="file" id="CSVUpload" type="file" name="file" className="upload-file"/>
                    <p className="help-text" style={{marginLeft:"20px", textAlign: "left"}}> If this is the first time in the year that Andar data is uploaded, please upload the Output .csv file first before the Program. </p>
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Program File" onClick={this.importProgram} />
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Output File" onClick={this.importOutput} />
-                   <br/><br/>
                </form>
+                </div>
+                <br/><br/>
+                <div style={{
+                paddingTop:10,
+                border:'1px solid grey',
+                borderRadius:30,
+                borderWidth: 10,
+                borderHeight:300}}>
                <h3 style={{margin: "20px"}}>Status of Upload:</h3>
-               <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here
+               <div id="errorOut" style={{margin:"px"}}>Status of upload will be displayed here
                  {this.state.loading == 1 &&
                  <div style={{width: "200px", height: "200px"}} dangerouslySetInnerHTML={{__html: loadingImg}}></div>
                }
                </div>
                <br/><br/>
                  <br/><br/>
+                 </div>
+            </div>
             </div>
         );
     }

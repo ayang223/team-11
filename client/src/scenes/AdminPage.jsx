@@ -62,17 +62,21 @@ var AccountForm = React.createClass({
 
   render: function(){
     return(
+      <div style={{border:'1px solid grey',
+      borderRadius:30,
+      borderWidth: 10,
+      borderHeight:20}}>
       <div style={{
         width:1100,
-        height:400,
+        height:500,
         margin:20,
         paddingLeft:130,
-        paddingRight:120}}>
+        paddingRight:120 }}>
       <form onFormAccount={this.onFormAccount}>
         <div className="row">
         <div className="medium-15 columns">
         <h3> Create new account </h3>
-        <label> Username </label>
+        <label > Username </label>
         <input type="text" ref="username" placeholder="Please enter username. "/>
         </div>
         </div>
@@ -105,6 +109,7 @@ var AccountForm = React.createClass({
         </div>
       </form>
       </div>
+    </div>
       )
   }
 
@@ -152,7 +157,12 @@ var DeleteUserForm = React.createClass({
 
   render:function(){
     return(
-      <div style={{width:1100,height:300,margin:30,paddingLeft:130,paddingRight:120}}>
+      <div style={{
+          border:'1px solid grey',
+          borderRadius:30,
+          borderWidth: 10,
+          borderHeight:15}}>
+      <div style={{width:1100,height:200,margin:30,paddingLeft:130,paddingRight:120}}>
 
       <form onDeleteUserForm={this.onDeleteUserForm}>
         <div className="row">
@@ -165,6 +175,7 @@ var DeleteUserForm = React.createClass({
          <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40,float:"right"}} onClick={this.deleteUser}>Delete user</button>
       </form>
       </div>
+    </div>
       )
   }
 })
@@ -263,7 +274,7 @@ var AdminPage = React.createClass({
   render:function(){
     var innerStyle = {
       width:"1260px",
-      height:"1200px",
+      height:"1850px",
       padding: 50,
       margin: 7,
       backgroundColor: "#D9DAE3",
@@ -279,15 +290,40 @@ var AdminPage = React.createClass({
     return(
         <div style={innerStyle}>
           <h2 style={{margin:"10px", textAlign: "center"}} >Admin Page</h2>
-            <div style={{paddingLeft:130,paddingRight:120}}>
+          <br/><br/>
+            <div>
+              <div style={{
+              width:1163,
+              height:300,
+              border:'1px solid grey',
+              borderRadius:30,
+              borderWidth: 10,
+              borderHeight:20}}>
+                <div style={{paddingLeft:130,paddingRight:120,paddingTop:30,textAlign: "left"}}>
                 <h3>User lists </h3>
                 <TableAdmin data={this.state.data} />
-                <br/>
                 <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40, float:"right"}} onClick={this.refreshList}>Refresh List</button>
                 </div>
+                </div>
+                <br/>
+                <br/>
+            </div>
+                <br/>
                 <div style={{textAlign:"left"}}>
-                  <AccountForm onNewAccount={this.handleNewAccount}/>
-                  <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
+                  <AccountForm onNewAccount={this.handleNewAccount}/><br/><br/>
+                  <DeleteUserForm onDeleteUser={this.handleDeleteUser}/><br/><br/>
+                  <div style={{
+                  width:1163,
+                  height:300,
+                  border:'1px solid grey',
+                  borderRadius:30,
+                  borderWidth: 10,
+                  borderHeight:20}}>
+                       <div style={{paddingLeft:120,paddingRight:120,paddingTop:10}}>
+                         <h3>Recent actions </h3>
+                       <TableLogEvents data={this.state.dataLogEvents} />
+                       </div>
+                  </div>
                 </div>
         </div>
 
