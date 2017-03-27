@@ -71,6 +71,26 @@ class Dashboard extends React.Component {
         });
 
         // Take stuff out for Year
+        var filterByYearOn = true;
+        var filterByYearIDs = [];
+        for(var i = 0; i < filteredData.AndarDataOutput.length; i++){
+          if(!$.isArray(filterByYear) || filterByYear.length == 0){
+            filterByYearOn = false;
+            break;
+          } else {
+            var isFiltered = false;
+            for(var j = 0; j < filterByYear.length; j++){
+              if(JSON.stringify(filteredData.AndarDataOutput[i].grant_date.substring(0,4) + "/" + filteredData.AndarDataOutput[i].grant_end.substring(0,4))== filterByYear[j]){
+                if(!this.contains(filterByYearIDs, filteredData.AndarDataOutput[i].program_andar)){
+                  filterByYearIDs.push(filteredData.AndarDataOutput[i].program_andar);
+                } break;
+              }
+            }
+          }
+        }
+        if (filterByYearOn){
+          filteredData = this.filterOutID(filteredData, filterByYearIDs);
+        }
 
         // Take stuff out for City
         var filterByCityOn = true;
@@ -83,6 +103,7 @@ class Dashboard extends React.Component {
                     if (JSON.stringify(filteredData.Municipality[i].municipality) == filterByCity[j]) {
                         if (!this.contains(filterByCityIDs, filteredData.Municipality[i].andar_id)) {
                             filterByCityIDs.push(filteredData.Municipality[i].andar_id);
+
                         }
                         break;
                     }
@@ -94,8 +115,66 @@ class Dashboard extends React.Component {
         }
 
         // Take stuff out for Invested
+        var filterByInvestedOn = true;
+        var filterByInvestedIDs = [];
+        for(var i = 0; i < filteredData.AndarDataOutput.length; i++){
+          if(!$.isArray(filterByInvested) || filterByInvested.length == 0){
+            filterByInvestedOn = false;
+            break;
+          } else {
+            var isFiltered = false;
+            for(var j = 0; j < filterByInvested.length; j++){
+             
+              if(filteredData.AndarDataOutput[i].yearly_allocation < 5000){
+                var _invested = "less than $5000";
+              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 5000 && filteredData.AndarDataOutput[i].yearly_allocation <= 10000){
+                var _invested = "5000-$10000";
+              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 10000 && filteredData.AndarDataOutput[i].yearly_allocation <= 50000){
+                var _invested = "$10000-$50000";
+              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 50000 && filteredData.AndarDataOutput[i].yearly_allocation <= 100000){
+                var _invested = "$50000-$100000"; 
+              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 100000 && filteredData.AndarDataOutput[i].yearly_allocation <= 250000){
+                var _invested = "$100000-$250000";
+              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 250000 && filteredData.AndarDataOutput[i].yearly_allocation <= 500000){
+                var _invested = "250000-$500000";
+              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 500000 && filteredData.AndarDataOutput[i].yearly_allocation<= 1000000){
+                var _invested = "$500000-$1000000"; 
+              } else if (filteredData.AndarDataOutput[i].yearly_allocation >= 1000000){
+                var _invested = "more than $1000000";
+              }
+              if(JSON.stringify(_invested) == filterByInvested[j]){
+                if(!this.contains(filterByInvestedIDs, filteredData.AndarDataOutput[i].program_andar)){
+                  filterByInvestedIDs.push(filteredData.AndarDataOutput[i].program_andar);
+                }break;
+              }
+            }
+          }
+        } 
+        if(FilterByInvested){
+          filteredData = this.filterOutID(filteredData, filterByInvestedIDs);
+        }
 
         // Take stuff out for Agency (Should only affect it's own table)
+        var filterByAgencyOn = true;
+        var filterByAgencyIDs = [];
+        for(var i = 0; i < filteredData.Agency.length; i++){
+          if(!$.isArray(filterByAgency) || filterByAgency.length == 0){
+            filterByAgencyOn = false;
+            break;
+          } else{
+            var isfiltered = false;
+            for(var j = 0; j < filterByAgency.length; j++){
+              if(JSON.stringify(filteredData.Agency[i].name) == filterByAgency[j]){
+                if(!this.contains(filterByAgencyIDs, filteredData.Agency[i].id)){
+                  filterByAgencyIDs.push(filteredData.Agency[i].id);
+                }
+              }break;
+            }
+          }
+        }
+        if (filterByAgencyOn){
+          filteredData = this.filterOutID(filteredData, filterByAgencyIDs);
+        }
 
         // Take stuff out for Focus Area
         var filterByFocusAreaOn = true;
@@ -221,6 +300,25 @@ class Dashboard extends React.Component {
 
     filterOutID(data, filterIDs) {
         var filteredData = JSON.parse(JSON.stringify(data));
+        
+        // Filter Agency
+        for(var i = 0; i < data.Agency.length; i++){
+          var aggencyName = data.Agency.name;
+          if(!this.contains(filterIDs, aggencyName)){
+            var aggencyObject = JSON.stringify(data.Agency[i]);
+            var aggencyIndex = -1;
+            for(var j = 0 ; j < filteredData.Agency.length; j++){
+              if(JSON.stringify(filteredData.Agency[j]) == aggencyObject){
+                aggencyIndex = j;
+                break;
+              }
+            }
+            if (aggencyIndex > -1){
+              filteredData.Agency.splice(aggencyIndex, 1);
+            }
+          }
+        }
+
 
         // Filter Program
         for(var i = 0; i < data.Program.length; i++) {
