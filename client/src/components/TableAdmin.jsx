@@ -56,6 +56,7 @@ render() {
     var heightTotal = metadata.length*50 + 52
 
     return (
+      <div >
       <Table
         rowHeight={38}
         rowsCount={metadata.length}
@@ -99,6 +100,7 @@ render() {
           width={225}
         />
       </Table>
+      </div>
     );
   }
 });

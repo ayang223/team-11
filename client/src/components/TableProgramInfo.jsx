@@ -97,6 +97,7 @@ render() {
     var heightTotal = 152;
 
     return (
+      <div style={{padding: "50px"}}>
       <Table
         rowHeight={100}
         rowsCount = {1}
@@ -134,6 +135,7 @@ render() {
           align='center'
         />
       </Table>
+      </div>
     );
   }
 });
