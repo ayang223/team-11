@@ -145,7 +145,6 @@ class Dashboard extends React.Component {
               }
             }
           } 
-<<<<<<< HEAD
           if(filterByInvestedOn){
             filteredData = this.filterOutID(filteredData, filterByInvestedIDs);
           }
@@ -169,27 +168,6 @@ class Dashboard extends React.Component {
                     }
                 }
               }
-=======
-          if(FilterByInvested){
-            filteredData = this.filterOutID(filteredData, filterByInvestedIDs);
-          }
-
-        // Take stuff out for Agency (Should only affect it's own table)
-        var filterByAgencyOn = true;
-        var filterByAgencyIDs = [];
-        for(var i = 0; i < filteredData.Agency.length; i++){
-          if(!$.isArray(filterByAgency) || filterByAgency.length == 0){
-            filterByAgencyOn = false;
-            break;
-          } else{
-            var isfiltered = false;
-            for(var j = 0; j < filterByAgency.length; j++){
-              if(JSON.stringify(filteredData.Agency[i].name) == filterByAgency[j]){
-                if(!this.contains(filterByAgencyIDs, filteredData.Agency[i].id)){
-                  filterByAgencyIDs.push(filteredData.Agency[i].id);
-                }
-              }break;
->>>>>>> f72e1317db86b0ffe76a46c4546a2b9b880c3d93
             }
           }
         }
