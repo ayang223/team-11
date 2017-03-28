@@ -23,6 +23,7 @@ externals: {
     root: __dirname,
     alias: {
       //rename React componenets here for cleaner imports
+      jQuery: 'jquery',
       App: 'src/app.jsx',
       Nav: 'src/components/Nav.jsx',
       Main: 'src/scenes/Main.jsx',
