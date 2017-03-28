@@ -11,10 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.mysql.jdbc.Statement;
 import com.team11.backend.RequestHandler;
 
 import java.sql.PreparedStatement;
@@ -570,36 +570,41 @@ public class DatabaseHandler {
 		//String TurnOffSafeUpdates = "SET SQL_SAFE_UPDATES=0;";
 		//String TurnOnSafeUpdates = "SET SQL_SAFE_UPDATES=1;";
 		
-		String clearAndarData = "DELETE FROM united_way_andar_db.andardataoutput;";
-		String clearAreaDir = "DELETE FROM united_way_andar_db.areadirectory;";
-		String clearDonorEngagement = "DELETE FROM united_way_andar_db.donorengagement;";
-		String clearGeoArea = "DELETE FROM united_way_andar_db.geoarea;";
-		String clearMuncipality = "DELETE FROM united_way_andar_db.municipality;";
-		String clearOutput = "DELETE FROM united_way_andar_db.outputs;";
-		String clearProgramElement = "DELETE FROM united_way_andar_db.programelement;";
-		String clearProgramSubElement = "DELETE FROM united_way_andar_db.programsubelement;";
-		String clearTargetPop = "DELETE FROM united_way_andar_db.targetpopulation;";
+		String clearAndarData = "DELETE FROM AndarDataOutput";
+		String clearAreaDir = "DELETE FROM AreaDirectory";
+		String clearDonorEngagement = "DELETE FROM DonorEngagement";
+		String clearGeoArea = "DELETE FROM GeoArea";
+		String clearMuncipality = "DELETE FROM Municipality";
+		String clearOutput = "DELETE FROM Outputs";
+		String clearProgramElement = "DELETE FROM ProgramElement";
+		String clearProgramSubElement = "DELETE FROM ProgramSubElement";
+		String clearTargetPop = "DELETE FROM TargetPopulation";
 
-		String clearLocations = "DELETE FROM united_way_andar_db.location;";
-		String clearProgram = "DELETE FROM united_way_andar_db.program;";
-		String clearAgency = "DELETE FROM united_way_andar_db.agency;";
+		String clearLocations = "DELETE FROM Location";
+		String clearProgram = "DELETE FROM Program";
+		String clearAgency = "DELETE FROM Agency";
 
-		//Must be executed in this order
-		String sql =  clearLocations + clearProgram + clearAgency + clearTargetPop + clearProgramSubElement + clearProgramElement + clearOutput + clearMuncipality + clearGeoArea + clearDonorEngagement + clearAreaDir + clearAndarData;
 		Connection conn = null;
-		PreparedStatement stmt = null;
-		
+		Statement stmt = null;
+		ResultSet rs = null;
+
 		try {
 			conn = getConnection();
 
-			stmt = conn.prepareStatement(sql);
-
-			int count = stmt.executeUpdate();
-			if (count > 0){
-				return RequestHandler.getStatusSuccess();
-			} else {
-				return RequestHandler.getStatusFailed();
-			}
+			conn.createStatement().executeUpdate(clearLocations);
+			conn.createStatement().executeUpdate(clearProgram);
+			conn.createStatement().executeUpdate(clearAgency);
+			
+			conn.createStatement().executeUpdate(clearTargetPop);
+			conn.createStatement().executeUpdate(clearProgramSubElement);
+			conn.createStatement().executeUpdate(clearProgramElement);
+			conn.createStatement().executeUpdate(clearOutput);
+			conn.createStatement().executeUpdate(clearMuncipality);
+			conn.createStatement().executeUpdate(clearDonorEngagement);
+			conn.createStatement().executeUpdate(clearAreaDir);
+			conn.createStatement().executeUpdate(clearAndarData);
+			
+			return RequestHandler.getStatusSuccess();
 		} catch (SQLException e) {
 			System.out.println(e);
 			return RequestHandler.getStatusFailed();

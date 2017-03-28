@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.team11.backend.DashboardLogic;
 import com.team11.backend.LoginHandler;
 import com.team11.backend.UserManager;
+import com.team11.backend.DatabaseHandler;
 
 /**
  * This class takes a request and does the required actions
