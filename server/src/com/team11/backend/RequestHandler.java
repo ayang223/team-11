@@ -21,6 +21,8 @@ public class RequestHandler {
 	private static final String LIST_LOGS = "List Logs";
 	private static final String LOGIN_USER = "Login User";
 	private static final String LOG_FILTER = "Log Filter";
+	//private static final String DELETE_DATA = "Delete Data";
+	private static final String CLEAR_DATABASE = "Clear Database";
 
 	public RequestHandler() {
 
@@ -51,6 +53,9 @@ public class RequestHandler {
 			break;
 		case IMPORT_PROGRAMS:
 			responseJson = DashboardLogic.importPrograms(requestJson);
+			break;
+		case CLEAR_DATABASE:
+			responseJson = DatabaseHandler.clearDatabase();
 			break;
 		case LIST_USER:
 			responseJson = UserManager.listUser(requestJson);

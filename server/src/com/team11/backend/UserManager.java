@@ -16,6 +16,7 @@ public class UserManager {
 	private static final String FIRST_NAME = "first_name";
 	private static final String LAST_NAME = "last_name";
 	private static final String ADMIN_PRIVILEGES = "admin_privileges";
+	private static final String DELETION_PROTECTED = "deleteion_protected";
 
 	public UserManager() {
 
@@ -66,12 +67,14 @@ public class UserManager {
 			responseJson = RequestHandler.getStatusFailed();
 			return responseJson;
 		}
-		String user = requestJson.get(USER).getAsString();
-		if (user.toLowerCase().equals("main_admin")) {
+		boolean deletion_protected = requestJson.get(DELETION_PROTECTED).getAsBoolean();
+		if (deletion_protected) {
 			responseJson = RequestHandler.getStatusFailed();
-			responseJson.addProperty("main_admin", true);
+			responseJson.addProperty("DELETION_PROTECTED", true);
 			return responseJson;
 		}
+		
+		String user = requestJson.get(USER).getAsString();
 		boolean success = DatabaseHandler.deleteUser(user);
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;

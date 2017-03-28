@@ -564,6 +564,67 @@ public class DatabaseHandler {
 		return success;
 	}
 	
+	// Clear the database
+	public static JsonObject clearDatabase() {
+
+		//String TurnOffSafeUpdates = "SET SQL_SAFE_UPDATES=0;";
+		//String TurnOnSafeUpdates = "SET SQL_SAFE_UPDATES=1;";
+		
+		String clearAndarData = "DELETE FROM united_way_andar_db.andardataoutput;";
+		String clearAreaDir = "DELETE FROM united_way_andar_db.areadirectory;";
+		String clearDonorEngagement = "DELETE FROM united_way_andar_db.donorengagement;";
+		String clearGeoArea = "DELETE FROM united_way_andar_db.geoarea;";
+		String clearMuncipality = "DELETE FROM united_way_andar_db.municipality;";
+		String clearOutput = "DELETE FROM united_way_andar_db.outputs;";
+		String clearProgramElement = "DELETE FROM united_way_andar_db.programelement;";
+		String clearProgramSubElement = "DELETE FROM united_way_andar_db.programsubelement;";
+		String clearTargetPop = "DELETE FROM united_way_andar_db.targetpopulation;";
+
+		String clearLocations = "DELETE FROM united_way_andar_db.location;";
+		String clearProgram = "DELETE FROM united_way_andar_db.program;";
+		String clearAgency = "DELETE FROM united_way_andar_db.agency;";
+
+		//Must be executed in this order
+		String sql =  clearLocations + clearProgram + clearAgency + clearTargetPop + clearProgramSubElement + clearProgramElement + clearOutput + clearMuncipality + clearGeoArea + clearDonorEngagement + clearAreaDir + clearAndarData;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+
+			int count = stmt.executeUpdate();
+			if (count > 0){
+				return RequestHandler.getStatusSuccess();
+			} else {
+				return RequestHandler.getStatusFailed();
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			return RequestHandler.getStatusFailed();
+		} catch (ClassNotFoundException e) {
+			System.out.println(e);
+			return RequestHandler.getStatusFailed();
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+	}
+	
+	
 	// Get Dashboard Queries
 	
 	public static JsonArray getProgram() {

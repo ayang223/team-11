@@ -128,7 +128,7 @@ CREATE TABLE Location (
 	id integer NOT NULL AUTO_INCREMENT,
 	andar_id integer NOT NULL,
 	name varchar(128),
-	postal varchar(8), 
+	postal varchar(8),
 	lat double,
 	lon double,
 
@@ -147,7 +147,8 @@ CREATE TABLE Users (
 	first_name varchar(32),
 	last_name varchar(32),
 	admin_privileges boolean NOT NULL,
-	
+	delete_protected boolean DEFAULT FALSE,
+
 	PRIMARY KEY (id)
 );
 
@@ -162,5 +163,8 @@ CREATE TABLE Log (
 
 /* Initialization of main administrator account*/
 INSERT INTO Users
-VALUES (0, 'Main_Admin', '0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605', NULL, NULL, TRUE);
+VALUES (1, 'Main_Admin', '0d6e4079e36703ebd37c00722f5891d28b0e2811dc114b129215123adcce3605', NULL, NULL, TRUE, TRUE);
 
+/* Initialization of test account*/
+INSERT INTO Users
+VALUES (2, 'GENERIC_TEST', '676d4d3a2be65235d45ac3ac491476bf1c4ff1d35a68173384e5a13add28adfe', 'GENERIC_NAME', 'GENERIC_LAST_NAME', TRUE, TRUE);

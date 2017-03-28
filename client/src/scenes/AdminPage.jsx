@@ -256,6 +256,28 @@ var AdminPage = React.createClass({
     });
   },
 
+  clearDatabase: function() {
+    $.ajax({
+      url:url,
+      type: "POST",
+      data: JSON.stringify({
+        "action" : "Clear Database"
+      }),
+      dataType:"json",
+      success:function(data){
+        if(data.status === "failed"){
+          alert("Failed to clear database");
+        } else {
+          alert("Success! Database has been cleared");
+        }
+      }.bind(this),
+      error:function(error){
+        console.log(error);
+        alert("Failed to clear database");
+      }
+    })
+  },
+
   render:function(){
     return(
      <div className="row">
@@ -272,6 +294,10 @@ var AdminPage = React.createClass({
        <div className="row" style={{padding: "50px"}}>
        <h4>Recent actions: </h4> <hr />
        <TableLogEvents data={this.state.dataLogEvents} />
+       </div>
+       <div className="row" style={{padding : "50px"}}>
+       <h4>Manage database: </h4><hr />
+       <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.clearDatabase}>Clear Database</button>
        </div>
      </div>
       )
