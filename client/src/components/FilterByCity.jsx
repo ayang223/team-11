@@ -37,7 +37,7 @@ var FilterByCity = React.createClass({
       object.value = city[i].municipality;
       var isDup = false;
       for(var j = 0; j < cityArr.length; j++){
-        if(object.value == cityArr[j].municipality){
+        if(object.value == cityArr[j].value){
           isDup = true;
           break;
         }

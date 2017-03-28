@@ -58,7 +58,7 @@ var Import = React.createClass({
                  }.bind(this),
                  error:function(error){
                    console.log(error);
-                     document.getElementById('errorOut').innerHTML = "Upload Failed";
+                   document.getElementById('errorOut').innerHTML = "Upload Failed";
                }
              });
 
@@ -106,6 +106,7 @@ var Import = React.createClass({
                    }.bind(this),
                    error:function(error){
                      console.log(error);
+                    document.getElementById('errorOut').innerHTML = "Upload Failed";
                  }
                });
 
