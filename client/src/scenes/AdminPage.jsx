@@ -52,10 +52,8 @@ var AccountForm = React.createClass({
         }else{
           alert("Success! New User has been created");
         }
-        console.log(data)
       }.bind(this),
       error:function(error){
-        console.log(error);
       }
     })
   },
@@ -129,7 +127,7 @@ var DeleteUserForm = React.createClass({
         "user" : username
       }),
       success:function(data){
-        console.log(data);
+         (data);
         if (data.status === "failed") {
           if (data.main_admin) {
             alert("User cannot be deleted");
@@ -141,7 +139,7 @@ var DeleteUserForm = React.createClass({
         }
       }.bind(this),
       error:function(error){
-        console.log(error);
+         (error);
         alert("User delete failed");
       }
     })
@@ -183,7 +181,6 @@ var AdminPage = React.createClass({
 
   componentWillMount:function() {
     var _this = this;
-    console.log("compnenet will mount")
     var getUsers = $.ajax({
       url:url,
       type: "POST",
@@ -192,7 +189,6 @@ var AdminPage = React.createClass({
       }),
       dataType:"json",
       success:function(data){
-        console.log(data)
         var getLogEvents = $.ajax({
           url: url,
           type: "POST",
@@ -207,18 +203,15 @@ var AdminPage = React.createClass({
             })
           }.bind(this),
           error: function (error){
-            console.log(error);
           }
         });
       }.bind(this),
       error:function(error){
-        console.log(error);
       }
     });
   },
 
   componentDidMount:function() {
-    console.log("Component did mount")
   },
 
   handleNewAccount:function(username, password, verifypassword, fname, lname){
@@ -251,7 +244,6 @@ var AdminPage = React.createClass({
         })
       }.bind(this),
       error:function(error){
-        console.log(error);
       }
     });
   },
@@ -272,7 +264,6 @@ var AdminPage = React.createClass({
         }
       }.bind(this),
       error:function(error){
-        console.log(error);
         alert("Failed to clear database");
       }
     })

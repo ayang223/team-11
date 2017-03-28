@@ -6,8 +6,6 @@ import {Table, Column, Cell} from 'fixed-data-table';
 var TableLogEvents = React.createClass({
   createLogList: function(data) {
     var metadata = [];
-    console.log('xDDDD');
-    console.log(data);
     var logEvents = null;
     if (data && data["Log Events"]) {
       logEvents = data["Log Events"];
