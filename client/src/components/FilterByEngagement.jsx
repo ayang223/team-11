@@ -1,26 +1,27 @@
 var React = require('react');
 var array = [];
+var Select = require('react-select');
 
 var FilterByEngagement = React.createClass({
   getInitialState:function(){
-    return {selectValue:[]};
+    return {
+      value: [],
+      disabled : false,
+      selectValue: [],
+    };
   },
-  handleChange: function(e){
-    this.setState({selectValue: array});
-    var newSelection = JSON.stringify(e.target.value);
-    var isPresent = false;
-    var i;
-    for(i = 0; i < array.length; i++){
-      if(newSelection === array[i]){
-        isPresent = true;
+  handleChange: function(value){
+    this.setState({
+      value : value
+    } , () => {
+      var selectArr = [];
+      for(var i = 0; i < this.state.value.length; i++){
+          selectArr.push(JSON.stringify(this.state.value[i].value));
       }
-    }
-    if(!isPresent){
-      array.push(JSON.stringify(e.target.value));
-    }else{
-      var index = array.indexOf(JSON.stringify(e.target.value));
-      array.splice(index, 1);
-    }
+      this.setState({
+        selectValue: selectArr
+      });
+    });
   },
 
   createMetadata:function(data){
@@ -28,9 +29,22 @@ var FilterByEngagement = React.createClass({
     var donorEngagement = data.DonorEngagement;
     var engagementArr = [];
     for (var i =0; i< donorEngagement.length; i++){
-      if(engagementArr.includes(donorEngagement[i].engagement)){
-        console.log("engagement true")
-      } else engagementArr.push(donorEngagement[i].engagement)
+      var object = {
+        label : "",
+        value: ""
+      }
+      object.label = donorEngagement[i].engagement;
+      object.value = donorEngagement[i].engagement;
+      var isDup = false;
+      for(var j = 0; j < engagementArr.length; j++){
+        if(object.value == engagementArr[j].value){
+          isDup = true;
+          break;
+        }
+      }
+      if(isDup){
+        //console.log("engagement true")
+      } else engagementArr.push(object)
     }
     return engagementArr;
   },
@@ -39,16 +53,10 @@ var FilterByEngagement = React.createClass({
     var dataFromDash = this.props.data;
     var message = 'FilterByEngagement: ' + this.state.selectValue;
     var engagementArr = this.createMetadata(dataFromDash);
-    const listItems = engagementArr.map((engagement) =>
-      <option key={engagement} value={engagement} style={{margin:"2px"}}>{engagement}</option>
-      );
     return(
-      <div className="medium-3 columns">
-        <label>Select engagement</label>
-      <select multiple={{true}} size="3" value={[]} onChange={this.handleChange}>
-          {listItems}
-        </select>
-        <label>{message}</label>
+      <div>
+          <label>Engagement Filter</label>
+          <Select placeholder="Select Engagement" multi disabled={this.state.disabled} value={this.state.value} options={engagementArr} onChange={this.handleChange}/>
       </div>
     )
   }

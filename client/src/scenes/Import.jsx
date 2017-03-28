@@ -2,22 +2,35 @@ var React = require('react');
 var Baby = require('babyparse');
 var url = require('url');
 var {hashHistory} = require('react-router');
+var loadingImg = require('public/pie.svg');
+var $ = require('jQuery');
 var buttonStyle={
   margin : "20px",
   align: "center"
 }
 
+var loading={
+  width: "200px",
+  height: "200px"
+}
+
 
 
 var Import = React.createClass({
+    getInitialState: function(){
+      return{
+        loading: 0,
+      }
+    },
 
     importProgram : function(e){
-      document.getElementById('errorOut').innerHTML = "Currently uploading your data.... Please wait";
+
+      document.getElementById('errorOut').innerHTML = "";
       var file = document.getElementById('CSVUpload').files[0];
       if(file == null){
         alert("No file selected!");
         return null;
-      }
+      }else{
       console.log(file);
        var reader = new FileReader();
        reader.onload = function () {
@@ -45,21 +58,28 @@ var Import = React.createClass({
                  }.bind(this),
                  error:function(error){
                    console.log(error);
+                     document.getElementById('errorOut').innerHTML = "Upload Failed";
                }
              });
 
          };
        // start reading the file. When it is done, calls the onload event defined above.
        reader.readAsBinaryString(file);
+     }
       },
 
       importOutput : function(e){
-        document.getElementById('errorOut').innerHTML = "Currently uploading your data.... Please wait";
+        var _this = this;
+
+        document.getElementById('errorOut').innerHTML = "";
         var file = document.getElementById('CSVUpload').files[0];
         if(file == null){
           alert("No file selected!");
           return null;
-        }
+        }else{
+          this.setState({
+            loading : 1,
+          });
         console.log(file);
         var reader = new FileReader();
          reader.onload = function () {
@@ -92,6 +112,7 @@ var Import = React.createClass({
            };
          // start reading the file. When it is done, calls the onload event defined above.
          reader.readAsBinaryString(file);
+       }
         },
 
     render: function() {
@@ -106,8 +127,12 @@ var Import = React.createClass({
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Output File" onClick={this.importOutput} />
                    <br/><br/>
                </form>
-               <h3 style={{margin: "20px"}}>Status of Upload</h3>
-               <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here</div>
+               <h3 style={{margin: "20px"}}>Status of Upload:</h3>
+               <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here
+                 {this.state.loading == 1 &&
+                 <div style={{width: "200px", height: "200px"}} dangerouslySetInnerHTML={{__html: loadingImg}}></div>
+               }
+             </div>
                <br/><br/>
                  <br/><br/>
             </div>

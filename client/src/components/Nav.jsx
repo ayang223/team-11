@@ -22,7 +22,6 @@ var activeItem =  {
   color: 'Black', fontWeight: 'bold'
 }
 
-
 var isLoggedIn = true;
 var isAdmin = true;
  function checkLogin(){
@@ -55,7 +54,8 @@ var isAdmin = true;
          <div className="top-bar" style={navStyle}>
            <div className="top-bar-left">
              <ul className="menu" style={eachItem}>
-             <li className="menu-text">Andar Data Analytics</li>
+             <li className="menu-text">
+               Andar Data Analytics</li>
               <li>
                   <Link  style={eachItem} to="/import" activeClassName="active" activeStyle={activeItem}>Import</Link>
               </li>

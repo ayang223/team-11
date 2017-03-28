@@ -1,33 +1,40 @@
 var React = require('react');
 var array = [];
+var Select = require('react-select');
 
 var FilterByAgency = React.createClass({
   getInitialState:function(){
-    return {selectValue: [] };
+    return {
+      value: [],
+      disabled : false,
+      selectValue: [],
+    };
   },
-  handleChange: function(e){
-    this.setState({selectValue: array});
-    var newSelection = JSON.stringify(e.target.value);
-    var isPresent = false;
-    var i;
-    for(i = 0; i < array.length; i++){
-      if(newSelection === array[i]){
-        isPresent = true;
+  handleChange: function(value){
+    this.setState({
+      value : value
+    } , () => {
+      var selectArr = [];
+      for(var i = 0; i < this.state.value.length; i++){
+          selectArr.push(JSON.stringify(this.state.value[i].value));
       }
-    }
-    if(!isPresent){
-      array.push(JSON.stringify(e.target.value));
-    }else{
-      var index = array.indexOf(JSON.stringify(e.target.value));
-      array.splice(index, 1);
-    }
+      this.setState({
+        selectValue: selectArr
+      });
+    });
   },
   createMetadata : function(data){
     var metadata = {};
     var agency = data.Agency;
     var agencyNames = [];
     for(var i =0; i< agency.length; i++){
-      agencyNames.push(agency[i].name)
+      var object = {
+        label : "",
+        value: ""
+      }
+      object.label = agency[i].name;
+      object.value = agency[i].name;
+      agencyNames.push(object);
     }
     return agencyNames;
   },
@@ -39,13 +46,10 @@ var FilterByAgency = React.createClass({
           <option key={name} value={name} style={{margin:"2px"}}>{name}</option>
         );
     return(
-      <div className="medium-3 columns">
-        <label>Select Agency</label>
-      <select multiple={true} size="3" value={this.state.selectValue} onChange={this.handleChange}>
-          {listItems}
-        </select>
-        <label>{message}</label>
-      </div>
+        <div>
+          <label>Agency Filter</label>
+          <Select placeholder="Select Agency" multi disabled={this.state.disabled} value={this.state.value} options={agencyNames} onChange={this.handleChange}  />
+          </div>
     )
   }
 })

@@ -46,7 +46,7 @@ public class DashboardLogic {
 		ArrayList<String> headers = new ArrayList<String>();
 		itemJson = arrayJson.get(0).getAsJsonArray();
 		
-		for (int column = 0; column < itemJson.size()-1; column++) {
+		for (int column = 0; column < itemJson.size(); column++) {
 			String fieldHeader = itemJson.get(column).getAsString();
 			headers.add(fieldHeader);
 		}
@@ -126,7 +126,9 @@ public class DashboardLogic {
 				if (dataCategory.equals("Program Elements")) {
 					
 					while (!temp.equals("100") && !temp.equals("200") && !temp.equals("300") && dataCategory.equals("Program Elements")){
-						success = DatabaseHandler.insertProgramSubElement(programAndar, programCategory, header);
+						if (!temp.isEmpty()) {
+							success = DatabaseHandler.insertProgramSubElement(programAndar, programCategory, header);
+						}
 						if (!success) {
 							return RequestHandler.getStatusFailed();
 						}

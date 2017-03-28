@@ -16,15 +16,7 @@ var scaleExtent = [
 ]
 var scale = 100000 * 5;
 var center = [-123.1022025, 49.2823492];
-var rawJson = {
-    "type": "Topology",
-    "objects": {
-        "places": {
-            "type": "GeometryCollection",
-            "geometries": []
-        }
-    }
-}
+
 var popupContent = function(d) {
     return d.properties.name
 }
@@ -40,14 +32,21 @@ var D3Map = React.createClass({
     getInitialState: function() {
         return {
             scale: 100000 * 5,
-            mapData: {},
-            loading: true,
             data: this.props.data
         }
     },
-    componentWillMount: function() {
+    createMaps: function(data) {
+      var rawJson = {
+          "type": "Topology",
+          "objects": {
+              "places": {
+                  "type": "GeometryCollection",
+                  "geometries": []
+              }
+          }
+      }
         var _this = this;
-        var dashData = this.props.data;
+        var dashData = data;
         var topoData;
         for (var i = 0; i < dashData.Location.length; i++) {
             //this.psToCoor(dashData.Location[i].postal, i, dashData.Location[i].name);
@@ -66,7 +65,7 @@ var D3Map = React.createClass({
             }
         }
         topoData = topojson.feature(rawJson, rawJson.objects.places);
-        _this.setState({mapData: topoData, loading: false});
+        return topoData;
     },
     zoomOut: function() {
         this.setState({
@@ -79,11 +78,11 @@ var D3Map = React.createClass({
         })
     },
     render() {
+        var mapData = this.createMaps(this.state.data);
         var zoomIn = this.zoomIn;
         var zoomOut = this.zoomOut;
         var styleContainer = {
             position: 'relative',
-            backgroundColor: '#EEE',
             width: this.width,
             height: this.height
         }
@@ -98,7 +97,7 @@ var D3Map = React.createClass({
             <div className="large-6 column" style={styleContainer}>
                 <h2>Programs Map</h2>
                 <Map width={width} height={height} scale={scale} zoomScale={this.state.scale} scaleExtent={scaleExtent} center={center}>
-                    <MarkerGroup key={"polygon-test"} data={this.state.mapData} popupContent={popupContent} onClick={onPolygonClick} onCloseClick={onPolygonCloseClick} markerClass={"your-marker-css-class"}/>
+                    <MarkerGroup key={"polygon-test"} data={mapData} popupContent={popupContent} onClick={onPolygonClick} onCloseClick={onPolygonCloseClick} markerClass={"your-marker-css-class"}/>
                     <ZoomControl zoomInClick={zoomIn} zoomOutClick={zoomOut}/>
                 </Map>
             </div>
