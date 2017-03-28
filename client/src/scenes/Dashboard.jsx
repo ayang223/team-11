@@ -8,6 +8,7 @@ var FilterByInvested = require('FilterByInvested');
 var FilterByPopulation = require('FilterByPopulation');
 var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
+var FilterByGeoArea = require('FilterByGeoArea');
 var ChartMoneyInvested = require('ChartMoneyInvested');
 var ChartSumClientsServed = require('ChartSumClientsServed');
 var ChartGeographicInvestedCityGrouping = require('ChartGeographicInvestedCityGrouping');
@@ -47,6 +48,7 @@ class Dashboard extends React.Component {
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
+        var FilterByGeoArea = this._filterByGeoArea.state.selectValue;
 
         var username = cookie.load('userID');
         var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
@@ -577,6 +579,7 @@ class Dashboard extends React.Component {
                         <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/>
                         <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
                         <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
+                        <FilterByGeoArea ref={filterbygeoarea => {this._filterByGeoArea = filterbygeoarea}} data ={this.state.data}/>
                  </div>
 										<div className="row">
                       <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />

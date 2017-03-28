@@ -39,6 +39,7 @@ externals: {
       FilterByPopulation: 'src/components/FilterByPopulation.jsx',
       FilterByElement: 'src/components/FilterByElement.jsx',
       FilterByEngagement: 'src/components/FilterByEngagement.jsx',
+      FilterByGeoArea: 'src/components/FilterByGeoArea.jsx',
       ChartMoneyInvested: 'src/components/ChartMoneyInvested.jsx',
       ChartSumClientsServed: 'src/components/ChartSumClientsServed.jsx',
       ChartGeographicInvestedCityGrouping: 'src/components/ChartGeographicInvestedCityGrouping.jsx',
