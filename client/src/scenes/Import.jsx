@@ -1,3 +1,4 @@
+import cookie from 'react-cookie';
 var React = require('react');
 var Baby = require('babyparse');
 var url = require('url');
@@ -36,6 +37,7 @@ var Import = React.createClass({
        reader.onload = function () {
            var result = reader.result;
            var parsed = Baby.parse(result);
+           var username = cookie.load('userID');
            // Currently the result is in this scope, so if we want to pass this data to
            // the backend server, the call will have to be in here
            //document.getElementById('json').innerHTML = JSON.stringify(parsed);
@@ -44,7 +46,8 @@ var Import = React.createClass({
                 type: "POST",
                 data: JSON.stringify({
                   "action" : "Import Programs",
-                  "data": parsed.data
+                  "data": parsed.data,
+                  "user": username
                 }),
                 dataType:"json",
                 success:function(data){
@@ -85,6 +88,7 @@ var Import = React.createClass({
          reader.onload = function () {
              var result = reader.result;
              var parsed = Baby.parse(result);
+             var username = cookie.load('userID');
              // Currently the result is in this scope, so if we want to pass this data to
              // the backend server, the call will have to be in here
              $.ajax({
@@ -92,7 +96,8 @@ var Import = React.createClass({
                   type: "POST",
                   data: JSON.stringify({
                     "action" : "Import Output",
-                     "data": parsed.data
+                     "data": parsed.data,
+                     "user": username
                   }),
                   dataType:"json",
                   success:function(data){
