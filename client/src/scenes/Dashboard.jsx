@@ -286,6 +286,26 @@ class Dashboard extends React.Component {
             filteredData = this.filterOutID(filteredData, filterByElementIDs);
         }
 
+        // Take stuff out of Geo Area
+        var filterByGeoAreaOn = true;
+        var FilterByGeoAreaIDs = [];
+        if(!$.isArray(FilterByGeoArea) || FilterByGeoArea.length == 0){
+          filterByGeoAreaOn = false;
+        } else {
+          for(var i = 0; i < filteredData.GeoArea.length; i++){
+            for(var j = 0; j < FilterByGeoArea.length; j++){
+              if(JSON.stringify(filteredData.GeoArea[i].area) == FilterByGeoArea[j]){
+                if (!this.contains(FilterByGeoAreaIDs, filteredData.GeoArea[i].andar_id)) {
+                  FilterByGeoAreaIDs.push(filteredData.GeoArea[i].andar_id);
+              }
+              break;
+            }
+          }
+        }
+      } if(filterByGeoAreaOn){
+        filteredData = this.filterOutID(filteredData, FilterByGeoAreaIDs);
+      }
+
         console.log(filteredData);
 
         this.setState({filterData: filteredData});
@@ -301,24 +321,6 @@ class Dashboard extends React.Component {
 
     filterOutID(data, filterIDs) {
         var filteredData = JSON.parse(JSON.stringify(data));
-
-        // Filter Agency
-        for(var i = 0; i < data.Agency.length; i++){
-          var agencyName = data.Agency[i].name;
-          if(!this.contains(filterIDs, agencyName)){
-            var agencyObject = JSON.stringify(data.Agency[i].id)
-            var agencyIndex = -1;
-            for(var j = 0; j < filteredData.Program.length; j++){
-              if(JSON.stringify(filteredData.Program[j].id) == agencyObject){
-                agencyIndex = j;
-                break;
-              }
-            }
-            if(programIndex > -1){
-              filteredData.Program.splice(agencyIndex,1);
-            }
-          }
-        }
 
         // Filter Agency
         for(var i = 0; i < data.Program.length; i++){
