@@ -26362,15 +26362,14 @@
 	    },
 	    render: function render() {
 	        var innerStyle = {
-	            width: "500px",
-	            height: "450px",
+	            width: "30%",
+	            height: "20%",
 	            padding: 50,
 	            margin: 7,
 	            backgroundColor: "#f0f0f5",
 	            color: "#474747",
 	            display: "inline-block",
 	            fontFamily: "sans-serif",
-	            fontSize: "20",
 	            textAlign: "left",
 	            msTransition: 'all',
 	            boxShadow: "10px 10px 5px #888888"
@@ -44941,6 +44940,12 @@
 
 	'use strict';
 
+	var _reactCookie = __webpack_require__(8);
+
+	var _reactCookie2 = _interopRequireDefault(_reactCookie);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	var React = __webpack_require__(13);
@@ -44971,6 +44976,34 @@
 	    };
 	  },
 
+	  componentWillMount: function componentWillMount() {
+	    var _this = this;
+	    var getUsers = $.ajax({
+	      url: url,
+	      type: "POST",
+	      data: JSON.stringify({
+	        "action": "Most Recent Import"
+	      }),
+	      dataType: "json",
+	      success: function (data) {
+	        var recentImportMessage;
+	        if (!data || !data["Most Recent Import"] || data["Most Recent Import"].length === 0) {
+	          recentImportMessage = "No data has been imported yet.";
+	        } else {
+	          var recentImportUser = data["Most Recent Import"][0].username;
+	          var recentImportTime = data["Most Recent Import"][0].date_time;
+	          var recentImportMessage = "The most recent import of data was on " + recentImportTime + " by user " + recentImportUser + ".";
+	        }
+	        this.setState({
+	          recentImportMessage: recentImportMessage
+	        });
+	      }.bind(this),
+	      error: function error(_error) {}
+	    });
+	  },
+
+	  componentDidMount: function componentDidMount() {},
+
 	  importProgram: function importProgram(e) {
 
 	    document.getElementById('errorOut').innerHTML = "";
@@ -44984,6 +45017,7 @@
 	      reader.onload = function () {
 	        var result = reader.result;
 	        var parsed = Baby.parse(result);
+	        var username = _reactCookie2.default.load('userID');
 	        // Currently the result is in this scope, so if we want to pass this data to
 	        // the backend server, the call will have to be in here
 	        //document.getElementById('json').innerHTML = JSON.stringify(parsed);
@@ -44992,7 +45026,8 @@
 	          type: "POST",
 	          data: JSON.stringify({
 	            "action": "Import Programs",
-	            "data": parsed.data
+	            "data": parsed.data,
+	            "user": username
 	          }),
 	          dataType: "json",
 	          success: function (data) {
@@ -45001,11 +45036,29 @@
 	              document.getElementById('errorOut').innerHTML = "Upload Failed, may be bad connection to Database, or the data already exists";
 	            } else {
 	              document.getElementById('errorOut').innerHTML = "Upload Success! You can navigate to Dashboard for analytics now.";
+	              var getUsers = $.ajax({
+	                url: url,
+	                type: "POST",
+	                data: JSON.stringify({
+	                  "action": "Most Recent Import"
+	                }),
+	                dataType: "json",
+	                success: function (data) {
+	                  if (!data || !data["Most Recent Import"] || data["Most Recent Import"].length === 0) {
+	                    document.getElementById('mostRecentUpload').innerHTML = "No data has been imported yet.";
+	                  } else {
+	                    var recentImportUser = data["Most Recent Import"][0].username;
+	                    var recentImportTime = data["Most Recent Import"][0].date_time;
+	                    document.getElementById('mostRecentUpload').innerHTML = "The most recent import of data was on " + recentImportTime + " by user " + recentImportUser + ".";
+	                  }
+	                }.bind(this),
+	                error: function error(_error2) {}
+	              });
 	            }
 	            console.log(data);
 	          }.bind(this),
-	          error: function error(_error) {
-	            console.log(_error);
+	          error: function error(_error3) {
+	            console.log(_error3);
 	            document.getElementById('errorOut').innerHTML = "Upload Failed";
 	          }
 	        });
@@ -45032,6 +45085,7 @@
 	      reader.onload = function () {
 	        var result = reader.result;
 	        var parsed = Baby.parse(result);
+	        var username = _reactCookie2.default.load('userID');
 	        // Currently the result is in this scope, so if we want to pass this data to
 	        // the backend server, the call will have to be in here
 	        $.ajax({
@@ -45039,7 +45093,8 @@
 	          type: "POST",
 	          data: JSON.stringify({
 	            "action": "Import Output",
-	            "data": parsed.data
+	            "data": parsed.data,
+	            "user": username
 	          }),
 	          dataType: "json",
 	          success: function (data) {
@@ -45048,11 +45103,30 @@
 	              document.getElementById('errorOut').innerHTML = "Upload Failed, possibly bad connection to database, or the data already exists. Please contact your Administrator";
 	            } else {
 	              document.getElementById('errorOut').innerHTML = "Upload Success!";
+	              var getUsers = $.ajax({
+	                url: url,
+	                type: "POST",
+	                data: JSON.stringify({
+	                  "action": "Most Recent Import"
+	                }),
+	                dataType: "json",
+	                success: function (data) {
+	                  if (!data || !data["Most Recent Import"] || data["Most Recent Import"].length === 0) {
+	                    document.getElementById('mostRecentUpload').innerHTML = "No data has been imported yet.";
+	                  } else {
+	                    var recentImportUser = data["Most Recent Import"][0].username;
+	                    var recentImportTime = data["Most Recent Import"][0].date_time;
+	                    document.getElementById('mostRecentUpload').innerHTML = "The most recent import of data was on " + recentImportTime + " by user " + recentImportUser + ".";
+	                  }
+	                }.bind(this),
+	                error: function error(_error4) {}
+	              });
 	            }
 	            console.log(data);
 	          }.bind(this),
-	          error: function error(_error2) {
-	            console.log(_error2);
+	          error: function error(_error5) {
+	            console.log(_error5);
+	            document.getElementById('errorOut').innerHTML = "Upload Failed";
 	          }
 	        });
 	      };
@@ -45089,6 +45163,11 @@
 	        React.createElement('input', { className: 'button success button', style: buttonStyle, type: 'button', ref: 'button', value: 'Upload Output File', onClick: this.importOutput }),
 	        React.createElement('br', null),
 	        React.createElement('br', null)
+	      ),
+	      React.createElement(
+	        'div',
+	        { id: 'mostRecentUpload', style: { margin: "20px" } },
+	        this.state.recentImportMessage
 	      ),
 	      ' ',
 	      React.createElement('hr', null),
@@ -46677,6 +46756,9 @@
 	                    React.createElement(
 	                        'div',
 	                        null,
+	                        React.createElement(TableProgramInfo, { ref: function ref(tableprograminfo) {
+	                                _this3._tableProgramInfo = tableprograminfo;
+	                            }, data: this.state.filterData }),
 	                        React.createElement(
 	                            Tabs,
 	                            { forceRenderTabPanel: true },
@@ -46739,20 +46821,8 @@
 	                            React.createElement(
 	                                Tab,
 	                                null,
-	                                'Table of Totals'
-	                            ),
-	                            React.createElement(
-	                                Tab,
-	                                null,
 	                                'Listings'
 	                            )
-	                        ),
-	                        React.createElement(
-	                            TabPanel,
-	                            null,
-	                            React.createElement(TableProgramInfo, { ref: function ref(tableprograminfo) {
-	                                    _this3._tableProgramInfo = tableprograminfo;
-	                                }, data: this.state.filterData })
 	                        ),
 	                        React.createElement(
 	                            TabPanel,
@@ -49582,7 +49652,7 @@
 	      object.value = city[i].municipality;
 	      var isDup = false;
 	      for (var j = 0; j < cityArr.length; j++) {
-	        if (object.value == cityArr[j].municipality) {
+	        if (object.value == cityArr[j].value) {
 	          isDup = true;
 	          break;
 	        }
@@ -81131,6 +81201,21 @@
 
 	    var metadata = this.createMetadata(this.state.data);
 
+	    var options = {};
+	    options.tooltips = {};
+	    options.tooltips.callbacks = {};
+	    options.tooltips.callbacks.label = function (tooltipItem, data) {
+	      var allData = data.datasets[tooltipItem.datasetIndex].data;
+	      var tooltipLabel = data.labels[tooltipItem.index];
+	      var tooltipData = allData[tooltipItem.index];
+	      var total = 0;
+	      for (var i in allData) {
+	        total += allData[i];
+	      }
+	      var tooltipPercentage = Math.round(tooltipData / total * 100);
+	      return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+	    };
+
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'large-6 columns' },
@@ -81140,7 +81225,7 @@
 	        title
 	      ),
 	      _react2.default.createElement('hr', null),
-	      _react2.default.createElement(_reactChartjs.Pie, { data: metadata })
+	      _react2.default.createElement(_reactChartjs.Pie, { data: metadata, options: options })
 	    );
 	  }
 	});
@@ -88467,7 +88552,7 @@
 	            _react2.default.createElement('hr', null),
 	            _react2.default.createElement(
 	                'div',
-	                { className: 'row', style: { padding: "50px" } },
+	                { className: 'row', style: {} },
 	                _react2.default.createElement(
 	                    _fixedDataTable.Table,
 	                    {
@@ -88584,8 +88669,8 @@
 
 	var ZoomControl = __webpack_require__(593).ZoomControl;
 
-	var width = 1000;
-	var height = 600;
+	var width = 500;
+	var height = 400;
 	var scaleExtent = [1 << 12, 1 << 30];
 	var scale = 100000 * 5;
 	var center = [-123.1022025, 49.2823492];
@@ -88632,7 +88717,7 @@
 	                    "type": "Point",
 	                    "coordinates": [dashData.Location[i].lon, dashData.Location[i].lat],
 	                    "properties": {
-	                        "name": dashData.Location[i].name
+	                        "name": dashData.Location[i].name + " " + "http://www.google.com/maps/place/" + dashData.Location[i].lon.toString() + "," + dashData.Location[i].lat.toString()
 	                    }
 	                });
 	            }
@@ -117564,12 +117649,14 @@
 
 	            for (var j = 0; j < dataFromDash.Location.length; j++) {
 	                var location = {
+	                    "name": "",
 	                    "lat": 0,
 	                    "lon": 0
 	                };
 	                if (program.id === dataFromDash.Location[j].andar_id) {
 	                    if (dataFromDash.Location[j].lat !== 0) {
 	                        location.lat = dataFromDash.Location[j].lat, location.lon = dataFromDash.Location[j].lon;
+	                        location.name = dataFromDash.Location[j].name;
 	                        locations.push(location); //TODO: Change to Coordinates after Backend Change
 	                    }
 	                }
@@ -117602,7 +117689,9 @@
 	        var zoomIn = this.zoomIn;
 	        var zoomOut = this.zoomOut;
 	        var center = [-123.1022025, 49.2823492];
+
 	        for (var i = 0; i < programList.length; i++) {
+	            var mapLinks = [];
 	            var rawJson = {
 	                "type": "Topology",
 	                "objects": {
@@ -117613,16 +117702,40 @@
 	                }
 	            };
 	            for (var k = 0; k < programList[i].locations.length; k++) {
+	                var mapLink = {};
 	                rawJson.objects.places.geometries.push({
 	                    "type": "Point",
 	                    "coordinates": [programList[i].locations[k].lon, programList[i].locations[k].lat],
 	                    "properties": {
-	                        "name": programList[i].name
+	                        "name": programList[i].locations[k].name
 	                    }
 	                });
 	                center = [programList[i].locations[k].lon, programList[i].locations[k].lat];
+	                var isDup = false;
+	                mapLink.link = "http://www.google.com/maps/place/" + JSON.stringify(programList[i].locations[k].lat) + "," + JSON.stringify(programList[i].locations[k].lon);
+	                mapLink.name = programList[i].locations[k].name;
+	                for (var j = 0; j < mapLinks.length; j++) {
+	                    if (mapLinks[j].link == mapLink.link) {
+	                        isDup = true;
+	                    }
+	                }
+	                if (!isDup) {
+	                    mapLinks.push(mapLink);
+	                }
 	            }
 	            var mapData = topojson.feature(rawJson, rawJson.objects.places);
+	            var listMapLinks = mapLinks.map(function (mapLink, i) {
+	                return React.createElement(
+	                    'li',
+	                    { key: mapLink.name + mapLink.link + i },
+	                    React.createElement(
+	                        'a',
+	                        { href: mapLink.link, target: '_blank' },
+	                        mapLink.name
+	                    )
+	                );
+	            });
+
 	            var listElements = programList[i].elements.map(function (element) {
 	                return React.createElement(
 	                    'li',
@@ -117723,6 +117836,16 @@
 	                            null,
 	                            '$',
 	                            programList[i].AndarDataOutput.yearly_allocation
+	                        ),
+	                        React.createElement(
+	                            'dt',
+	                            null,
+	                            'Google Map Links: '
+	                        ),
+	                        React.createElement(
+	                            'dd',
+	                            null,
+	                            listMapLinks
 	                        )
 	                    )
 	                ),
@@ -119135,7 +119258,7 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'row' },
+	        { className: 'row', style: { padding: "50px" } },
 	        React.createElement(AccountForm, { onNewAccount: this.handleNewAccount }),
 	        React.createElement(DeleteUserForm, { onDeleteUser: this.handleDeleteUser })
 	      ),
