@@ -278,7 +278,7 @@ var AdminPage = React.createClass({
        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
        <TableAdmin data={this.state.data} />
        </div>
-       <div className="row">
+       <div className="row" style={{padding : "50px"}}>
        <AccountForm onNewAccount={this.handleNewAccount}/>
        <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
        </div>

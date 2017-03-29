@@ -16,15 +16,14 @@ var LoginForm = React.createClass({
     },
     render: function() {
       var innerStyle = {
-        width:"500px",
-        height:"450px",
+        width:"30%",
+        height:"20%",
         padding: 50,
         margin: 7,
         backgroundColor: "#f0f0f5",
         color: "#474747",
         display: "inline-block",
         fontFamily: "sans-serif",
-        fontSize: "20",
         textAlign: "left",
         msTransition: 'all',
         boxShadow: "10px 10px 5px #888888"

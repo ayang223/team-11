@@ -25,6 +25,7 @@ externals: {
       //rename React componenets here for cleaner imports
       jQuery: 'jquery',
       App: 'src/app.jsx',
+      jQuery: 'jquery',
       Nav: 'src/components/Nav.jsx',
       Main: 'src/scenes/Main.jsx',
       Login: 'src/scenes/Login.jsx',

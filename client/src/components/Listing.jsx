@@ -59,6 +59,7 @@ var Listing = React.createClass({
 
             for (var j = 0; j < dataFromDash.Location.length; j++) {
               var location = {
+                "name": "",
                 "lat" : 0,
                 "lon" : 0
               }
@@ -66,6 +67,7 @@ var Listing = React.createClass({
                   if(dataFromDash.Location[j].lat !== 0){
                       location.lat = dataFromDash.Location[j].lat,
                       location.lon = dataFromDash.Location[j].lon;
+                      location.name = dataFromDash.Location[j].name;
                       locations.push(location); //TODO: Change to Coordinates after Backend Change
                   }
                 }
@@ -98,7 +100,9 @@ var Listing = React.createClass({
       var zoomIn = this.zoomIn;
       var zoomOut = this.zoomOut
       var center = [-123.1022025, 49.2823492];
+
         for(var i = 0; i < programList.length; i++){
+          var mapLinks = [];
           var rawJson = {
               "type": "Topology",
               "objects": {
@@ -109,18 +113,33 @@ var Listing = React.createClass({
               }
           }
           for(var k =0; k < programList[i].locations.length; k++){
+            var mapLink = {};
             rawJson.objects.places.geometries.push({
                 "type": "Point",
                 "coordinates": [
                     programList[i].locations[k].lon, programList[i].locations[k].lat
                 ],
                 "properties": {
-                    "name":   programList[i].name
+                    "name":   programList[i].locations[k].name
                 }
             });
             center = [programList[i].locations[k].lon, programList[i].locations[k].lat];
+            var isDup = false;
+            mapLink.link = "http://www.google.com/maps/place/" + JSON.stringify(programList[i].locations[k].lat) + "," + JSON.stringify(programList[i].locations[k].lon);
+            mapLink.name = programList[i].locations[k].name;
+            for(var j = 0; j < mapLinks.length; j++){
+              if(mapLinks[j].link == mapLink.link){
+                isDup = true;
+              }
+            }
+            if(!isDup){
+              mapLinks.push(mapLink);
+            }
           }
           var mapData = topojson.feature(rawJson, rawJson.objects.places);
+          var listMapLinks = mapLinks.map((mapLink, i) =>
+              <li key={mapLink.name + mapLink.link + i}><a href={mapLink.link} target="_blank">{mapLink.name}</a></li>);
+
           var listElements = programList[i].elements.map((element)=>
                 <li className="help-text" key={element}>{element}</li>);
           listOfHi.push(
@@ -142,6 +161,8 @@ var Listing = React.createClass({
                     <dd>{listElements}</dd>
                     <dt>Yearly Allocation: </dt>
                     <dd>${programList[i].AndarDataOutput.yearly_allocation}</dd>
+                    <dt>Google Map Links: </dt>
+                    <dd>{listMapLinks}</dd>
 
               </dl>
               </div>

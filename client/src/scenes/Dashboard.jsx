@@ -592,6 +592,7 @@ class Dashboard extends React.Component {
 											}}>Export PDF</button></div>
                     <br/>
                     <div>
+                      <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
                         <Tabs forceRenderTabPanel={true}>
                             <TabList>
                                 <Tab>Money Invested</Tab>
@@ -616,12 +617,8 @@ class Dashboard extends React.Component {
                     </div>
 										<Tabs forceRenderTabPanel={true}>
 												<TabList>
-														<Tab>Table of Totals</Tab>
 														<Tab>Listings</Tab>
 												</TabList>
-												<TabPanel>
-														<TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
-												</TabPanel>
 												<TabPanel>
                             <Listing ref={listing => { this._listing = listing }} data={this.state.filterData}/>
 												</TabPanel>

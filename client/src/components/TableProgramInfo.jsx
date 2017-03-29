@@ -102,7 +102,7 @@ render() {
           margin: "20px",
           textAlign: "center"
       }}>Table of Totals</h4><hr />
-    <div className="row"style={{padding: "50px"}}>
+    <div className="row"style={{}}>
       <Table
         rowHeight={100}
         rowsCount = {1}
