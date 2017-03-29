@@ -8,8 +8,8 @@ var MarkerGroup = require('react-d3-map').MarkerGroup;
 import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
 var ZoomControl = require('react-d3-map-core').ZoomControl;
 
-var width = 1000;
-var height = 600;
+var width = 600;
+var height = 500;
 var scaleExtent = [
     1 << 12,
     1 << 30
@@ -59,7 +59,7 @@ var D3Map = React.createClass({
                         dashData.Location[i].lon, dashData.Location[i].lat
                     ],
                     "properties": {
-                        "name": dashData.Location[i].name
+                        "name": dashData.Location[i].name + " " + "http://www.google.com/maps/place/" + dashData.Location[i].lon.toString() + "," + dashData.Location[i].lat.toString()
                     }
                 });
             }
