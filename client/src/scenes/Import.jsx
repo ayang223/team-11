@@ -24,6 +24,37 @@ var Import = React.createClass({
       }
     },
 
+
+    componentWillMount: function() {
+      var _this = this;
+      var getUsers = $.ajax({
+        url: url,
+        type: "POST",
+        data: JSON.stringify({
+          "action" : "Most Recent Import"
+        }),
+        dataType: "json",
+        success: function(data) {
+          var recentImportMessage;
+          if (!data || !data["Most Recent Import"] || data["Most Recent Import"].length === 0) {
+            recentImportMessage = "No data has been imported yet.";
+          } else {
+            var recentImportUser = data["Most Recent Import"][0].username;
+            var recentImportTime = data["Most Recent Import"][0].date_time;
+            var recentImportMessage = "The most recent import of data was on " + recentImportTime + " by user " + recentImportUser + ".";
+          }
+          this.setState({
+            recentImportMessage: recentImportMessage
+          })
+        }.bind(this),
+        error: function(error) {
+        }
+      });
+    },
+
+    componentDidMount: function() {
+    },
+
     importProgram : function(e){
 
       document.getElementById('errorOut').innerHTML = "";
@@ -56,6 +87,25 @@ var Import = React.createClass({
                     document.getElementById('errorOut').innerHTML = "Upload Failed, may be bad connection to Database, or the data already exists";
                   }else{
                     document.getElementById('errorOut').innerHTML = "Upload Success! You can navigate to Dashboard for analytics now.";
+                    var getUsers = $.ajax({
+                      url: url,
+                      type: "POST",
+                      data: JSON.stringify({
+                        "action" : "Most Recent Import"
+                      }),
+                      dataType: "json",
+                      success: function(data) {
+                        if (!data || !data["Most Recent Import"] || data["Most Recent Import"].length === 0) {
+                          document.getElementById('mostRecentUpload').innerHTML = "No data has been imported yet.";
+                        } else {
+                          var recentImportUser = data["Most Recent Import"][0].username;
+                          var recentImportTime = data["Most Recent Import"][0].date_time;
+                          document.getElementById('mostRecentUpload').innerHTML = "The most recent import of data was on " + recentImportTime + " by user " + recentImportUser + ".";
+                        }
+                      }.bind(this),
+                      error: function(error) {
+                      }
+                    });
                   }
                    console.log(data)
                  }.bind(this),
@@ -106,6 +156,25 @@ var Import = React.createClass({
                       document.getElementById('errorOut').innerHTML = "Upload Failed, possibly bad connection to database, or the data already exists. Please contact your Administrator";
                     }else{
                       document.getElementById('errorOut').innerHTML = "Upload Success!";
+                      var getUsers = $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: JSON.stringify({
+                          "action" : "Most Recent Import"
+                        }),
+                        dataType: "json",
+                        success: function(data) {
+                          if (!data || !data["Most Recent Import"] || data["Most Recent Import"].length === 0) {
+                            document.getElementById('mostRecentUpload').innerHTML = "No data has been imported yet.";
+                          } else {
+                            var recentImportUser = data["Most Recent Import"][0].username;
+                            var recentImportTime = data["Most Recent Import"][0].date_time;
+                            document.getElementById('mostRecentUpload').innerHTML = "The most recent import of data was on " + recentImportTime + " by user " + recentImportUser + ".";
+                          }
+                        }.bind(this),
+                        error: function(error) {
+                        }
+                      });
                     }
                      console.log(data)
                    }.bind(this),
@@ -138,6 +207,9 @@ var Import = React.createClass({
                  {this.state.loading == 1 &&
                  <div style={{width: "200px", height: "200px"}} dangerouslySetInnerHTML={{__html: loadingImg}}></div>
                }
+             </div>
+             <div id="mostRecentUpload">
+             {this.state.recentImportMessage}
              </div>
                <br/><br/>
                  <br/><br/>
