@@ -24,6 +24,7 @@ public class RequestHandler {
 	private static final String LOG_FILTER = "Log Filter";
 	//private static final String DELETE_DATA = "Delete Data";
 	private static final String CLEAR_DATABASE = "Clear Database";
+	private static final String MOST_RECENT_IMPORT = "Most Recent Import";
 
 	public RequestHandler() {
 
@@ -69,6 +70,9 @@ public class RequestHandler {
 			break;
 		case LOG_FILTER:
 			responseJson = LogEventHandler.logFilter(requestJson);
+			break;
+		case MOST_RECENT_IMPORT:
+			responseJson = LogEventHandler.mostRecentImport(requestJson);
 			break;
 		default:
 			responseJson = getStatusFailed();
