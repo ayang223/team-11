@@ -120,7 +120,7 @@ var Listing = React.createClass({
                     programList[i].locations[k].lon, programList[i].locations[k].lat
                 ],
                 "properties": {
-                    "name":   programList[i].name
+                    "name":   programList[i].locations[k].name
                 }
             });
             center = [programList[i].locations[k].lon, programList[i].locations[k].lat];
@@ -138,7 +138,7 @@ var Listing = React.createClass({
           }
           var mapData = topojson.feature(rawJson, rawJson.objects.places);
           var listMapLinks = mapLinks.map((mapLink, i) =>
-              <li key={mapLink.name + mapLink.link + i}><a href={mapLink.link}>{mapLink.name}</a></li>);
+              <li key={mapLink.name + mapLink.link + i}><a href={mapLink.link} target="_blank">{mapLink.name}</a></li>);
 
           var listElements = programList[i].elements.map((element)=>
                 <li className="help-text" key={element}>{element}</li>);
@@ -161,6 +161,7 @@ var Listing = React.createClass({
                     <dd>{listElements}</dd>
                     <dt>Yearly Allocation: </dt>
                     <dd>${programList[i].AndarDataOutput.yearly_allocation}</dd>
+                    <dt>Google Map Links: </dt>
                     <dd>{listMapLinks}</dd>
 
               </dl>

@@ -201,16 +201,17 @@ var Import = React.createClass({
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Program File" onClick={this.importProgram} />
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Output File" onClick={this.importOutput} />
                    <br/><br/>
-               </form> <hr />
+               </form>
+               <div id="mostRecentUpload" style={{margin:"20px"}}>
+               {this.state.recentImportMessage}
+               </div> <hr />
                <h3 style={{margin: "20px"}}>Status of Upload:</h3>
                <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here
                  {this.state.loading == 1 &&
                  <div style={{width: "200px", height: "200px"}} dangerouslySetInnerHTML={{__html: loadingImg}}></div>
                }
              </div>
-             <div id="mostRecentUpload">
-             {this.state.recentImportMessage}
-             </div>
+
                <br/><br/>
                  <br/><br/>
             </div>
