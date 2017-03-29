@@ -65,6 +65,12 @@ public class LogEventHandler {
 		return logSuccess;
 	}
 
+	public static JsonObject mostRecentImport(JsonObject requestJson) {
+		JsonObject responseJson = new JsonObject();
+		responseJson.add("Most Recent Import", DatabaseHandler.getMostRecentImport());
+		return responseJson;
+	}
+	
 	public static JsonObject listLogs(JsonObject requestJson) {
 		JsonObject responseJson = new JsonObject();
 		responseJson.add("Log Events", DatabaseHandler.getLogEvents());
