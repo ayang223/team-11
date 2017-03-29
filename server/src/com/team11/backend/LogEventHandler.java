@@ -52,6 +52,18 @@ public class LogEventHandler {
 		responseJson = success ? RequestHandler.getStatusSuccess() : RequestHandler.getStatusFailed();
 		return responseJson;
 	}
+	
+	public static boolean logUpload(String username, boolean success) {
+		boolean logSuccess = true;
+
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+		if (success) {
+			logSuccess = DatabaseHandler.insertLogEvent(username, "Import Success", timeStamp);
+		} else {
+			logSuccess = DatabaseHandler.insertLogEvent(username, "Import Failed", timeStamp);
+		}
+		return logSuccess;
+	}
 
 	public static JsonObject listLogs(JsonObject requestJson) {
 		JsonObject responseJson = new JsonObject();
