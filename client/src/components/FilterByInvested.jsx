@@ -137,7 +137,6 @@ var FilterByInvested = React.createClass({
                 }
             }
         }
-
         //console.log("filter contins: " +  investedFilterArr);
         return investedFilterArr;
     },

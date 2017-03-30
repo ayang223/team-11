@@ -9,6 +9,7 @@ var FilterByInvested = require('FilterByInvested');
 var FilterByPopulation = require('FilterByPopulation');
 var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
+var FilterByGeoArea = require('FilterByGeoArea');
 var ChartMoneyInvested = require('ChartMoneyInvested');
 var ChartSumClientsServed = require('ChartSumClientsServed');
 var ChartGeographicInvestedCityGrouping = require('ChartGeographicInvestedCityGrouping');
@@ -50,6 +51,7 @@ class Dashboard extends React.Component {
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
+        var filterByGeoArea = this._filterByGeoArea.state.selectValue;
 
         var username = cookie.load('userID');
         var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
@@ -287,6 +289,26 @@ class Dashboard extends React.Component {
             filteredData = this.filterOutID(filteredData, filterByElementIDs);
         }
 
+        // Take stuff out of Geo Area
+        var filterByGeoAreaOn = true;
+        var filterByGeoAreaIDs = [];
+        if(!$.isArray(filterByGeoArea) || filterByGeoArea.length == 0){
+          filterByGeoAreaOn = false;
+        } else {
+          for(var i = 0; i < filteredData.GeoArea.length; i++){
+            for(var j = 0; j < filterByGeoArea.length; j++){
+              if(JSON.stringify(filteredData.GeoArea[i].area) == filterByGeoArea[j]){
+                if (!this.contains(filterByGeoAreaIDs, filteredData.GeoArea[i].andar_id)) {
+                  filterByGeoAreaIDs.push(filteredData.GeoArea[i].andar_id);
+              }
+              break;
+            }
+          }
+        } 
+      } if(filterByGeoAreaOn){
+        filteredData = this.filterOutID(filteredData, filterByGeoAreaIDs);
+      }
+
         console.log(filteredData);
 
         this.setState({filterData: filteredData});
@@ -302,24 +324,6 @@ class Dashboard extends React.Component {
 
     filterOutID(data, filterIDs) {
         var filteredData = JSON.parse(JSON.stringify(data));
-
-        // Filter Agency
-        for(var i = 0; i < data.Agency.length; i++){
-          var agencyName = data.Agency[i].name;
-          if(!this.contains(filterIDs, agencyName)){
-            var agencyObject = JSON.stringify(data.Agency[i].id)
-            var agencyIndex = -1;
-            for(var j = 0; j < filteredData.Program.length; j++){
-              if(JSON.stringify(filteredData.Program[j].id) == agencyObject){
-                agencyIndex = j;
-                break;
-              }
-            }
-            if(programIndex > -1){
-              filteredData.Program.splice(agencyIndex,1);
-            }
-          }
-        }
 
         // Filter Agency
         for(var i = 0; i < data.Program.length; i++){
@@ -582,6 +586,7 @@ class Dashboard extends React.Component {
                         <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/>
                         <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
                         <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
+                        <FilterByGeoArea ref={filterbygeoarea => {this._filterByGeoArea = filterbygeoarea}} data ={this.state.data}/>
                  </div>
 										<div className="row">
                       <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />

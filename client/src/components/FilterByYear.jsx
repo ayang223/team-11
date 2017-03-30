@@ -50,6 +50,18 @@ var FilterByYear = React.createClass({
   //  console.log( "years: " + yearArr);
     return yearArr;
   },
+  createMetadata : function(data){
+    var metadata = {};
+    var year = data.AndarDataOutput;
+    var yearArr = [];
+    for(var i =0; i< year.length; i++){
+      if(yearArr.includes (year[i].grant_date.substring(0,4) + "/" +year[i].grant_end.substring(0,4))){
+        //console.log("years already contained in array")
+      } else yearArr.push(year[i].grant_date.substring(0,4) + "/" +year[i].grant_end.substring(0,4))
+    }
+    //console.log( "years: " + yearArr);
+    return yearArr;
+  },
 
   render: function(){
     var dataFromDash = this.props.data;
