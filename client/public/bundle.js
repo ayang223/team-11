@@ -117,6 +117,7 @@
 	var Dashboard = __webpack_require__(305);
 	var Logout = __webpack_require__(663);
 	var AdminPage = __webpack_require__(664);
+	var Export = __webpack_require__(669);
 
 	__webpack_require__(667);
 	$(document).foundation();
@@ -158,6 +159,7 @@
 	        React.createElement(Route, { path: '/dashboard', onEnter: validateSession, component: Dashboard }),
 	        React.createElement(Route, { path: '/logout', component: Logout }),
 	        React.createElement(Route, { path: '/adminpage', component: AdminPage }),
+	        React.createElement(Route, { path: '/export', component: Export }),
 	        React.createElement(IndexRoute, { component: Login, onEnter: isLoggedIn })
 	    )
 	), document.getElementById('app'));
@@ -46112,6 +46114,10 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var React = __webpack_require__(13);
+
+	var _require = __webpack_require__(170),
+	    Link = _require.Link;
+
 	var FilterByYear = __webpack_require__(306);
 	var FilterByFocusArea = __webpack_require__(320);
 	var FilterByCity = __webpack_require__(321);
@@ -46147,9 +46153,11 @@
 	        _this2.generateGraphs = _this2.generateGraphs.bind(_this2);
 	        _this2.filterOutID = _this2.filterOutID.bind(_this2);
 	        _this2.contains = _this2.contains.bind(_this2);
+	        _this2.exportPDF = _this2.exportPDF.bind(_this2);
 	        _this2.state = {
 	            data: null,
-	            filterData: null
+	            filterData: null,
+	            exportPDF: false
 	        };
 	        return _this2;
 	    }
@@ -46650,8 +46658,9 @@
 	    }, {
 	        key: 'exportPDF',
 	        value: function exportPDF() {
-	            console.log("export!");
-	            window.print();
+	            this.setState({
+	                exportPDF: true
+	            });
 	        }
 	    }, {
 	        key: 'componentWillMount',
@@ -46683,82 +46692,137 @@
 	            var _this3 = this;
 
 	            if (this.state.data) {
-	                return React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement(
-	                        'h2',
-	                        { style: {
-	                                margin: "20px",
-	                                textAlign: "center"
-	                            } },
-	                        'Dashboard Page'
-	                    ),
-	                    ' ',
-	                    React.createElement('hr', null),
-	                    React.createElement('br', null),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        React.createElement(FilterByInvested, { ref: function ref(filterbyinvested) {
-	                                _this3._filterByInvested = filterbyinvested;
-	                            }, data: this.state.data })
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        React.createElement(FilterByYear, { ref: function ref(filterbyyear) {
-	                                _this3._filterByYear = filterbyyear;
-	                            }, data: this.state.data }),
-	                        React.createElement(FilterByCity, { ref: function ref(filterbycity) {
-	                                _this3._filterByCity = filterbycity;
-	                            }, data: this.state.data }),
-	                        React.createElement(FilterByAgency, { ref: function ref(filterbyagency) {
-	                                _this3._filterByAgency = filterbyagency;
-	                            }, data: this.state.data }),
-	                        React.createElement(FilterByPopulation, { ref: function ref(filterbypopulation) {
-	                                _this3._filterByPopulation = filterbypopulation;
-	                            }, data: this.state.data }),
-	                        React.createElement(FilterByEngagement, { ref: function ref(filterbyengagement) {
-	                                _this3._filterByEngagement = filterbyengagement;
-	                            }, data: this.state.data })
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        React.createElement(FilterByFocusArea, { ref: function ref(filterbyfocusarea) {
-	                                _this3._filterByFocusArea = filterbyfocusarea;
-	                            }, data: this.state.data }),
-	                        React.createElement('hr', null),
-	                        React.createElement(FilterByElement, { ref: function ref(filterbyelement) {
-	                                _this3._filterByElement = filterbyelement;
-	                            }, data: this.state.data })
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        React.createElement(
-	                            'button',
-	                            { className: 'button info', onClick: this.generateGraphs, style: {
-	                                    margin: "20px"
-	                                } },
-	                            'Apply Filter'
-	                        ),
-	                        React.createElement(
-	                            'button',
-	                            { className: 'button export', onClick: this.exportPDF, style: {
-	                                    margin: "20px"
-	                                } },
-	                            'Export PDF'
-	                        )
-	                    ),
-	                    React.createElement('br', null),
-	                    React.createElement(
+	                if (!this.state.exportPDF) {
+	                    return React.createElement(
 	                        'div',
 	                        null,
-	                        React.createElement(TableProgramInfo, { ref: function ref(tableprograminfo) {
-	                                _this3._tableProgramInfo = tableprograminfo;
-	                            }, data: this.state.filterData }),
+	                        React.createElement(
+	                            'h2',
+	                            { style: {
+	                                    margin: "20px",
+	                                    textAlign: "center"
+	                                } },
+	                            'Dashboard Page'
+	                        ),
+	                        ' ',
+	                        React.createElement('hr', null),
+	                        React.createElement('br', null),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            React.createElement(FilterByInvested, { ref: function ref(filterbyinvested) {
+	                                    _this3._filterByInvested = filterbyinvested;
+	                                }, data: this.state.data })
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            React.createElement(FilterByYear, { ref: function ref(filterbyyear) {
+	                                    _this3._filterByYear = filterbyyear;
+	                                }, data: this.state.data }),
+	                            React.createElement(FilterByCity, { ref: function ref(filterbycity) {
+	                                    _this3._filterByCity = filterbycity;
+	                                }, data: this.state.data }),
+	                            React.createElement(FilterByAgency, { ref: function ref(filterbyagency) {
+	                                    _this3._filterByAgency = filterbyagency;
+	                                }, data: this.state.data }),
+	                            React.createElement(FilterByPopulation, { ref: function ref(filterbypopulation) {
+	                                    _this3._filterByPopulation = filterbypopulation;
+	                                }, data: this.state.data }),
+	                            React.createElement(FilterByEngagement, { ref: function ref(filterbyengagement) {
+	                                    _this3._filterByEngagement = filterbyengagement;
+	                                }, data: this.state.data })
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            React.createElement(FilterByFocusArea, { ref: function ref(filterbyfocusarea) {
+	                                    _this3._filterByFocusArea = filterbyfocusarea;
+	                                }, data: this.state.data }),
+	                            React.createElement('hr', null),
+	                            React.createElement(FilterByElement, { ref: function ref(filterbyelement) {
+	                                    _this3._filterByElement = filterbyelement;
+	                                }, data: this.state.data })
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            React.createElement(
+	                                'button',
+	                                { className: 'button info', onClick: this.generateGraphs, style: {
+	                                        margin: "20px"
+	                                    } },
+	                                'Apply Filter'
+	                            ),
+	                            React.createElement(
+	                                'button',
+	                                { className: 'button export', onClick: this.exportPDF, style: {
+	                                        margin: "20px"
+	                                    } },
+	                                'Export PDF'
+	                            )
+	                        ),
+	                        React.createElement('div', null),
+	                        React.createElement('br', null),
+	                        React.createElement(
+	                            'div',
+	                            null,
+	                            React.createElement(TableProgramInfo, { ref: function ref(tableprograminfo) {
+	                                    _this3._tableProgramInfo = tableprograminfo;
+	                                }, data: this.state.filterData }),
+	                            React.createElement(
+	                                Tabs,
+	                                { forceRenderTabPanel: true },
+	                                React.createElement(
+	                                    TabList,
+	                                    null,
+	                                    React.createElement(
+	                                        Tab,
+	                                        null,
+	                                        'Money Invested'
+	                                    ),
+	                                    React.createElement(
+	                                        Tab,
+	                                        null,
+	                                        'Clients Served'
+	                                    ),
+	                                    React.createElement(
+	                                        Tab,
+	                                        null,
+	                                        'Geographic Distribution'
+	                                    )
+	                                ),
+	                                React.createElement(
+	                                    TabPanel,
+	                                    null,
+	                                    React.createElement(ChartMoneyInvested, { ref: function ref(chartmoneyinvested) {
+	                                            _this3._chartMoneyInvested = chartmoneyinvested;
+	                                        }, data: this.state.filterData })
+	                                ),
+	                                React.createElement(
+	                                    TabPanel,
+	                                    null,
+	                                    React.createElement(ChartSumClientsServed, { ref: function ref(chartsumclientsserved) {
+	                                            _this3._chartSumClientsServed = chartsumclientsserved;
+	                                        }, data: this.state.filterData })
+	                                ),
+	                                React.createElement(
+	                                    TabPanel,
+	                                    null,
+	                                    React.createElement(ChartGeographicInvestedCityGrouping, { ref: function ref(chartgeographicinvestedcitygrouping) {
+	                                            _this3._chartGeographicInvestedCityGrouping = chartgeographicinvestedcitygrouping;
+	                                        }, data: this.state.filterData })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            null,
+	                            React.createElement(D3Map, { ref: function ref(map) {
+	                                    _this3._map = map;
+	                                }, data: this.state.filterData })
+	                        ),
+	                        React.createElement('div', { className: 'row', style: { marginTop: "50px" } }),
 	                        React.createElement(
 	                            Tabs,
 	                            { forceRenderTabPanel: true },
@@ -46768,71 +46832,27 @@
 	                                React.createElement(
 	                                    Tab,
 	                                    null,
-	                                    'Money Invested'
-	                                ),
-	                                React.createElement(
-	                                    Tab,
-	                                    null,
-	                                    'Clients Served'
-	                                ),
-	                                React.createElement(
-	                                    Tab,
-	                                    null,
-	                                    'Geographic Distribution'
+	                                    'Listings'
 	                                )
 	                            ),
 	                            React.createElement(
 	                                TabPanel,
 	                                null,
-	                                React.createElement(ChartMoneyInvested, { ref: function ref(chartmoneyinvested) {
-	                                        _this3._chartMoneyInvested = chartmoneyinvested;
-	                                    }, data: this.state.filterData })
-	                            ),
-	                            React.createElement(
-	                                TabPanel,
-	                                null,
-	                                React.createElement(ChartSumClientsServed, { ref: function ref(chartsumclientsserved) {
-	                                        _this3._chartSumClientsServed = chartsumclientsserved;
-	                                    }, data: this.state.filterData })
-	                            ),
-	                            React.createElement(
-	                                TabPanel,
-	                                null,
-	                                React.createElement(ChartGeographicInvestedCityGrouping, { ref: function ref(chartgeographicinvestedcitygrouping) {
-	                                        _this3._chartGeographicInvestedCityGrouping = chartgeographicinvestedcitygrouping;
+	                                React.createElement(Listing, { ref: function ref(listing) {
+	                                        _this3._listing = listing;
 	                                    }, data: this.state.filterData })
 	                            )
 	                        )
-	                    ),
-	                    React.createElement(
+	                    );
+	                } else {
+	                    return React.createElement(
 	                        'div',
 	                        null,
-	                        React.createElement(D3Map, { ref: function ref(map) {
-	                                _this3._map = map;
+	                        React.createElement(ChartMoneyInvested, { ref: function ref(chartmoneyinvested) {
+	                                _this3._chartMoneyInvested = chartmoneyinvested;
 	                            }, data: this.state.filterData })
-	                    ),
-	                    React.createElement('div', { className: 'row', style: { marginTop: "50px" } }),
-	                    React.createElement(
-	                        Tabs,
-	                        { forceRenderTabPanel: true },
-	                        React.createElement(
-	                            TabList,
-	                            null,
-	                            React.createElement(
-	                                Tab,
-	                                null,
-	                                'Listings'
-	                            )
-	                        ),
-	                        React.createElement(
-	                            TabPanel,
-	                            null,
-	                            React.createElement(Listing, { ref: function ref(listing) {
-	                                    _this3._listing = listing;
-	                                }, data: this.state.filterData })
-	                        )
-	                    )
-	                );
+	                    );
+	                }
 	            }
 	            return React.createElement(
 	                'div',
@@ -119643,6 +119663,41 @@
 
 	// exports
 
+
+/***/ },
+/* 669 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(13);
+
+	var Export = React.createClass({
+		displayName: 'Export',
+		getInitialState: function getInitialState() {
+			return {
+				data: this.props.data
+			};
+		},
+
+
+		render: function render() {
+
+			var dashData = this.state.data;
+			console.log(dashData);
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h2',
+					null,
+					'Export Page '
+				)
+			);
+		}
+	});
+
+	module.exports = Export;
 
 /***/ }
 /******/ ]);

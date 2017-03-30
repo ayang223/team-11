@@ -1,5 +1,6 @@
 import cookie from 'react-cookie';
 var React = require('react');
+var {Link} = require('react-router');
 var FilterByYear = require('FilterByYear');
 var FilterByFocusArea = require('FilterByFocusArea');
 var FilterByCity = require('FilterByCity');
@@ -30,9 +31,11 @@ class Dashboard extends React.Component {
         this.generateGraphs = this.generateGraphs.bind(this);
         this.filterOutID = this.filterOutID.bind(this);
         this.contains = this.contains.bind(this);
+        this.exportPDF = this.exportPDF.bind(this);
         this.state = {
             data: null,
-            filterData: null
+            filterData: null,
+            exportPDF: false
         };
     }
 
@@ -529,8 +532,9 @@ class Dashboard extends React.Component {
     }
 
     exportPDF() {
-        console.log("export!");
-				window.print();
+        this.setState({
+          exportPDF: true
+        });
     }
 
     componentWillMount() {
@@ -558,6 +562,7 @@ class Dashboard extends React.Component {
 
     render() {
         if (this.state.data) {
+          if(!this.state.exportPDF){
             return (
                 <div>
                     <h2 style={{
@@ -590,6 +595,9 @@ class Dashboard extends React.Component {
 											<button className="button export" onClick={this.exportPDF} style={{
 													margin: "20px"
 											}}>Export PDF</button></div>
+                      <div>
+                 
+                 </div>
                     <br/>
                     <div>
                       <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
@@ -625,7 +633,14 @@ class Dashboard extends React.Component {
 										</Tabs>
                 </div>
             );
+        }else{
+          return (
+          <div>
+          <ChartMoneyInvested ref={chartmoneyinvested => { this._chartMoneyInvested = chartmoneyinvested}} data={this.state.filterData}/>
+          </div>
+          )
         }
+      }
         return (
             <div>Loading...
                 <div id='errorOut'></div>
