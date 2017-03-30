@@ -56,8 +56,8 @@ var Import = React.createClass({
     },
 
     importProgram : function(e){
-
-      document.getElementById('errorOut').innerHTML = "";
+      var svgFrag = '<svg>' + loadingImg + '</svg>';
+      document.getElementById('errorOut').innerHTML = '' + svgFrag;
       var file = document.getElementById('CSVUpload').files[0];
       if(file == null){
         alert("No file selected!");
@@ -123,16 +123,13 @@ var Import = React.createClass({
 
       importOutput : function(e){
         var _this = this;
-
-        document.getElementById('errorOut').innerHTML = "";
+        var svgFrag = '<svg>' + loadingImg + '</svg>';
+        document.getElementById('errorOut').innerHTML = '' + svgFrag;
         var file = document.getElementById('CSVUpload').files[0];
         if(file == null){
           alert("No file selected!");
           return null;
         }else{
-          this.setState({
-            loading : 1,
-          });
         console.log(file);
         var reader = new FileReader();
          reader.onload = function () {
@@ -207,9 +204,6 @@ var Import = React.createClass({
                </div> <hr />
                <h3 style={{margin: "20px"}}>Status of Upload:</h3>
                <div id="errorOut" style={{margin:"20px"}}>Status of upload will be displayed here
-                 {this.state.loading == 1 &&
-                 <div style={{width: "200px", height: "200px"}} dangerouslySetInnerHTML={{__html: loadingImg}}></div>
-               }
              </div>
 
                <br/><br/>
