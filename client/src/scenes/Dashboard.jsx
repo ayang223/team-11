@@ -583,10 +583,7 @@ class Dashboard extends React.Component {
                     }}>Dashboard Page</h2> <hr />
                     <br/>
                     <div className="row">
-
-
                         <FilterByInvested ref={filterbyinvested => { this._filterByInvested = filterbyinvested}} data={this.state.data}/>
-
                     </div>
                     <div className="row">
                         <FilterByYear ref={filterbyyear => { this._filterByYear = filterbyyear}} data={this.state.data}/>
@@ -651,13 +648,15 @@ class Dashboard extends React.Component {
           <div>
             <button className="button export" onClick={this.backDash} style={{margin: "20px"}}>Back to Dashboard</button>
             <button className="button export" onClick={this.exportPDF} style={{margin: "20px"}}>Export PDF</button>
-          <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
+            <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
+            <ChartMoneyInvested ref={chartmoneyinvested => { this._chartMoneyInvested = chartmoneyinvested}} data={this.state.filterData}/>
+            <ChartSumClientsServed ref={chartsumclientsserved => { this._chartSumClientsServed = chartsumclientsserved}} data={this.state.filterData}/>
+            <div>
+              <ChartGeographicInvestedCityGrouping ref={chartgeographicinvestedcitygrouping => { this._chartGeographicInvestedCityGrouping = chartgeographicinvestedcitygrouping}} data={this.state.filterData}/>
+              <D3Map ref={map => { this._map = map}} data={this.state.filterData}/>
           <div>
-          <ChartMoneyInvested ref={chartmoneyinvested => { this._chartMoneyInvested = chartmoneyinvested}} data={this.state.filterData}/>
-          <ChartSumClientsServed ref={chartsumclientsserved => { this._chartSumClientsServed = chartsumclientsserved}} data={this.state.filterData}/>
-          <ChartGeographicInvestedCityGrouping ref={chartgeographicinvestedcitygrouping => { this._chartGeographicInvestedCityGrouping = chartgeographicinvestedcitygrouping}} data={this.state.filterData}/>
-
-        <Listing ref={listing => { this._listing = listing }} data={this.state.filterData}/>
+          <Listing ref={listing => { this._listing = listing }} data={this.state.filterData}/>
+          </div>
         </div>
         </div>
           )

@@ -8,7 +8,7 @@ var MarkerGroup = require('react-d3-map').MarkerGroup;
 import PlacesAutocomplete, {geocodeByAddress} from 'react-places-autocomplete';
 var ZoomControl = require('react-d3-map-core').ZoomControl;
 
-var width = 500;
+var width = 700;
 var height = 400;
 var scaleExtent = [
     1 << 12,
@@ -94,7 +94,7 @@ var D3Map = React.createClass({
             )
         }
         return (
-            <div className="large-6 column" style={styleContainer}>
+            <div className="large-6 columns">
                 <h4 style={{textAlign: "center"}}>Programs Map</h4><hr />
                 <Map width={width} height={height} scale={scale} zoomScale={this.state.scale} scaleExtent={scaleExtent} center={center}>
                     <MarkerGroup key={"polygon-test"} data={mapData} popupContent={popupContent} onClick={onPolygonClick} onCloseClick={onPolygonCloseClick} markerClass={"your-marker-css-class"}/>

@@ -58,7 +58,8 @@ var ChartMoneyInvested=React.createClass({
     return (
       <div className="large-6 columns">
         <h4 style={{textAlign: "center"}}>{title}</h4><hr />
-        <HorizontalBar data={metadata}/>
+        <HorizontalBar data={metadata} width={1400}
+        height={600}/>
         </div>
     );
   }

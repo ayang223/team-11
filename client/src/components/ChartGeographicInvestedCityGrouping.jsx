@@ -191,7 +191,8 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
     return (
       <div className="large-6 columns">
         <h4 style={{textAlign: "center"}}>{title}</h4><hr/>
-        <Pie data={metadata} options={options}/>
+        <Pie data={metadata} options={options} width={1400}
+        height={600}/>
       </div>
     );
   }
