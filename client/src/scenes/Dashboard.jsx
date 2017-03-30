@@ -32,7 +32,8 @@ class Dashboard extends React.Component {
         this.generateGraphs = this.generateGraphs.bind(this);
         this.filterOutID = this.filterOutID.bind(this);
         this.contains = this.contains.bind(this);
-        this.exportPDF = this.exportPDF.bind(this);
+        this.onlyTables = this.onlyTables.bind(this);
+        this.backDash = this.backDash.bind(this);
         this.state = {
             data: null,
             filterData: null,
@@ -68,9 +69,7 @@ class Dashboard extends React.Component {
             dataType:"json",
             success:function(data){
                if (data.status === "success") {
-                 console.log("Filter log success");
                } else {
-                 console.log("Filter log failed");
                }
             }.bind(this),
         });
@@ -304,12 +303,11 @@ class Dashboard extends React.Component {
               break;
             }
           }
-        } 
+        }
       } if(filterByGeoAreaOn){
         filteredData = this.filterOutID(filteredData, filterByGeoAreaIDs);
       }
 
-        console.log(filteredData);
 
         this.setState({filterData: filteredData});
 
@@ -535,10 +533,20 @@ class Dashboard extends React.Component {
         return false;
     }
 
-    exportPDF() {
+    onlyTables() {
         this.setState({
           exportPDF: true
         });
+    }
+
+    backDash(){
+      this.setState({
+        exportPDF : false
+      })
+    }
+
+    exportPDF(){
+      window.print();
     }
 
     componentWillMount() {
@@ -597,11 +605,11 @@ class Dashboard extends React.Component {
 											<button className="button info" onClick={this.generateGraphs} style={{
 													margin: "20px"
 											}}>Apply Filter</button>
-											<button className="button export" onClick={this.exportPDF} style={{
+                    <button className="button success" onClick={this.onlyTables} style={{
 													margin: "20px"
-											}}>Export PDF</button></div>
+											}}>Display Only Results</button></div>
                       <div>
-                 
+
                  </div>
                     <br/>
                     <div>
@@ -641,15 +649,23 @@ class Dashboard extends React.Component {
         }else{
           return (
           <div>
+            <button className="button export" onClick={this.backDash} style={{margin: "20px"}}>Back to Dashboard</button>
+            <button className="button export" onClick={this.exportPDF} style={{margin: "20px"}}>Export PDF</button>
+          <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
+          <div>
           <ChartMoneyInvested ref={chartmoneyinvested => { this._chartMoneyInvested = chartmoneyinvested}} data={this.state.filterData}/>
-          </div>
+          <ChartSumClientsServed ref={chartsumclientsserved => { this._chartSumClientsServed = chartsumclientsserved}} data={this.state.filterData}/>
+          <ChartGeographicInvestedCityGrouping ref={chartgeographicinvestedcitygrouping => { this._chartGeographicInvestedCityGrouping = chartgeographicinvestedcitygrouping}} data={this.state.filterData}/>
+
+        <Listing ref={listing => { this._listing = listing }} data={this.state.filterData}/>
+        </div>
+        </div>
           )
         }
       }
         return (
             <div>Loading...
                 <div id='errorOut'></div>
-
             </div>
         );
     }
