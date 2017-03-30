@@ -56,10 +56,10 @@ var FilterByYear = React.createClass({
     var yearArr = [];
     for(var i =0; i< year.length; i++){
       if(yearArr.includes (year[i].grant_date.substring(0,4) + "/" +year[i].grant_end.substring(0,4))){
-        console.log("years already contained in array")
+        //console.log("years already contained in array")
       } else yearArr.push(year[i].grant_date.substring(0,4) + "/" +year[i].grant_end.substring(0,4))
     }
-    console.log( "years: " + yearArr);
+    //console.log( "years: " + yearArr);
     return yearArr;
   },
 

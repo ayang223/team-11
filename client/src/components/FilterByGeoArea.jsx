@@ -21,6 +21,7 @@ var FilterByGeoArea = React.createClass({
 				selectArr.push(JSON.stringify(this.state.value[i].value));
 			}
 			this.setState({selectValue: selectArr});
+			//console.log("selected filters: " + selectArr);
 		});
 	},
 
@@ -43,7 +44,7 @@ var FilterByGeoArea = React.createClass({
 				}
 			}
 			if(isDup){
-				console.log("dupe in geo area");
+				
 			} else {
 				geoAreaArr.push(object)
 			}

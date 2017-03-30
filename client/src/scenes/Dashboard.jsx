@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
-        var FilterByGeoArea = this._filterByGeoArea.state.selectValue;
+        var filterByGeoArea = this._filterByGeoArea.state.selectValue;
 
         var username = cookie.load('userID');
         var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
@@ -288,22 +288,22 @@ class Dashboard extends React.Component {
 
         // Take stuff out of Geo Area
         var filterByGeoAreaOn = true;
-        var FilterByGeoAreaIDs = [];
-        if(!$.isArray(FilterByGeoArea) || FilterByGeoArea.length == 0){
+        var filterByGeoAreaIDs = [];
+        if(!$.isArray(filterByGeoArea) || filterByGeoArea.length == 0){
           filterByGeoAreaOn = false;
         } else {
           for(var i = 0; i < filteredData.GeoArea.length; i++){
-            for(var j = 0; j < FilterByGeoArea.length; j++){
-              if(JSON.stringify(filteredData.GeoArea[i].area) == FilterByGeoArea[j]){
-                if (!this.contains(FilterByGeoAreaIDs, filteredData.GeoArea[i].andar_id)) {
-                  FilterByGeoAreaIDs.push(filteredData.GeoArea[i].andar_id);
+            for(var j = 0; j < filterByGeoArea.length; j++){
+              if(JSON.stringify(filteredData.GeoArea[i].area) == filterByGeoArea[j]){
+                if (!this.contains(filterByGeoAreaIDs, filteredData.GeoArea[i].andar_id)) {
+                  filterByGeoAreaIDs.push(filteredData.GeoArea[i].andar_id);
               }
               break;
             }
           }
-        }
+        } 
       } if(filterByGeoAreaOn){
-        filteredData = this.filterOutID(filteredData, FilterByGeoAreaIDs);
+        filteredData = this.filterOutID(filteredData, filterByGeoAreaIDs);
       }
 
         console.log(filteredData);
