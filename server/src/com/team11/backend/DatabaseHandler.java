@@ -594,7 +594,7 @@ public class DatabaseHandler {
 			conn.createStatement().executeUpdate(clearLocations);
 			conn.createStatement().executeUpdate(clearProgram);
 			conn.createStatement().executeUpdate(clearAgency);
-			
+			conn.createStatement().executeUpdate(clearGeoArea);
 			conn.createStatement().executeUpdate(clearTargetPop);
 			conn.createStatement().executeUpdate(clearProgramSubElement);
 			conn.createStatement().executeUpdate(clearProgramElement);
