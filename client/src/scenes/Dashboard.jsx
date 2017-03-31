@@ -1,5 +1,6 @@
 import cookie from 'react-cookie';
 var React = require('react');
+var {Link} = require('react-router');
 var FilterByYear = require('FilterByYear');
 var FilterByFocusArea = require('FilterByFocusArea');
 var FilterByCity = require('FilterByCity');
@@ -8,6 +9,7 @@ var FilterByInvested = require('FilterByInvested');
 var FilterByPopulation = require('FilterByPopulation');
 var FilterByElement = require('FilterByElement');
 var FilterByEngagement = require('FilterByEngagement');
+var FilterByGeoArea = require('FilterByGeoArea');
 var ChartMoneyInvested = require('ChartMoneyInvested');
 var ChartSumClientsServed = require('ChartSumClientsServed');
 var ChartGeographicInvestedCityGrouping = require('ChartGeographicInvestedCityGrouping');
@@ -30,9 +32,13 @@ class Dashboard extends React.Component {
         this.generateGraphs = this.generateGraphs.bind(this);
         this.filterOutID = this.filterOutID.bind(this);
         this.contains = this.contains.bind(this);
+        this.onlyTables = this.onlyTables.bind(this);
+        this.backDash = this.backDash.bind(this);
         this.state = {
             data: null,
-            filterData: null
+            filterData: null,
+            exportPDF: false,
+            filters: ""
         };
     }
 
@@ -47,10 +53,14 @@ class Dashboard extends React.Component {
         var filterByPopulation = this._filterByPopulation.state.selectValue;
         var filterByEngagement = this._filterByEngagement.state.selectValue;
         var filterByElement = this._filterByElement.state.selectValue;
+        var filterByGeoArea = this._filterByGeoArea.state.selectValue;
 
         var username = cookie.load('userID');
         var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
           filterByPopulation, filterByElement, filterByEngagement);
+          this.setState({
+            filters :allFilters
+          });
         var filterString = allFilters.join(", ");
         $.ajax({
             url:url,
@@ -63,9 +73,7 @@ class Dashboard extends React.Component {
             dataType:"json",
             success:function(data){
                if (data.status === "success") {
-                 console.log("Filter log success");
                } else {
-                 console.log("Filter log failed");
                }
             }.bind(this),
         });
@@ -284,7 +292,26 @@ class Dashboard extends React.Component {
             filteredData = this.filterOutID(filteredData, filterByElementIDs);
         }
 
-        console.log(filteredData);
+        // Take stuff out of Geo Area
+        var filterByGeoAreaOn = true;
+        var filterByGeoAreaIDs = [];
+        if(!$.isArray(filterByGeoArea) || filterByGeoArea.length == 0){
+          filterByGeoAreaOn = false;
+        } else {
+          for(var i = 0; i < filteredData.GeoArea.length; i++){
+            for(var j = 0; j < filterByGeoArea.length; j++){
+              if(JSON.stringify(filteredData.GeoArea[i].area) == filterByGeoArea[j]){
+                if (!this.contains(filterByGeoAreaIDs, filteredData.GeoArea[i].andar_id)) {
+                  filterByGeoAreaIDs.push(filteredData.GeoArea[i].andar_id);
+              }
+              break;
+            }
+          }
+        }
+      } if(filterByGeoAreaOn){
+        filteredData = this.filterOutID(filteredData, filterByGeoAreaIDs);
+      }
+
 
         this.setState({filterData: filteredData});
 
@@ -299,24 +326,6 @@ class Dashboard extends React.Component {
 
     filterOutID(data, filterIDs) {
         var filteredData = JSON.parse(JSON.stringify(data));
-
-        // Filter Agency
-        for(var i = 0; i < data.Agency.length; i++){
-          var agencyName = data.Agency[i].name;
-          if(!this.contains(filterIDs, agencyName)){
-            var agencyObject = JSON.stringify(data.Agency[i].id)
-            var agencyIndex = -1;
-            for(var j = 0; j < filteredData.Program.length; j++){
-              if(JSON.stringify(filteredData.Program[j].id) == agencyObject){
-                agencyIndex = j;
-                break;
-              }
-            }
-            if(programIndex > -1){
-              filteredData.Program.splice(agencyIndex,1);
-            }
-          }
-        }
 
         // Filter Agency
         for(var i = 0; i < data.Program.length; i++){
@@ -528,9 +537,20 @@ class Dashboard extends React.Component {
         return false;
     }
 
-    exportPDF() {
-        console.log("export!");
-				window.print();
+    onlyTables() {
+        this.setState({
+          exportPDF: true
+        });
+    }
+
+    backDash(){
+      this.setState({
+        exportPDF : false
+      })
+    }
+
+    exportPDF(){
+      window.print();
     }
 
     componentWillMount() {
@@ -558,6 +578,7 @@ class Dashboard extends React.Component {
 
     render() {
         if (this.state.data) {
+          if(!this.state.exportPDF){
             return (
                 <div>
                     <h2 style={{
@@ -566,10 +587,7 @@ class Dashboard extends React.Component {
                     }}>Dashboard Page</h2> <hr />
                     <br/>
                     <div className="row">
-
-
                         <FilterByInvested ref={filterbyinvested => { this._filterByInvested = filterbyinvested}} data={this.state.data}/>
-
                     </div>
                     <div className="row">
                         <FilterByYear ref={filterbyyear => { this._filterByYear = filterbyyear}} data={this.state.data}/>
@@ -577,6 +595,7 @@ class Dashboard extends React.Component {
                         <FilterByAgency ref={filterbyagency => { this._filterByAgency = filterbyagency}} data={this.state.data}/>
                         <FilterByPopulation ref={filterbypopulation => { this._filterByPopulation = filterbypopulation }} data={this.state.data}/>
                         <FilterByEngagement ref={filterbyengagement => { this._filterByEngagement = filterbyengagement}} data={this.state.data}/>
+                        <FilterByGeoArea ref={filterbygeoarea => {this._filterByGeoArea = filterbygeoarea}} data ={this.state.data}/>
                  </div>
 										<div className="row">
                       <FilterByFocusArea ref={filterbyfocusarea => { this._filterByFocusArea = filterbyfocusarea }} data={this.state.data} />
@@ -587,11 +606,15 @@ class Dashboard extends React.Component {
 											<button className="button info" onClick={this.generateGraphs} style={{
 													margin: "20px"
 											}}>Apply Filter</button>
-											<button className="button export" onClick={this.exportPDF} style={{
+                    <button className="button success" onClick={this.onlyTables} style={{
 													margin: "20px"
-											}}>Export PDF</button></div>
+											}}>Display Only Results</button></div>
+                      <div>
+
+                 </div>
                     <br/>
                     <div>
+                      <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
                         <Tabs forceRenderTabPanel={true}>
                             <TabList>
                                 <Tab>Money Invested</Tab>
@@ -616,23 +639,42 @@ class Dashboard extends React.Component {
                     </div>
 										<Tabs forceRenderTabPanel={true}>
 												<TabList>
-														<Tab>Table of Totals</Tab>
 														<Tab>Listings</Tab>
 												</TabList>
-												<TabPanel>
-														<TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
-												</TabPanel>
 												<TabPanel>
                             <Listing ref={listing => { this._listing = listing }} data={this.state.filterData}/>
 												</TabPanel>
 										</Tabs>
                 </div>
             );
+        }else{
+          return (
+          <div>
+            <button className="button export" onClick={this.backDash} style={{margin: "20px"}}>Back to Dashboard</button>
+            <button className="button export" onClick={this.exportPDF} style={{margin: "20px"}}>Export PDF</button>
+            <div className="row">
+              <p>
+              Filters used:
+            </p>
+              <p className="help-text">{this.state.filters}</p>
+            </div>
+            <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
+            <ChartMoneyInvested ref={chartmoneyinvested => { this._chartMoneyInvested = chartmoneyinvested}} data={this.state.filterData}/>
+            <ChartSumClientsServed ref={chartsumclientsserved => { this._chartSumClientsServed = chartsumclientsserved}} data={this.state.filterData}/>
+            <div>
+              <ChartGeographicInvestedCityGrouping ref={chartgeographicinvestedcitygrouping => { this._chartGeographicInvestedCityGrouping = chartgeographicinvestedcitygrouping}} data={this.state.filterData}/>
+              <D3Map ref={map => { this._map = map}} data={this.state.filterData}/>
+          <div>
+          <Listing ref={listing => { this._listing = listing }} data={this.state.filterData}/>
+          </div>
+        </div>
+        </div>
+          )
         }
+      }
         return (
             <div>Loading...
                 <div id='errorOut'></div>
-
             </div>
         );
     }

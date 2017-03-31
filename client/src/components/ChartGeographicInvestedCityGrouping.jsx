@@ -173,10 +173,25 @@ var ChartGeographicInvestedCityGrouping=React.createClass({
 
     var metadata = this.createMetadata(this.state.data);
 
+    var options = {};
+    options.tooltips = {};
+    options.tooltips.callbacks = {};
+    options.tooltips.callbacks.label = function(tooltipItem, data) {
+			var allData = data.datasets[tooltipItem.datasetIndex].data;
+			var tooltipLabel = data.labels[tooltipItem.index];
+			var tooltipData = allData[tooltipItem.index];
+			var total = 0;
+			for (var i in allData) {
+				total += allData[i];
+			}
+			var tooltipPercentage = Math.round((tooltipData / total) * 100);
+			return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+		}
+
     return (
       <div className="large-6 columns">
         <h4 style={{textAlign: "center"}}>{title}</h4><hr/>
-        <Pie data={metadata}/>
+        <Pie data={metadata} options={options} width={1400} height={600}/>
       </div>
     );
   }

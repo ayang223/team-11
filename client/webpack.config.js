@@ -23,7 +23,9 @@ externals: {
     root: __dirname,
     alias: {
       //rename React componenets here for cleaner imports
+      jQuery: 'jquery',
       App: 'src/app.jsx',
+      jQuery: 'jquery',
       Nav: 'src/components/Nav.jsx',
       Main: 'src/scenes/Main.jsx',
       Login: 'src/scenes/Login.jsx',
@@ -39,6 +41,7 @@ externals: {
       FilterByPopulation: 'src/components/FilterByPopulation.jsx',
       FilterByElement: 'src/components/FilterByElement.jsx',
       FilterByEngagement: 'src/components/FilterByEngagement.jsx',
+      FilterByGeoArea: 'src/components/FilterByGeoArea.jsx',
       ChartMoneyInvested: 'src/components/ChartMoneyInvested.jsx',
       ChartSumClientsServed: 'src/components/ChartSumClientsServed.jsx',
       ChartGeographicInvestedCityGrouping: 'src/components/ChartGeographicInvestedCityGrouping.jsx',

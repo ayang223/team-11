@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.team11.backend.DatabaseHandler;
+import com.team11.backend.LogEventHandler;
 /**
  * This class contains all dashboard logic
  */
@@ -37,8 +38,12 @@ public class DashboardLogic {
 	}
 
 	public static JsonObject importOutput(JsonObject requestJson) {
+		if (!requestJson.has("data") || !requestJson.has("user")) {
+			return RequestHandler.getStatusFailed();
+		}
 		boolean success = true;
 		JsonArray arrayJson = requestJson.get("data").getAsJsonArray();
+		String username = requestJson.get("user").getAsString();
 		JsonArray itemJson = new JsonArray();
 				
 		// Store column headers into an array list
@@ -74,6 +79,7 @@ public class DashboardLogic {
 			
 			success = DatabaseHandler.insertInventoryOutput(funds, focus, outcome, funding, programAndar,yearlyAllocation, grantStart, grantEnd, description, planner);
 			if (!success) {
+				LogEventHandler.logUpload(username, success);
 				return RequestHandler.getStatusFailed();
 			}
 			
@@ -95,6 +101,7 @@ public class DashboardLogic {
 					String populationItem = headers.get(fieldNum);
 					success = DatabaseHandler.insertTargetPopulation(programAndar, populationItem);
 					if (!success) {
+						LogEventHandler.logUpload(username, success);
 						return RequestHandler.getStatusFailed();
 					}
 				}
@@ -114,6 +121,7 @@ public class DashboardLogic {
 				
 				success = DatabaseHandler.insertProgramElement(programAndar, programCategory, level);
 				if (!success) {
+					LogEventHandler.logUpload(username, success);
 					return RequestHandler.getStatusFailed();
 				}
 				fieldNum++;
@@ -130,6 +138,7 @@ public class DashboardLogic {
 							success = DatabaseHandler.insertProgramSubElement(programAndar, programCategory, header);
 						}
 						if (!success) {
+							LogEventHandler.logUpload(username, success);
 							return RequestHandler.getStatusFailed();
 						}
 						
@@ -172,6 +181,7 @@ public class DashboardLogic {
 							focusPercent = Integer.parseInt(percentString);
 							success = DatabaseHandler.insertMunicipality(programAndar, municipality, focusPercent);
 							if (!success) {
+								LogEventHandler.logUpload(username, success);
 								return RequestHandler.getStatusFailed();
 							}
 						} else {
@@ -180,6 +190,7 @@ public class DashboardLogic {
 						
 						success = DatabaseHandler.insertAreaDirectory(geoArea, municipality);
 						if (!success) {
+							LogEventHandler.logUpload(username, success);
 							return RequestHandler.getStatusFailed();
 						}
 						
@@ -199,6 +210,7 @@ public class DashboardLogic {
 					String donorEngagement = headers.get(fieldNum);
 					success = DatabaseHandler.insertDonorEngagement(programAndar, donorEngagement, temp);
 					if (!success) {
+						LogEventHandler.logUpload(username, success);
 						return RequestHandler.getStatusFailed();
 					}
 				}
@@ -216,6 +228,7 @@ public class DashboardLogic {
 					String output = headers.get(fieldNum);
 					success = DatabaseHandler.insertOutput(programAndar, output, Integer.parseInt(value));
 					if (!success) {
+						LogEventHandler.logUpload(username, success);
 						return RequestHandler.getStatusFailed();
 					}
 				}
@@ -223,17 +236,22 @@ public class DashboardLogic {
 				fieldNum++;
 			}
 		}
-		
+
+		LogEventHandler.logUpload(username, true);
 		return RequestHandler.getStatusSuccess();
 	}
 
 	public static JsonObject importPrograms(JsonObject requestJson) {
+		if (!requestJson.has("data") || !requestJson.has("user")) {
+			return RequestHandler.getStatusFailed();
+		}
 
 		// Parse the request JSON data and insert into database with
 		// queries in DatabaseHandler
 		// JSON range for Postal codes: FIELD 1-?
 		boolean success = true;
 		JsonArray arrayJson = requestJson.get("data").getAsJsonArray();
+		String username = requestJson.get("user").getAsString();
 		JsonArray itemJson = new JsonArray();
 
 		for (int row = 1; row < arrayJson.size()-1; row++) {
@@ -261,11 +279,13 @@ public class DashboardLogic {
 			
 			success = DatabaseHandler.insertAgency(agencyAndar, agencyName);
 			if (!success) {
+				LogEventHandler.logUpload(username, success);
 				return RequestHandler.getStatusFailed();
 			}
 			
 			success = DatabaseHandler.insertProgram(programAndar, agencyAndar, programName, website, description, numLocations);
 			if (!success) {
+				LogEventHandler.logUpload(username, success);
 				return RequestHandler.getStatusFailed();
 			}
 
@@ -276,12 +296,14 @@ public class DashboardLogic {
 				if (!locationName.equals("") || !locationPostal.equals("")) {
 					success = DatabaseHandler.insertLocation(programAndar, locationName, locationPostal);
 					if (!success) {
+						LogEventHandler.logUpload(username, success);
 						return RequestHandler.getStatusFailed();
 					}
 				}
 			}
 		}
-		
+
+		LogEventHandler.logUpload(username, true);
 		return RequestHandler.getStatusSuccess();
 	}
 

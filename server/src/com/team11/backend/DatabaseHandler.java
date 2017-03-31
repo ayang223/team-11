@@ -599,7 +599,7 @@ public class DatabaseHandler {
 			conn.createStatement().executeUpdate(clearLocations);
 			conn.createStatement().executeUpdate(clearProgram);
 			conn.createStatement().executeUpdate(clearAgency);
-			
+			conn.createStatement().executeUpdate(clearGeoArea);
 			conn.createStatement().executeUpdate(clearTargetPop);
 			conn.createStatement().executeUpdate(clearProgramSubElement);
 			conn.createStatement().executeUpdate(clearProgramElement);
@@ -1209,6 +1209,58 @@ public class DatabaseHandler {
 		return outputs;
 	}
 
+
+	public static JsonArray getMostRecentImport() {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		String sql = "SELECT * FROM Log WHERE action = 'Import Success' ORDER BY id DESC LIMIT 1";
+		JsonArray recentImport = new JsonArray();
+
+		try {
+			conn = getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				JsonObject event = new JsonObject();
+				int id = rs.getInt("id");
+				String username = rs.getString("username");
+				String action = rs.getString("action");
+				String date_time = rs.getString("date_time");
+				event.addProperty("id", id);
+				event.addProperty("username", username);
+				event.addProperty("action", action);
+				event.addProperty("date_time", date_time);
+
+				recentImport.add(event);
+			}
+		} catch (SQLException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			recentImport.add(queryFailed);
+		} catch (ClassNotFoundException e) {
+			JsonObject queryFailed = RequestHandler.getStatusFailed();
+			recentImport.add(queryFailed);
+		} finally {
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// Do nothing
+				}
+			}
+		}
+
+		return recentImport;
+	}
+	
 	// Monitoring tool log
 	public static boolean insertLogEvent(String username, String action, String date_time) {
 		Connection conn = null;

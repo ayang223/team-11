@@ -249,6 +249,7 @@ var AdminPage = React.createClass({
   },
 
   clearDatabase: function() {
+    if(window.confirm("Do you really want to clear the whole database?")){
     $.ajax({
       url:url,
       type: "POST",
@@ -257,7 +258,8 @@ var AdminPage = React.createClass({
       }),
       dataType:"json",
       success:function(data){
-        if(data.status === "failed"){
+        console.log(data);
+        if(data.status == "failed"){
           alert("Failed to clear database");
         } else {
           alert("Success! Database has been cleared");
@@ -267,6 +269,7 @@ var AdminPage = React.createClass({
         alert("Failed to clear database");
       }
     })
+  }
   },
 
   render:function(){
@@ -278,7 +281,7 @@ var AdminPage = React.createClass({
        <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.refreshList}>Refresh List</button>
        <TableAdmin data={this.state.data} />
        </div>
-       <div className="row">
+       <div className="row" style={{padding : "50px"}}>
        <AccountForm onNewAccount={this.handleNewAccount}/>
        <DeleteUserForm onDeleteUser={this.handleDeleteUser}/>
        </div>
@@ -288,7 +291,7 @@ var AdminPage = React.createClass({
        </div>
        <div className="row" style={{padding : "50px"}}>
        <h4>Manage database: </h4><hr />
-       <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.clearDatabase}>Clear Database</button>
+       <button className="button small-centered text-center coloumns alert" type="submit" style={{width:150, height:40}} onClick={this.clearDatabase}>Clear Database</button>
        </div>
      </div>
       )
