@@ -59,7 +59,7 @@ var D3Map = React.createClass({
                         dashData.Location[i].lon, dashData.Location[i].lat
                     ],
                     "properties": {
-                        "name": dashData.Location[i].name + " " + "http://www.google.com/maps/place/" + dashData.Location[i].lon.toString() + "," + dashData.Location[i].lat.toString()
+                        "name": dashData.Location[i].name
                     }
                 });
             }
