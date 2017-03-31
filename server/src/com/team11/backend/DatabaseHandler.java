@@ -527,16 +527,21 @@ public class DatabaseHandler {
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, programAndar);
 				stmt.setString(2, name);
-				stmt.setString(3, postal);
-				if (lat == null || lon == null) {
+				if (postal.equals("")) {
+					stmt.setNull(3, Types.VARCHAR);
+					stmt.setNull(4, Types.DOUBLE);
+					stmt.setNull(5, Types.DOUBLE);
+				} else if (lat == null || lon == null){
+					stmt.setString(3, postal);
 					stmt.setNull(4, Types.DOUBLE);
 					stmt.setNull(5, Types.DOUBLE);
 				} else {
+					stmt.setString(3, postal);
 					stmt.setDouble(4, lat);
 					stmt.setDouble(5, lon);
 				}
-				int count = stmt.executeUpdate();
-				success = count > 0;
+				stmt.executeUpdate();
+				success = true;
 			} catch (SQLException e) {
 				success = false;
 			} catch (ClassNotFoundException e) {
@@ -559,7 +564,7 @@ public class DatabaseHandler {
 			}
 		
 		} catch (IOException e) {
-			success = false;
+			// Do nothing
 		}
 		return success;
 	}
