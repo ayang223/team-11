@@ -37,7 +37,8 @@ class Dashboard extends React.Component {
         this.state = {
             data: null,
             filterData: null,
-            exportPDF: false
+            exportPDF: false,
+            filters: ""
         };
     }
 
@@ -57,6 +58,9 @@ class Dashboard extends React.Component {
         var username = cookie.load('userID');
         var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
           filterByPopulation, filterByElement, filterByEngagement);
+          this.setState({
+            filters :allFilters
+          });
         var filterString = allFilters.join(", ");
         $.ajax({
             url:url,
@@ -648,6 +652,12 @@ class Dashboard extends React.Component {
           <div>
             <button className="button export" onClick={this.backDash} style={{margin: "20px"}}>Back to Dashboard</button>
             <button className="button export" onClick={this.exportPDF} style={{margin: "20px"}}>Export PDF</button>
+            <div className="row">
+              <p>
+              Filters used:
+            </p>
+              <p className="help-text">{this.state.filters}</p>
+            </div>
             <TableProgramInfo ref={tableprograminfo => { this._tableProgramInfo = tableprograminfo }} data={this.state.filterData}/>
             <ChartMoneyInvested ref={chartmoneyinvested => { this._chartMoneyInvested = chartmoneyinvested}} data={this.state.filterData}/>
             <ChartSumClientsServed ref={chartsumclientsserved => { this._chartSumClientsServed = chartsumclientsserved}} data={this.state.filterData}/>
