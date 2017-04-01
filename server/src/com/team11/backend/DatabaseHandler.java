@@ -591,7 +591,6 @@ public class DatabaseHandler {
 
 		Connection conn = null;
 		Statement stmt = null;
-		ResultSet rs = null;
 
 		try {
 			conn = getConnection();
@@ -702,13 +701,11 @@ public class DatabaseHandler {
 
 			while (rs.next()) {
 				JsonObject row = new JsonObject();
-				int id = rs.getInt("id");
 				int andar_id = rs.getInt("andar_id");
 				String name = rs.getString("name");
 				String postal = rs.getString("postal");
 				double lat = rs.getDouble("lat");
 				double lon = rs.getDouble("lon");
-				row.addProperty("id", id);
 				row.addProperty("andar_id", andar_id);
 				row.addProperty("name", name);
 				row.addProperty("postal", postal);

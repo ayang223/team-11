@@ -125,14 +125,13 @@ CREATE TABLE Program (
 );
 
 CREATE TABLE Location (
-	id integer NOT NULL AUTO_INCREMENT,
 	andar_id integer NOT NULL,
-	name varchar(128),
-	postal varchar(8),
+	name varchar(128) NOT NULL,
+	postal varchar(8) NOT NULL,
 	lat double,
 	lon double,
 
-	PRIMARY KEY (id),
+	PRIMARY KEY (andar_id, name, postal),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );
