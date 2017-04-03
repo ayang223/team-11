@@ -55,11 +55,15 @@ var ChartMoneyInvested=React.createClass({
     var title = "Money Invested Bar Chart ";
 
     var metadata = this.createMetadata(this.state.data);
+    var heightValue = 600;
+    if(metadata.datasets[0].data.length > 15) {
+        heightValue = metadata.datasets[0].data.length * 40;
+    }
     return (
       <div className="large-6 columns">
         <h4 style={{textAlign: "center"}}>{title}</h4><hr />
         <HorizontalBar data={metadata} width={1400}
-        height={600}/>
+        height={heightValue}/>
         </div>
     );
   }

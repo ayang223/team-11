@@ -19,8 +19,9 @@ CREATE TABLE AndarDataOutput (
 	grant_end date NOT NULL,
 	description varchar(512),
 	planner varchar(128) NOT NULL,
+	grant_year varchar(8) NOT NULL,
 
-	PRIMARY KEY (program_andar)
+	PRIMARY KEY (program_andar,grant_year)
 );
 
 CREATE TABLE TargetPopulation (
@@ -95,10 +96,11 @@ CREATE TABLE DonorEngagement (
 
 CREATE TABLE Outputs (
 	andar_id integer NOT NULL,
+	grant_year varchar(8) NOT NULL,
 	type varchar(128) NOT NULL,
 	value integer NOT NULL,
 
-	PRIMARY KEY (andar_id, type),
+	PRIMARY KEY (andar_id, type, grant_year),
 
 	FOREIGN KEY (andar_id) REFERENCES AndarDataOutput(program_andar)
 );
@@ -131,7 +133,7 @@ CREATE TABLE Location (
 	lat double,
 	lon double,
 
-	PRIMARY KEY (andar_id, name, postal),
+	PRIMARY KEY (andar_id,name,postal),
 
 	FOREIGN KEY (andar_id) REFERENCES Program(id)
 );

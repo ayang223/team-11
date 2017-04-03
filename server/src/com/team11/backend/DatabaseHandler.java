@@ -49,7 +49,7 @@ public class DatabaseHandler {
 	public static boolean insertInventoryOutput(String funds, String focus, String outcome, String funding, int programAndar, float yearlyAllocation, String grantStart, String grantEnd, String description, String planner) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO AndarDataOutput (funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE program_andar=program_andar";
+		String sql = "INSERT INTO AndarDataOutput (funds, focus, outcome, funding, program_andar, yearly_allocation, grant_start, grant_end, description, planner, grant_year) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE funds = VALUES(funds), focus= VALUES(focus), outcome= VALUES(outcome), funding= VALUES(funding), yearly_allocation = VALUES(yearly_allocation), grant_start = VALUES(grant_start), grant_end= VALUES(grant_end), description= VALUES(description), planner= VALUES(planner)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -65,6 +65,7 @@ public class DatabaseHandler {
 			stmt.setString(8, grantEnd);
 			stmt.setString(9, description);
 			stmt.setString(10, planner);
+			stmt.setString(11, grantStart.substring(0,4));
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
@@ -96,7 +97,7 @@ public class DatabaseHandler {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		
-		String sql = "INSERT INTO TargetPopulation (andar_id, population) VALUES (?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
+		String sql = "INSERT INTO TargetPopulation (andar_id, population) VALUES (?, ?) ON DUPLICATE KEY UPDATE population = population";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -134,7 +135,7 @@ public class DatabaseHandler {
 	public static boolean insertProgramElement(int programAndar, String element, int level) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO ProgramElement (andar_id, element, level) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
+		String sql = "INSERT INTO ProgramElement (andar_id, element, level) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE level=VALUES(level)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -212,7 +213,7 @@ public class DatabaseHandler {
 	public static boolean insertGeoArea(int programAndar, String area, int level) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO GeoArea (andar_id, area, level) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE andar_id = andar_id";
+		String sql = "INSERT INTO GeoArea (andar_id, area, level) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE level=VALUES(level)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -251,7 +252,7 @@ public class DatabaseHandler {
 	public static boolean insertMunicipality(int programAndar, String municipality, int focusPercent) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE andar_id = andar_id";
+		String sql = "INSERT INTO Municipality (andar_id, municipality, focus_percentage) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE focus_percentage = VALUES(focus_percentage)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -290,7 +291,7 @@ public class DatabaseHandler {
 	public static boolean insertDonorEngagement(int programAndar, String engagement, String description) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO DonorEngagement (andar_id, engagement, description) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
+		String sql = "INSERT INTO DonorEngagement (andar_id, engagement, description) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE description = VALUES(description)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -326,18 +327,19 @@ public class DatabaseHandler {
 		return success;
 	}
 	
-	public static boolean insertOutput(int programAndar, String type, int value) {
+	public static boolean insertOutput(int programAndar, String grantStart_year, String type, int value) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Outputs (andar_id, type, value) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
+		String sql = "INSERT INTO Outputs (andar_id, grant_year, type, value) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=VALUES(value)";
 		boolean success = true;
 		try {
 			conn = getConnection();
 
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, programAndar);
-			stmt.setString(2, type);
-			stmt.setInt(3, value);
+			stmt.setString(2, grantStart_year);
+			stmt.setString(3, type);
+			stmt.setInt(4, value);
 			int count = stmt.executeUpdate();
 			success = count > 0;
 		} catch (SQLException e) {
@@ -406,7 +408,7 @@ public class DatabaseHandler {
 	public static boolean insertAgency(int agencyAndar, String name) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Agency (id, name) VALUES (?, ?) ON DUPLICATE KEY UPDATE id=id";
+		String sql = "INSERT INTO Agency (id, name) VALUES (?, ?) ON DUPLICATE KEY UPDATE name=VALUES(name)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -443,7 +445,7 @@ public class DatabaseHandler {
 	public static boolean insertProgram(int programAndar, int agencyAndar, String name, String website, String description, int numLocations) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO Program (id, agency_andar, name, website, description, num_locations) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id=id";
+		String sql = "INSERT INTO Program (id, agency_andar, name, website, description, num_locations) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE agency_andar=VALUES(agency_andar), name=VALUES(name), website=VALUES(website), description=VALUES(description), num_locations=VALUES(num_locations)";
 		boolean success = true;
 		try {
 			conn = getConnection();
@@ -519,7 +521,7 @@ public class DatabaseHandler {
 		     
 			Connection conn = null;
 			PreparedStatement stmt = null;
-			String sql = "INSERT INTO Location (andar_id, name, postal, lat, lon) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE andar_id=andar_id";
+			String sql = "REPLACE INTO Location (andar_id, name, postal, lat, lon) VALUES (?, ?, ?, ?, ?)";
 
 			try {
 				conn = getConnection();
