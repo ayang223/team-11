@@ -77,24 +77,12 @@ class Dashboard extends React.Component {
                }
             }.bind(this),
         });
+
         // Take stuff out for Year
-        var filterByYearOn = true;
-        var filterByYearIDs = [];
         if(!$.isArray(filterByYear) || filterByYear.length == 0){
-          filterByYearOn = false;
+          //Do Nothing
         } else {
-          for(var i = 0; i < filteredData.AndarDataOutput.length; i++){
-            for(var j = 0; j < filterByYear.length; j++){
-              if(JSON.stringify(filteredData.AndarDataOutput[i].grant_date.substring(0,4) + "/" + filteredData.AndarDataOutput[i].grant_end.substring(0,4))== filterByYear[j]){
-                if(!this.contains(filterByYearIDs, filteredData.AndarDataOutput[i].program_andar)){
-                  filterByYearIDs.push(filteredData.AndarDataOutput[i].program_andar);
-                } break;
-              }
-            }
-          }
-        }
-        if (filterByYearOn){
-          filteredData = this.filterOutID(filteredData, filterByYearIDs);
+            filteredData = this.filterOutYear(filteredData, filterByYear);
         }
 
         // Take stuff out for City
@@ -324,6 +312,61 @@ class Dashboard extends React.Component {
 		this._listing.setState({data: filteredData});
     }
 
+    filterOutYear(data, filterYears) {
+        var filteredData = JSON.parse(JSON.stringify(data));
+
+        for(var i = 0; i < data.AndarDataOutput.length; i++) {
+            var andarOutputYear = JSON.stringify(data.AndarDataOutput[i].grant_year);
+            var shouldRemoveAndar = true;
+            for(var j = 0; j < filterYears.length; j++){
+                var filterYearStringAndar = filterYears[j].substring(0,5) + "\"";
+                if(andarOutputYear == filterYearStringAndar) {
+                    shouldRemoveAndar = false;
+                }
+            }
+            if(shouldRemoveAndar) {
+                var andarDataIndex = -1;
+                for(var k = 0; k < filteredData.AndarDataOutput.length; k++) {
+                    var andarObject = JSON.stringify(data.AndarDataOutput[i]);
+                    if(JSON.stringify(filteredData.AndarDataOutput[k]) == andarObject){
+                        andarDataIndex = k;
+                        break;
+                    }
+                }
+                if(andarDataIndex > -1){
+                    filteredData.AndarDataOutput.splice(andarDataIndex, 1);
+                }
+            }
+        }
+        
+        for(var l = 0; l < data.Outputs.length; l++) {
+            var outputYear = JSON.stringify(data.Outputs[l].grant_year);
+            var shouldRemoveOutput = true;
+            for(var m = 0; m < filterYears.length; m++){
+                var filterYearStringOutput = filterYears[m].substring(0,5) + "\"";
+                if(outputYear == filterYearStringOutput) {
+                    shouldRemoveOutput = false;
+                }
+            }
+            if(shouldRemoveOutput) {
+                var outputIndex = -1;
+                for(var n = 0; n < filteredData.Outputs.length; n++) {
+                    var outputObject = JSON.stringify(data.Outputs[l]);
+                    if(JSON.stringify(filteredData.Outputs[n]) == outputObject){
+                        outputIndex = n;
+                        break;
+                    }
+                }
+                if(outputIndex > -1){
+                    filteredData.Outputs.splice(outputIndex, 1);
+                }
+            }
+        }
+        console.log(filteredData);
+
+        return filteredData;
+    }
+
     filterOutID(data, filterIDs) {
         var filteredData = JSON.parse(JSON.stringify(data));
 
@@ -340,7 +383,7 @@ class Dashboard extends React.Component {
               }
             }
             if(agencyIndex > -1){
-              filteredData.Agency.splice(agencyIndex,1);
+              filteredData.Agency.splice(agencyIndex, 1);
             }
           }
         }

@@ -807,6 +807,7 @@ public class DatabaseHandler {
 				String grant_end = rs.getDate("grant_end").toString();
 				String description = rs.getString("description");
 				String planner = rs.getString("planner");
+				String grant_year = rs.getString("grant_year");
 				row.addProperty("funds", funds);
 				row.addProperty("focus", focus);
 				row.addProperty("outcome", outcome);
@@ -817,6 +818,7 @@ public class DatabaseHandler {
 				row.addProperty("grant_end", grant_end);
 				row.addProperty("description", description);
 				row.addProperty("planner", planner);
+				row.addProperty("grant_year", grant_year);
 				
 				inventoryOutput.add(row);
 			}
@@ -1178,9 +1180,12 @@ public class DatabaseHandler {
 				int andar_id = rs.getInt("andar_id");
 				String type = rs.getString("type");
 				int value = rs.getInt("value");
+				String grant_year = rs.getString("grant_year");
+				
 				row.addProperty("andar_id", andar_id);
 				row.addProperty("type", type);
 				row.addProperty("value", value);
+				row.addProperty("grant_year", grant_year);
 				
 				outputs.add(row);
 			}

@@ -29,7 +29,17 @@ var ChartMoneyInvested=React.createClass({
                 currentProgramName = program[j].name;
             }
         }
-        if(currentProgramName != null) {
+        var alreadyExist = false;
+        for(var k = 0; k < metadata.labels.length; k++) {
+            var metadataProgram = metadata.labels[k];
+            if(metadataProgram == currentProgramName) {
+                var currentAllocation = moneyInvestedData[k];
+                var accumulativeAllocation = currentAllocation + currentYearlyAllocation;
+                moneyInvestedData[k] = accumulativeAllocation;
+                alreadyExist = true;
+            }
+        }
+        if(currentProgramName != null && alreadyExist == false) {
             moneyInvestedData.push(currentYearlyAllocation);
             metadata.labels.push(currentProgramName);
         }
