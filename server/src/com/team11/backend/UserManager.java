@@ -16,7 +16,7 @@ public class UserManager {
 	private static final String FIRST_NAME = "first_name";
 	private static final String LAST_NAME = "last_name";
 	private static final String ADMIN_PRIVILEGES = "admin_privileges";
-	private static final String DELETION_PROTECTED = "deleteion_protected";
+	private static final String DELETION_PROTECTED = "deletion_protected";
 
 	public UserManager() {
 

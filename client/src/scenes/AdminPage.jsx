@@ -9,6 +9,22 @@ var url = require('url');
 
 
 var AccountForm = React.createClass({
+  getInitialState:function(){
+    return{
+      username: '',
+      password:'',
+      verifypassword:'',
+      fname:'',
+      lname:'',
+      username: '',
+      data: '',
+      isAdmin: 'false'
+    };
+  },
+
+  handleChange:function(e){
+    this.setState({isAdmin: e.target.value})
+  },
   createNewAccount:function(e){
     e.preventDefault();
 
@@ -17,6 +33,7 @@ var AccountForm = React.createClass({
     var verifypassword = this.refs.verifypassword.value;
     var fname = this.refs.fname.value;
     var lname = this.refs.lname.value;
+    var isAdmin = this.refs.isAdmin.value;
 
     if(username.length > 0 && password.length > 0 && verifypassword.length > 0 && fname.length > 0 && lname.length >0){
       this.refs.username.value = '';
@@ -44,7 +61,7 @@ var AccountForm = React.createClass({
         "password" : encryptedPassword,
         "first_name" : fname,
         "last_name" : lname,
-        "admin_privileges" : false  // admin privilege default to false
+        "admin_privileges" : isAdmin  // admin privilege default to false
       }),
       success:function(data){
         if(data.status === "failed"){
@@ -58,10 +75,13 @@ var AccountForm = React.createClass({
     })
   },
 
+
   render: function(){
+    var msg = 'selected ' + this.state.isAdmin;
     return(
       <div className="medium-6 columns">
       <h4> Create new account </h4><hr />
+      <p>{msg}</p>
       <form onFormAccount={this.onFormAccount}>
         <div className="row">
         <div className="medium-6 columns">
@@ -94,10 +114,19 @@ var AccountForm = React.createClass({
         </div>
         </div>
         <div className="row">
-          <div className="medium-6 columns">
+        <div className="medium-6 columns">
+        <p> Admin Privileges: </p>
+        <select value ={this.state.isAdmin} onChange={this.handleChange}>
+          <option ref = "isAdmin" value = "false">False </option>
+          <option ref = "isAdmin" value = "true">True </option>
+        </select>
+        </div>
+        </div>
+        <div className="row">
+        <div className="medium-6 columns">
         <button className="button small-centered text-center coloumns" type="submit" style={{width:150, height:40}} onClick={this.createNewAccount}>Create account</button>
         </div>
-      </div>
+        </div>
       </form>
       </div>
       )
@@ -111,6 +140,12 @@ var DeleteUserForm = React.createClass({
     e.preventDefault();
 
     var username = this.refs.username.value;
+    var lowerUserName = username.toLowerCase();
+    var isProtected = false;
+
+    if(lowerUserName == "main_admin"){
+      isProtected = true;
+    }
 
     if(username.length > 0){
        this.props.onDeleteUser(username)
@@ -124,12 +159,13 @@ var DeleteUserForm = React.createClass({
       type: "POST",
       data: JSON.stringify({
         "action": "Delete User",
-        "user" : username
+        "user" : lowerUserName,
+        "deletion_protected" : isProtected
       }),
       success:function(data){
          (data);
         if (data.status === "failed") {
-          if (data.main_admin) {
+          if (lowerUserName == "main_admin") {
             alert("User cannot be deleted");
           } else {
             alert("User not found");
@@ -174,7 +210,8 @@ var AdminPage = React.createClass({
       fname:'',
       lname:'',
       username: '',
-      data: ''
+      data: '',
+      isAdmin: 'False'
     };
 
   },
@@ -214,13 +251,14 @@ var AdminPage = React.createClass({
   componentDidMount:function() {
   },
 
-  handleNewAccount:function(username, password, verifypassword, fname, lname){
+  handleNewAccount:function(username, password, verifypassword, fname, lname, isAdmin){
     this.setState({
       username:username,
       password:password,
       verifypassword:verifypassword,
       fname:fname,
-      lname:lname
+      lname:lname,
+      isAdmin:isAdmin
     });
   },
 
