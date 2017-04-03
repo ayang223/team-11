@@ -195,7 +195,7 @@ var Import = React.createClass({
                <form ref="uploadForm" className="uploader" encType="multipart/form-data" >
                    <input className="button success button" style={buttonStyle}  ref="file" id="CSVUpload" type="file" name="file" className="upload-file"/>
                    <p className="help-text" style={{marginLeft:"20px", textAlign: "left"}}> If this is the first time in the year that Andar data is uploaded, please upload the Output .csv file first before the Program. </p>
-                    <p className="help-text" style={{marginLeft:"20px", textAlign: "left"}}> If you are uploading a document with duplicate funding year, the old data will be o </p>
+                    <p className="help-text" style={{marginLeft:"20px", textAlign: "left"}}> If you are uploading a document with duplicate funding year, the old data will be overwritten</p>
                  <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Program File" onClick={this.importProgram} />
                    <input className="button success button" style={buttonStyle} type="button" ref="button" value="Upload Output File" onClick={this.importOutput} />
                    <br/><br/>

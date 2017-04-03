@@ -48,14 +48,14 @@ var Listing = React.createClass({
             "elements": [],
             "locations": [],
             "agency": "",
-            "AndarDataOutput": ""
+            "AndarDataOutput": []
         };
 
         for (var i = 0; i < dataFromDash.Program.length; i++) {
             program = dataFromDash.Program[i];
             var locations = [];
             var elements = [];
-            var andar = {};
+            var andar = [];
 
             for (var j = 0; j < dataFromDash.Location.length; j++) {
               var location = {
@@ -84,7 +84,7 @@ var Listing = React.createClass({
             }
             for(var n = 0; n < dataFromDash.AndarDataOutput.length; n++){
               if(program.id === dataFromDash.AndarDataOutput[n].program_andar){
-                andar = dataFromDash.AndarDataOutput[n];
+                andar.push(dataFromDash.AndarDataOutput[n]);
               }
             }
             program.AndarDataOutput = andar;
@@ -100,7 +100,6 @@ var Listing = React.createClass({
       var zoomIn = this.zoomIn;
       var zoomOut = this.zoomOut
       var center = [-123.1022025, 49.2823492];
-
         for(var i = 0; i < programList.length; i++){
           var mapLinks = [];
           var rawJson = {
@@ -142,6 +141,9 @@ var Listing = React.createClass({
 
           var listElements = programList[i].elements.map((element)=>
                 <li className="help-text" key={element}>{element}</li>);
+          var listAllocation = programList[i].AndarDataOutput.map((andarData) =>
+              <li key={andarData.grant_date.substring(0,4)}>Funding Period: {andarData.grant_date.substring(0,4)}-{andarData.grant_end.substring(0,4)},  $ Invested: {andarData.yearly_allocation}</li>
+          )
           listOfHi.push(
             <div className="row" key={programList[i].id}>
             <div className="large-6 column">
@@ -152,7 +154,7 @@ var Listing = React.createClass({
               <dl>
                 <dt>Program Description: </dt>
                 <dd>{programList[i].description}</dd>
-                  <dd>{programList[i].AndarDataOutput.description}</dd>
+                  <dd>{programList[i].AndarDataOutput[0].description}</dd>
                   <dt>Program website: </dt>
                   <dd>{programList[i].website}</dd>
                     <dt>Program Focus: </dt>
@@ -160,7 +162,7 @@ var Listing = React.createClass({
                     <dt>Program Elements: </dt>
                     <dd>{listElements}</dd>
                     <dt>Yearly Allocation: </dt>
-                    <dd>${programList[i].AndarDataOutput.yearly_allocation}</dd>
+                    <dd>{listAllocation}</dd>
                     <dt>Google Map Links: </dt>
                     <dd>{listMapLinks}</dd>
 
