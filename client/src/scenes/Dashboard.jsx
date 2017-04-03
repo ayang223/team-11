@@ -57,7 +57,7 @@ class Dashboard extends React.Component {
 
         var username = cookie.load('userID');
         var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
-          filterByPopulation, filterByElement, filterByEngagement);
+          filterByPopulation, filterByElement, filterByEngagement, filterByGeoArea);
           this.setState({
             filters :allFilters
           });
