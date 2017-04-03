@@ -77,11 +77,9 @@ var AccountForm = React.createClass({
 
 
   render: function(){
-    var msg = 'selected ' + this.state.isAdmin;
     return(
       <div className="medium-6 columns">
       <h4> Create new account </h4><hr />
-      <p>{msg}</p>
       <form onFormAccount={this.onFormAccount}>
         <div className="row">
         <div className="medium-6 columns">
