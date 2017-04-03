@@ -56,12 +56,12 @@ class Dashboard extends React.Component {
         var filterByGeoArea = this._filterByGeoArea.state.selectValue;
 
         var username = cookie.load('userID');
-        var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, filterByFocusArea,
-          filterByPopulation, filterByElement, filterByEngagement);
-          this.setState({
-            filters :allFilters
-          });
+        var allFilters = filterByYear.concat(filterByCity, filterByInvested, filterByAgency, JSON.stringify(filterByFocusArea),
+          filterByPopulation, JSON.stringify(filterByElement), filterByEngagement);
         var filterString = allFilters.join(", ");
+        this.setState({
+          filters :allFilters
+        });
         $.ajax({
             url:url,
            type: "POST",
