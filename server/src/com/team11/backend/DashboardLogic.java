@@ -226,7 +226,7 @@ public class DashboardLogic {
 				
 				if (!value.equals("")) {
 					String output = headers.get(fieldNum);
-					success = DatabaseHandler.insertOutput(programAndar, output, Integer.parseInt(value));
+					success = DatabaseHandler.insertOutput(programAndar, grantStart.substring(0,4), output, Integer.parseInt(value));
 					if (!success) {
 						LogEventHandler.logUpload(username, success);
 						return RequestHandler.getStatusFailed();
@@ -366,6 +366,7 @@ public class DashboardLogic {
 			case "Squamish-Lillooet Regional District":
 			case "Sunshine Coast Regional District":
 			case "Other Areas":
+				System.out.println(newElement);
 				return newElement;
 			default:
 				return currElement;
