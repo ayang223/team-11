@@ -62,6 +62,9 @@ class Dashboard extends React.Component {
             filters :allFilters
           });
         var filterString = allFilters.join(", ");
+        this.setState({
+          filters :allFilters
+        });
         $.ajax({
             url:url,
            type: "POST",
