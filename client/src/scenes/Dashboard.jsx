@@ -199,7 +199,6 @@ class Dashboard extends React.Component {
             }
         }
         if (filterByFocusAreaOn) {
-          console.log(filterByFocusAreaIDs);
             filteredData = this.filterOutID(filteredData, filterByFocusAreaIDs);
         }
 
@@ -363,7 +362,6 @@ class Dashboard extends React.Component {
                 }
             }
         }
-        console.log(filteredData);
 
         return filteredData;
     }
@@ -568,7 +566,6 @@ class Dashboard extends React.Component {
                 }
             }
         }
-        console.log(filteredData);
         return filteredData;
     }
 
