@@ -68,7 +68,7 @@ var Listing = React.createClass({
                       location.lat = dataFromDash.Location[j].lat,
                       location.lon = dataFromDash.Location[j].lon;
                       location.name = dataFromDash.Location[j].name;
-                      locations.push(location); //TODO: Change to Coordinates after Backend Change
+                      locations.push(location);
                   }
                 }
             }
@@ -87,10 +87,12 @@ var Listing = React.createClass({
                 andar.push(dataFromDash.AndarDataOutput[n]);
               }
             }
+            if(andar.length > 0){
             program.AndarDataOutput = andar;
             program.elements = elements;
             program.locations = locations;
             programList.push(program);
+          }
         }
         return programList;
     },
@@ -144,6 +146,10 @@ var Listing = React.createClass({
           var listAllocation = programList[i].AndarDataOutput.map((andarData) =>
               <li key={andarData.grant_date.substring(0,4)}>Funding Period: {andarData.grant_date.substring(0,4)}-{andarData.grant_end.substring(0,4)},  $ Invested: {andarData.yearly_allocation}</li>
           )
+
+          var listDescriptions = programList[i].AndarDataOutput.map((andarData) =>
+            <p key={andarData.grant_date.substring(0,4)}> andarData.description </p>
+        )
           listOfHi.push(
             <div className="row" key={programList[i].id}>
             <div className="large-6 column">
@@ -154,7 +160,7 @@ var Listing = React.createClass({
               <dl>
                 <dt>Program Description: </dt>
                 <dd>{programList[i].description}</dd>
-                  <dd>{programList[i].AndarDataOutput[0].description}</dd>
+                  <dd>{listDescriptions}</dd>
                   <dt>Program website: </dt>
                   <dd>{programList[i].website}</dd>
                     <dt>Program Focus: </dt>

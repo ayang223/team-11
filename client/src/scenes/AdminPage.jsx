@@ -34,7 +34,6 @@ var AccountForm = React.createClass({
     var fname = this.refs.fname.value;
     var lname = this.refs.lname.value;
     var isAdmin = this.state.isAdmin;
-    console.log(this.state.isAdmin);
     if(username.length > 0 && password.length > 0 && verifypassword.length > 0 && fname.length > 0 && lname.length >0){
       this.refs.username.value = '';
       this.refs.password.value = '';
