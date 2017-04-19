@@ -46,7 +46,7 @@ var LoginForm = React.createClass({
                         <p style={{marginBottom:"15px"}}>Password
                         </p><hr />
                         <input type="password" ref="password" placeholder="Enter password here"/>
-                        <p className="help-text" id="passwordHelpText">Forgot your password? Speak to an Administrator to retrieve your password</p>
+                        <p className="help-text" id="passwordHelpText">Forgot your password? Speak to an Administrator to reset your password</p>
                     </div>
                     <div style={{fontSize:"15"}}>
 

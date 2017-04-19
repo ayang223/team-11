@@ -181,7 +181,7 @@ var DeleteUserForm = React.createClass({
   render:function(){
     return(
       <div className="medium-6 columns">
-      <h4> Delete an User  </h4><hr />
+      <h4> Delete a User  </h4><hr />
       <form onDeleteUserForm={this.onDeleteUserForm}>
         <div className="row">
         <div className="medium-6 columns">

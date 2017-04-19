@@ -57,12 +57,12 @@ var Import = React.createClass({
 
     importProgram : function(e){
       var svgFrag = '<svg>' + loadingImg + '</svg>';
-      document.getElementById('errorOut').innerHTML = '' + svgFrag;
       var file = document.getElementById('CSVUpload').files[0];
       if(file == null){
         alert("No file selected!");
         return null;
       }else{
+      document.getElementById('errorOut').innerHTML = '' + svgFrag;
       console.log(file);
        var reader = new FileReader();
        reader.onload = function () {
@@ -124,12 +124,12 @@ var Import = React.createClass({
       importOutput : function(e){
         var _this = this;
         var svgFrag = '<svg>' + loadingImg + '</svg>';
-        document.getElementById('errorOut').innerHTML = '' + svgFrag;
         var file = document.getElementById('CSVUpload').files[0];
         if(file == null){
           alert("No file selected!");
           return null;
         }else{
+        document.getElementById('errorOut').innerHTML = '' + svgFrag;
         console.log(file);
         var reader = new FileReader();
          reader.onload = function () {
