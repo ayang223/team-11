@@ -148,7 +148,7 @@ var Listing = React.createClass({
           )
 
           var listDescriptions = programList[i].AndarDataOutput.map((andarData) =>
-            <p key={andarData.grant_date.substring(0,4)}> {andarData.description} </p>
+            <p key={andarData.program_andar}> {andarData.description} </p>
         )
           listOfHi.push(
             <div className="row" key={programList[i].id}>
@@ -159,7 +159,7 @@ var Listing = React.createClass({
               <h6 style={{fontWeight: 'bold'}}>{programList[i].agency}</h6>
               <dl>
                 <dt>Program Description: </dt>
-                <dd>{programList[i].description}</dd>
+                
                   <dd>{listDescriptions}</dd>
                   <dt>Program website: </dt>
                   <dd>{programList[i].website}</dd>
